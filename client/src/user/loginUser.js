@@ -3,7 +3,7 @@ import newUser from "./signupUser";
 
 const form = `
   <form id="login-user">
-  <h1>Login</h1>
+  <h1>Login Form</h1>
     <div class="form-group">
       <label for="Email">Email</label>
       <input type="text" class="form-control" placeholder="Please enter your email" name="email">

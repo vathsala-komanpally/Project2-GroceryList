@@ -1,0 +1,130 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  /* Style the header */
+  header {
+    background: linear-gradient(-90deg, #9dcccf, #c0cec4);
+    border-bottom: 1px gray solid;
+    padding: 30px 30px 30px;
+    margin: auto;
+    width: 100%;
+    height: 150px;
+    float: left;
+  }
+  
+  /* Style the header text */
+  h1 {
+    background: linear-gradient(-90deg, #9dcccf, #c0cec4);
+    border-bottom: 1px gray solid;
+    margin: auto;
+  }
+  
+  /* Style the button checkout */
+  #finish{
+    width:150px;
+    height: 40px;
+    background-color: #3a417e;
+  }
+  
+  /* Style names of grocery categories*/
+  h2 {
+    border: 1px solid rgb(34, 177, 70);
+    border-radius: 20px;
+    margin: auto;
+  }
+  
+  
+  .TopMenuRow,
+  h2 {
+    display: flex;
+  }
+  
+  .MainMenuImagecolumn {
+    flex: 29%;
+    padding: 3px;
+    
+  }
+  
+  img {
+    border: 1px solid rgb(212, 224, 215);
+    border-radius: 20px;
+    width: 100px;
+    height: 50px;
+  }
+  
+  .mainMenuImage{
+    width: 100px;
+    height: 150px;
+  }
+  
+  
+  /* Darker background on mouse-over */
+  .btn:hover {
+    background-color: rgb(121, 34, 7);
+    border-radius: 10px;
+  }
+  
+  .groceryList {
+    display: flex;
+  }
+  
+  /* Style buttons (name of items) in the ol */
+  .itemNames {
+    background-color: rgb(199, 214, 204); /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 12px 16px; /* Some padding */
+    font-size: 16px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+    border-radius: 5px;
+    margin: auto;
+    border: 5px solid rgb(107, 87, 44);
+    width: 150px;
+    height: 100px;
+    margin: 1em 0;
+  }
+  
+  /* Style result items table */
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 70%;
+  }
+  
+  td,
+  th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    height: 20px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+  
+  /* Style the footer */
+  footer {
+    background-color: rgb(115, 155, 138);
+    padding: 10px;
+    text-align: center;
+    color: white;
+  }
+
+  #login-user, #new-user{
+    background-color: rgb(115, 155, 138);
+    padding: 10px;
+    border: none; /* Remove borders */
+    padding: 12px 16px; /* Some padding */
+    font-size: 16px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+    border-radius: 5px;
+    margin: auto;
+    border: 5px solid rgb(105, 87, 134);
+    width: 50%;
+    margin: 1em 0;
+  }
+  #login-user{height: 50%;} #new-user{height: 75%;}
+
+/*# sourceMappingURL=/style.e308ff8e.css.map */

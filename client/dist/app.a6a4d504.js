@@ -961,7 +961,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 //import fruitForm from "../fruitForm";
-var form = "\n  <form id=\"login-user\">\n  <h1>Login</h1>\n    <div class=\"form-group\">\n      <label for=\"Email\">Email</label>\n      <input type=\"text\" class=\"form-control\" placeholder=\"Please enter your email\" name=\"email\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"password\">Password</label>\n      <input type=\"password\" class=\"form-control\" placeholder=\"Please enter password\" name=\"password\">\n    </div>\n    <button type=\"submit\" class=\"btn btn-primary\">Login</button>\n  </form>\n  <button id=\"register-new-user\" class=\"btn btn-primary\">Create account to Login </button>\n";
+var form = "\n  <form id=\"login-user\">\n  <h1>Login Form</h1>\n    <div class=\"form-group\">\n      <label for=\"Email\">Email</label>\n      <input type=\"text\" class=\"form-control\" placeholder=\"Please enter your email\" name=\"email\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"password\">Password</label>\n      <input type=\"password\" class=\"form-control\" placeholder=\"Please enter password\" name=\"password\">\n    </div>\n    <button type=\"submit\" class=\"btn btn-primary\">Login</button>\n  </form>\n  <button id=\"register-new-user\" class=\"btn btn-primary\">Create account to Login </button>\n";
 
 var loginUser = function loginUser() {
   $(document).on("submit", "#login-user", /*#__PURE__*/function () {
@@ -1036,13 +1036,331 @@ var _loginUser = _interopRequireDefault(require("./user/loginUser"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/*
-We only need to show the login form when the UI loads
-- If the login is successful, the fruits UI is rendered
-- If the login is unsuccessful, a message is shown on the screen to say that login was unsuccessful
-Note: To understand how the login page renders the fruits UI or display an error, check out loginUser.js
-*/
-$("body").prepend((0, _loginUser.default)());
+console.log("Javascript file is running");
+var fruitsObject = [{
+  id: 0,
+  Name: "Apple",
+  Price: 5,
+  Quantity: 0,
+  Imag: "./images/apple.jpeg"
+}, {
+  id: 1,
+  Name: "Banana",
+  Price: 3,
+  Quantity: 0,
+  Imag: "./images/banana.png"
+}, {
+  id: 2,
+  Name: "Grapes",
+  Price: 9,
+  Quantity: 0,
+  Imag: "./images/grape.png"
+}, {
+  id: 3,
+  Name: "Pear",
+  Price: 5,
+  Quantity: 0,
+  Imag: "./images/pear.png"
+}, {
+  id: 4,
+  Name: "Mango",
+  Price: 3,
+  Quantity: 0,
+  Imag: "./images/mango.jpeg"
+}];
+$("#fruitsList").append('<ol id="fruits"></ol>');
+fruitsObject.forEach(function (element, i) {
+  $("#fruits").append("<li><button class=\"itemNames\" value=".concat(element.Name, "><img src=").concat(element.Imag, ">").concat(element.Name, "</button></li>"));
+});
+var vegetablesObject = [{
+  id: 0,
+  Name: "Carrot",
+  Price: 2,
+  Quantity: 0,
+  Imag: "images/carrot.jpeg"
+}, {
+  id: 1,
+  Name: "Capsicum",
+  Price: 7,
+  Quantity: 0,
+  Imag: "images/Capsicum.jpeg"
+}, {
+  id: 2,
+  Name: "Cucumber",
+  Price: 2,
+  Quantity: 0,
+  Imag: "images/cucumber.jpeg"
+}, {
+  id: 3,
+  Name: "Spinach",
+  Price: 7,
+  Quantity: 0,
+  Imag: "images/spinach.jpeg"
+}, {
+  id: 4,
+  Name: "Potato",
+  Price: 4,
+  Quantity: 0,
+  Imag: "images/potato.jpeg"
+}];
+$("#vegetablesList").append('<ol id="vegetables"></ol>');
+vegetablesObject.forEach(function (element, i) {
+  $("#vegetables").append("<li><button class=\"itemNames\" value=".concat(element.Name, "><img src=").concat(element.Imag, ">").concat(element.Name, "</button></li>"));
+});
+var dairyObject = [{
+  id: 0,
+  Name: "Butter",
+  Price: 5,
+  Quantity: 0,
+  Imag: "images/butter.jpeg"
+}, {
+  id: 1,
+  Name: "Cheese",
+  Price: 10,
+  Quantity: 0,
+  Imag: "images/cheese.png"
+}, {
+  id: 2,
+  Name: "Milk",
+  Price: 3,
+  Quantity: 0,
+  Imag: "images/milk.png"
+}, {
+  id: 3,
+  Name: "Eggs",
+  Price: 7,
+  Quantity: 0,
+  Imag: "images/eggs.jpeg"
+}, {
+  id: 4,
+  Name: "Yogurt",
+  Price: 6,
+  Quantity: 0,
+  Imag: "images/yogurt.jpeg"
+}];
+$("#dairyList").append('<ol id="dairy"></ol>');
+dairyObject.forEach(function (element, i) {
+  $("#dairy").append("<li><button class=\"itemNames\" value=".concat(element.Name, "><img src=").concat(element.Imag, ">").concat(element.Name, "</button></li>"));
+});
+var grainsObject = [{
+  id: 0,
+  Name: "Bread",
+  Price: 4,
+  Quantity: 0,
+  Imag: "images/bread.jpeg"
+}, {
+  id: 1,
+  Name: "Barley",
+  Price: 12,
+  Quantity: 0,
+  Imag: "images/barley.png"
+}, {
+  id: 2,
+  Name: "Rice",
+  Price: 12,
+  Quantity: 0,
+  Imag: "images/rice.jpeg"
+}, {
+  id: 3,
+  Name: "Oats",
+  Price: 6,
+  Quantity: 0,
+  Imag: "images/oats.jpeg"
+}, {
+  id: 4,
+  Name: "Pasta",
+  Price: 4,
+  Quantity: 0,
+  Imag: "images/pasta.jpeg"
+}];
+$("#grainsList").append('<ol id="grains"></ol>');
+grainsObject.forEach(function (element, i) {
+  $("#grains").append("<li><button class=\"itemNames\" value=".concat(element.Name, "><img src=").concat(element.Imag, ">").concat(element.Name, "</button></li>"));
+});
+var meatObject = [{
+  id: 0,
+  Name: "Chicken",
+  Price: 6,
+  Quantity: 0,
+  Imag: "images/chicken.jpeg"
+}, {
+  id: 1,
+  Name: "Fish",
+  Price: 19,
+  Quantity: 0,
+  Imag: "images/fish.png"
+}, {
+  id: 2,
+  Name: "Goat",
+  Price: 22,
+  Quantity: 0,
+  Imag: "images/goat.jpeg"
+}, {
+  id: 3,
+  Name: "Lamb",
+  Price: 21,
+  Quantity: 0,
+  Imag: "images/lamb.png"
+}, {
+  id: 4,
+  Name: "Prawns",
+  Price: 15,
+  Quantity: 0,
+  Imag: "images/prawn.jpeg"
+}];
+$("#meatList").append('<ol id="meat"></ol>');
+meatObject.forEach(function (element, i) {
+  $("#meat").append("<li><button class=\"itemNames\" value=".concat(element.Name, "><img src=").concat(element.Imag, ">").concat(element.Name, "</button></li>"));
+});
+var products = {
+  Fruits: fruitsObject,
+  Vegetables: vegetablesObject,
+  Dairy: dairyObject,
+  Grains: grainsObject,
+  Meat: meatObject
+};
+var numberOfItems = [];
+var itemNumber = 0;
+console.log(products); //when user clicks on each item it prints those items on the page in form of table
+
+$(".itemNames").on("click", function (event) {
+  event.preventDefault();
+  var nameOfItem = $(this).val();
+  console.log("inside items click", nameOfItem);
+  itemClickedValues(nameOfItem);
+}); // pushing items clicked values into array of object(numberofItems) and increase quantity and price
+
+var itemClickedValues = function itemClickedValues(nameOfItem) {
+  for (var i = 0; i < Object.keys(products).length; i++) {
+    var valueOfKey = products[Object.keys(products)[i]];
+    var result = valueOfKey.find(function (_ref) {
+      var Name = _ref.Name;
+      return Name === nameOfItem;
+    });
+
+    if (result) {
+      itemNumber++;
+      var exist = numberOfItems.find(function (_ref2) {
+        var Name = _ref2.Name;
+        return Name === nameOfItem;
+      });
+
+      if (exist) {
+        //console.log("its here in exist:", exist);
+        objIndex = numberOfItems.findIndex(function (exist) {
+          return exist.Name == nameOfItem;
+        });
+        numberOfItems[objIndex].repeated = exist.repeated + 1;
+        numberOfItems[objIndex].price = exist.repeated * result.Price;
+        alert("you got ".concat(numberOfItems[objIndex].repeated - 1, " ").concat(nameOfItem, " in the list, Do you want to 1 more"));
+      } else {
+        var itemIdNumber = result.id;
+        var itemPrice = result.Price;
+        var idItemObject = {
+          id: itemNumber,
+          Name: nameOfItem,
+          price: itemPrice,
+          repeated: result.Quantity + 1
+        };
+        numberOfItems.push(idItemObject);
+      }
+    }
+  }
+
+  console.log(numberOfItems);
+  printResult();
+}; //printing values with total price on to the table 
+
+
+function printResult() {
+  var sum = 0;
+  $("#resultItems").empty();
+
+  for (var i = 0; i < numberOfItems.length; i++) {
+    $("#resultItems").append("<tr>\n        <td>".concat(i + 1, "</td>\n        <td>").concat(numberOfItems[i].Name, "</td>\n        <td>$").concat(numberOfItems[i].price, "</td>\n        <td>").concat(numberOfItems[i].repeated, "\n        <input type=\"button\" value=\"+\" class=\"plus\" onclick=\"plusFunction(this)\">\n           <input type=\"button\" value=\"-\" class=\"minus\" onclick=\"minusFunction(this)\">\n        <button onclick=\"deleteFunction(this)\">\n           <i class=\"fa fa-trash-o\"></i></button></td></tr>"));
+    var priceOf = numberOfItems[i].price;
+    sum = +priceOf + sum;
+  }
+
+  $("#resultItems").append("<tr><th></th><th>Total price:</th><th>".concat(sum, "</th>"));
+}
+
+var deleteSelectedItem = function deleteSelectedItem(nameOfItem) {
+  var exist = numberOfItems.find(function (_ref3) {
+    var Name = _ref3.Name;
+    return Name === nameOfItem;
+  });
+  objIndex = numberOfItems.findIndex(function (exist) {
+    return exist.Name == nameOfItem;
+  });
+  numberOfItems.splice(objIndex, 1);
+  alert("".concat(nameOfItem, " is removed from the list"));
+  printResult();
+};
+
+var itemRemovedValues = function itemRemovedValues(nameOfItem) {
+  for (var i = 0; i < Object.keys(products).length; i++) {
+    var valueOfKey = products[Object.keys(products)[i]];
+    var result = valueOfKey.find(function (_ref4) {
+      var Name = _ref4.Name;
+      return Name === nameOfItem;
+    });
+
+    if (result) {
+      var exist = numberOfItems.find(function (_ref5) {
+        var Name = _ref5.Name;
+        return Name === nameOfItem;
+      });
+
+      if (exist && exist.repeated > 1) {
+        objIndex = numberOfItems.findIndex(function (exist) {
+          return exist.Name == nameOfItem;
+        });
+        numberOfItems[objIndex].repeated = exist.repeated - 1;
+        numberOfItems[objIndex].price = exist.price - result.Price;
+        alert("you have only ".concat(numberOfItems[objIndex].repeated, " ").concat(nameOfItem, " in the list"));
+      } else if (exist.repeated = 1) {
+        deleteSelectedItem(nameOfItem);
+      }
+
+      printResult();
+    }
+  }
+}; //deleting a row if user clicks on delete symbol
+
+
+function deleteFunction(r) {
+  var row = r.parentNode.parentNode.rowIndex;
+  var cellItemName = document.getElementById("itemsTable").rows[row].cells[1].innerText;
+  deleteSelectedItem(cellItemName);
+} //incrementing previous quantity value by 1 user clicks on + button and price as well
+
+
+function plusFunction(r) {
+  var row = r.parentNode.parentNode.rowIndex;
+  var cellItemName = document.getElementById("itemsTable").rows[row].cells[1].innerText;
+  itemClickedValues(cellItemName);
+} //decreasing previous quantity value by 1 if user clciks '-' button and minus price from it
+
+
+function minusFunction(r) {
+  var row = r.parentNode.parentNode.rowIndex;
+  var cellItemName = document.getElementById("itemsTable").rows[row].cells[1].innerText;
+  itemRemovedValues(cellItemName);
+}
+
+$("#finish").on("click", function () {
+  // Clear form by calling empty function
+  $("body").empty();
+  /*
+  We only need to show the login form when the UI loads
+  - If the login is successful, the fruits UI is rendered
+  - If the login is unsuccessful, a message is shown on the screen to say that login was unsuccessful
+  Note: To understand how the login page renders the fruits UI or display an error, check out loginUser.js
+  */
+
+  $("body").prepend((0, _loginUser.default)());
+});
 },{"regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js","./user/loginUser":"src/user/loginUser.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -1071,7 +1389,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49229" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49405" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
