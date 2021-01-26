@@ -1,31 +1,27 @@
-import newUser from "./signupUser";
-//import fruitForm from "../fruitForm";
-
+import operationsOfAdmin from "./operationAdmin";
 const form = `
-  <form id="login-user">
+  <form id="admin-Login">
   <h1>Login</h1>
-  <h6>Please login to continue</h6>
+  <h6>Dear admin please login here to update grocery items</h6>
     <div class="form-group">
-      <label for="Email">Email</label>
-      <input type="text" class="form-control" placeholder="Please enter your email" name="email">
+      <label for="username">User Name</label>
+      <input type="text" class="form-control" placeholder="Please enter user name" name="username">
     </div>
     <div class="form-group">
       <label for="password">Password</label>
       <input type="password" class="form-control" placeholder="Please enter password" name="password">
     </div>
-    <button type="submit" class="btn btn-primary">Login</button>
+    <button type="submit" class="btn btn-primary" id="login">Login</button>
   </form>
-  <button id="register-new-user" class="btn btn-primary">Create account to Login </button>
 `;
 
-const loginUser = () => {
-  $(document).on("submit", "#login-user", async (event) => {
+const adminUser = () => {
+  $(document).on("submit", "#admin-Login", async (event) => {
     event.preventDefault();
-    
 
     // Extract username and password entered
     const formData = {
-      email: $("input[name='email']").val(),
+      username: $("input[name='username']").val(),
       password: $("input[name='password']").val(),
     };
   
@@ -33,7 +29,7 @@ const loginUser = () => {
     try {
       const response = await $.ajax({
         type: "POST",
-        url: "/api/users/login",
+        url: "/api/admins/login",
         contentType: "application/json",
         data: JSON.stringify(formData),
       });
@@ -42,21 +38,23 @@ const loginUser = () => {
       $("body").empty();
       // Append the fruit form to the body allowing the user to create/update/delete fruits
       //$("body").append(fruitForm());
+      $("body").append(operationsOfAdmin());
     } catch (err) {
       // If there's a problem logging in, then add a message to let user know that an invalid combination was provided
       $("body").append("<div>Invalid email/pass provided!</div>");
     }
   });
+  
   return form;
 };
 
-// Add event listener for Register new user button being clicked
-$(document).on("click", "#register-new-user", () => {
-  // Clear current login form
-  $("body").empty();
+// // Add event listener for Register new user button being clicked
+// $(document).on("click", "#login", () => {
+//   // Clear current login form
+//   $("body").empty();
 
-  // Append new user form instead
-  $("body").append(newUser());
-});
+//   // Append new user form instead
+ 
+// });
 
-export default loginUser;
+export default adminUser;
