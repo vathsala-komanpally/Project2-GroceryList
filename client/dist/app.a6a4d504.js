@@ -1454,26 +1454,22 @@ var mainForm = function mainForm() {
       }).then(function (categoryItems) {
         products["".concat(itemEl.name)] = categoryItems;
         categoryItems.forEach(function (element) {
-          $("#".concat(itemEl.name)).append("<li><input id=\"itemNames\" type=\"button\" name=\"".concat(element.itemname, "\" value=\"").concat(element.itemname, " $").concat(element.price, "\"> </li>"));
-        }); ///it has data in products object here
+          $("#".concat(itemEl.name)).append("<li><input class=\"itemNames\" type=\"button\" name=\"".concat(element.itemname, "\" value=\"").concat(element.itemname, " $").concat(element.price, "\"> </li>"));
+        });
       });
     });
-  }); // but its empty in here
+  }); //when user clicks on each item it prints those items on the page in form of table
 
-  console.log("Products array:", products); //when user clicks on each item it prints those items on the page in form of table
-
-  $(document).on("click", "#itemNames", /*#__PURE__*/function () {
+  $(document).on("click", ".itemNames", /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(e) {
       var nameOfItem;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              e.preventDefault(); //why this line showing only one ietm name 
-
-              nameOfItem = document.getElementById("itemNames"); //const nameOfItem = document.getElementById("itemNames").value; 
-
-              console.log("I am here", nameOfItem);
+              e.preventDefault();
+              nameOfItem = e.target.name;
+              console.log("Inside item click", nameOfItem);
               itemClickedValues(nameOfItem);
 
             case 4:
@@ -1490,43 +1486,46 @@ var mainForm = function mainForm() {
   }()); // pushing items clicked values into array of object(numberofItems) and increase quantity and price
 
   var itemClickedValues = function itemClickedValues(nameOfItem) {
+    //console.log("products:",products);
     for (var i = 0; i < Object.keys(products).length; i++) {
       var valueOfKey = products[Object.keys(products)[i]];
       var result = valueOfKey.find(function (_ref2) {
-        var Name = _ref2.Name;
-        return Name === nameOfItem;
+        var itemname = _ref2.itemname;
+        return itemname === nameOfItem;
       });
 
       if (result) {
         itemNumber++;
         var exist = numberOfItems.find(function (_ref3) {
-          var Name = _ref3.Name;
-          return Name === nameOfItem;
+          var itemname = _ref3.itemname;
+          return itemname === nameOfItem;
         });
 
         if (exist) {
-          //console.log("its here in exist:", exist);
-          objIndex = numberOfItems.findIndex(function (exist) {
-            return exist.Name == nameOfItem;
+          console.log("its here in exist:", exist);
+          console.log(numberOfItems);
+
+          var _objIndex = numberOfItems.findIndex(function (exist) {
+            return exist.itemname == nameOfItem;
           });
-          numberOfItems[objIndex].repeated = exist.repeated + 1;
-          numberOfItems[objIndex].price = exist.repeated * result.Price;
-          alert("you got ".concat(numberOfItems[objIndex].repeated - 1, " ").concat(nameOfItem, " in the list, Do you want to 1 more"));
+
+          numberOfItems[_objIndex].repeated = exist.repeated + 1;
+          numberOfItems[_objIndex].price = exist.repeated * result.price;
+          alert("you got ".concat(numberOfItems[_objIndex].repeated - 1, " ").concat(nameOfItem, " in the list, Do you want to 1 more"));
         } else {
-          var itemIdNumber = result.id;
-          var itemPrice = result.Price;
+          //const itemIdNumber = result.id;
+          var itemPrice = result.price;
           var idItemObject = {
             id: itemNumber,
-            Name: nameOfItem,
+            itemname: nameOfItem,
             price: itemPrice,
-            repeated: result.Quantity + 1
+            repeated: 1
           };
           numberOfItems.push(idItemObject);
         }
       }
     }
 
-    console.log(numberOfItems);
     printResult();
   }; //printing values with total price on to the table 
 
@@ -1536,7 +1535,7 @@ var mainForm = function mainForm() {
     $("#resultItems").empty();
 
     for (var i = 0; i < numberOfItems.length; i++) {
-      $("#resultItems").append("<tr>\n        <td>".concat(i + 1, "</td>\n        <td>").concat(numberOfItems[i].Name, "</td>\n        <td>$").concat(numberOfItems[i].price, "</td>\n        <td>").concat(numberOfItems[i].repeated, "\n        <input type=\"button\" value=\"+\" class=\"plus\" onclick=\"plusFunction(this)\">\n           <input type=\"button\" value=\"-\" class=\"minus\" onclick=\"minusFunction(this)\">\n        <button onclick=\"deleteFunction(this)\">\n           <i class=\"fa fa-trash-o\"></i></button></td></tr>"));
+      $("#resultItems").append("<tr>\n        <td>".concat(i + 1, "</td>\n        <td>").concat(numberOfItems[i].itemname, "</td>\n        <td>$").concat(numberOfItems[i].price, "</td>\n        <td>").concat(numberOfItems[i].repeated, "\n        <input type=\"button\" value=\"+\" class=\"plus\" onclick=\"plusFunction(this)\">\n           <input type=\"button\" value=\"-\" class=\"minus\" onclick=\"minusFunction(this)\">\n        <button onclick=\"deleteFunction(this)\">\n           <i class=\"fa fa-trash-o\"></i></button></td></tr>"));
       var priceOf = numberOfItems[i].price;
       sum = +priceOf + sum;
     }
@@ -1546,11 +1545,11 @@ var mainForm = function mainForm() {
 
   var deleteSelectedItem = function deleteSelectedItem(nameOfItem) {
     var exist = numberOfItems.find(function (_ref4) {
-      var Name = _ref4.Name;
-      return Name === nameOfItem;
+      var itemname = _ref4.itemname;
+      return itemname === nameOfItem;
     });
     objIndex = numberOfItems.findIndex(function (exist) {
-      return exist.Name == nameOfItem;
+      return exist.itemname == nameOfItem;
     });
     numberOfItems.splice(objIndex, 1);
     alert("".concat(nameOfItem, " is removed from the list"));
@@ -1561,22 +1560,22 @@ var mainForm = function mainForm() {
     for (var i = 0; i < Object.keys(products).length; i++) {
       var valueOfKey = products[Object.keys(products)[i]];
       var result = valueOfKey.find(function (_ref5) {
-        var Name = _ref5.Name;
-        return Name === nameOfItem;
+        var itemname = _ref5.itemname;
+        return itemname === nameOfItem;
       });
 
       if (result) {
         var exist = numberOfItems.find(function (_ref6) {
-          var Name = _ref6.Name;
-          return Name === nameOfItem;
+          var itemname = _ref6.itemname;
+          return itemname === nameOfItem;
         });
 
         if (exist && exist.repeated > 1) {
           objIndex = numberOfItems.findIndex(function (exist) {
-            return exist.Name == nameOfItem;
+            return exist.itemname == nameOfItem;
           });
           numberOfItems[objIndex].repeated = exist.repeated - 1;
-          numberOfItems[objIndex].price = exist.price - result.Price;
+          numberOfItems[objIndex].price = exist.price - result.price;
           alert("you have only ".concat(numberOfItems[objIndex].repeated, " ").concat(nameOfItem, " in the list"));
         } else if (exist.repeated = 1) {
           deleteSelectedItem(nameOfItem);
@@ -1596,6 +1595,7 @@ var mainForm = function mainForm() {
 
 
   function plusFunction(r) {
+    console.log("here");
     var row = r.parentNode.parentNode.rowIndex;
     var cellItemName = document.getElementById("itemsTable").rows[row].cells[1].innerText;
     itemClickedValues(cellItemName);
@@ -1707,7 +1707,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49476" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63354" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

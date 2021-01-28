@@ -26,7 +26,7 @@ const form = `
 
 const mainForm=()=>{
     
-const products = {}; 
+let products = {}; 
 let numberOfItems = [];
 let itemNumber = 0;
 
@@ -44,47 +44,46 @@ $.ajax({
           }).then((categoryItems) => {
             products[`${itemEl.name}`] = categoryItems;
            categoryItems.forEach((element) => {
-                $(`#${itemEl.name}`).append(`<li><input id="itemNames" type="button" name="${element.itemname}" value="${element.itemname} $${element.price}"> </li>`);
-            });///it has data in products object here
+                $(`#${itemEl.name}`).append(`<li><input class="itemNames" type="button" name="${element.itemname}" value="${element.itemname} $${element.price}"> </li>`);
+            });
     });  
   });
 });
-// but its empty in here
-console.log("Products array:",products);
 
 //when user clicks on each item it prints those items on the page in form of table
-$(document).on("click", "#itemNames", async (e) => {
+$(document).on("click", ".itemNames", async (e) => {
     e.preventDefault();
-    //why this line showing only one ietm name 
-    const nameOfItem = document.getElementById("itemNames"); 
-    //const nameOfItem = document.getElementById("itemNames").value; 
-    console.log("I am here",nameOfItem);
+    const nameOfItem = e.target.name;
+    console.log("Inside item click",nameOfItem);
     itemClickedValues(nameOfItem);
 });
 
 // pushing items clicked values into array of object(numberofItems) and increase quantity and price
 const itemClickedValues = (nameOfItem) => {
+   //console.log("products:",products);
     for (let i = 0; i < Object.keys(products).length; i++) {
         const valueOfKey = products[Object.keys(products)[i]];
-        const result = valueOfKey.find(({ Name }) => Name === nameOfItem);
+        
+        const result = valueOfKey.find(({ itemname }) => itemname === nameOfItem);
         if (result) {
             itemNumber++;
-            const exist = numberOfItems.find(({ Name }) => Name === nameOfItem);
+            const exist = numberOfItems.find(({ itemname }) => itemname === nameOfItem);
             if (exist) {
-                //console.log("its here in exist:", exist);
-                objIndex = numberOfItems.findIndex((exist => exist.Name == nameOfItem));
+                console.log("its here in exist:", exist);
+                console.log(numberOfItems);
+                const objIndex = numberOfItems.findIndex((exist => exist.itemname == nameOfItem));
                 numberOfItems[objIndex].repeated = exist.repeated + 1;
-                numberOfItems[objIndex].price = exist.repeated * result.Price;
+                numberOfItems[objIndex].price = exist.repeated * result.price;
                 alert(`you got ${numberOfItems[objIndex].repeated - 1} ${nameOfItem} in the list, Do you want to 1 more`);
             } else {
-                const itemIdNumber = result.id;
-                const itemPrice = result.Price;
-                const idItemObject = { id: itemNumber, Name: nameOfItem, price: itemPrice, repeated: result.Quantity + 1 };
+                //const itemIdNumber = result.id;
+                const itemPrice = result.price;
+                const idItemObject = { id: itemNumber, itemname: nameOfItem, price: itemPrice, repeated: 1 };
                 numberOfItems.push(idItemObject);
             }
         }
     }
-    console.log(numberOfItems);
+    
     printResult();
 }
 
@@ -95,7 +94,7 @@ function printResult() {
     for (let i = 0; i < numberOfItems.length; i++) {
         $("#resultItems").append(`<tr>
         <td>${i + 1}</td>
-        <td>${numberOfItems[i].Name}</td>
+        <td>${numberOfItems[i].itemname}</td>
         <td>$${numberOfItems[i].price}</td>
         <td>${numberOfItems[i].repeated}
         <input type="button" value="+" class="plus" onclick="plusFunction(this)">
@@ -110,8 +109,8 @@ function printResult() {
 
 
 const deleteSelectedItem = (nameOfItem) => {
-    const exist = numberOfItems.find(({ Name }) => Name === nameOfItem);
-    objIndex = numberOfItems.findIndex((exist => exist.Name == nameOfItem));
+    const exist = numberOfItems.find(({ itemname }) => itemname === nameOfItem);
+    objIndex = numberOfItems.findIndex((exist => exist.itemname == nameOfItem));
     numberOfItems.splice(objIndex, 1);
     alert(`${nameOfItem} is removed from the list`);
     printResult();
@@ -120,13 +119,13 @@ const deleteSelectedItem = (nameOfItem) => {
 const itemRemovedValues = (nameOfItem) => {
     for (let i = 0; i < Object.keys(products).length; i++) {
         const valueOfKey = products[Object.keys(products)[i]];
-        const result = valueOfKey.find(({ Name }) => Name === nameOfItem);
+        const result = valueOfKey.find(({ itemname }) => itemname === nameOfItem);
         if (result) {
-            const exist = numberOfItems.find(({ Name }) => Name === nameOfItem);
+            const exist = numberOfItems.find(({ itemname }) => itemname === nameOfItem);
             if (exist && exist.repeated > 1) {
-                objIndex = numberOfItems.findIndex((exist => exist.Name == nameOfItem));
+                objIndex = numberOfItems.findIndex((exist => exist.itemname == nameOfItem));
                 numberOfItems[objIndex].repeated = exist.repeated - 1;
-                numberOfItems[objIndex].price = exist.price - result.Price;
+                numberOfItems[objIndex].price = exist.price - result.price;
                 alert(`you have only ${numberOfItems[objIndex].repeated} ${nameOfItem} in the list`);
             } else if (exist.repeated = 1) {
 
@@ -147,6 +146,7 @@ function deleteFunction(r) {
 
 //incrementing previous quantity value by 1 user clicks on + button and price as well
 function plusFunction(r) {
+    console.log("here");
     let row = r.parentNode.parentNode.rowIndex;
     let cellItemName = document.getElementById("itemsTable").rows[row].cells[1].innerText;
     itemClickedValues(cellItemName);
