@@ -26,7 +26,7 @@ router.get("/category/all", (request, response) => {
       });
 });
 
-router.get("/allCategory", (request, response) => {
+router.get("/allGroceryItems", (request, response) => {
     groceryItemsModel.find()
     .populate('categoryId') //that associate or reference to the data
       .then((itemCategory) => {
@@ -46,9 +46,7 @@ router.post("/new-item", (request, response)=>{
 });
 
 router.patch("/update-item/:id", (request, response)=>{
-    groceryItemsModel.findByIdAndUpdate(request.params.id, request.body, {
-        new: true,
-      }).then((data)=>{
+    groceryItemsModel.findByIdAndUpdate(request.params.id, request.body).then((data)=>{
         response.send(data);
     }).catch(()=>{
         response.status(404).send("Item was not found!");
@@ -56,12 +54,23 @@ router.patch("/update-item/:id", (request, response)=>{
 });
 
 
-router.patch("/delete-item/:id",(request,response)=>{
-    groceryItemsModel.findByIdAndDelete(request.param.id).then((dta)=>{
+router.delete("/delete-item/:id",(request,response)=>{
+    groceryItemsModel.findByIdAndDelete(request.params.id).then((dta)=>{
         response.send("Item deleted scuccessfully!");
     }).catch(()=>{
-        response.status(4040).send("Item was not fpund!");
+        response.status(4040).send("Item was not found!");
     });
 });
+
+
+router.get("/category/:id", (request,response)=>{
+    groceryItemsModel.
+    find({ categoryId:request.params.id}).then((data)=>{
+        response.send(data);
+    }).catch((error)=>{
+        response.status(500).send("unable to find items of category");
+    });
+});
+
 
 module.exports = router;

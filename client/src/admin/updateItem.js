@@ -1,7 +1,11 @@
 
 const form = `
 <form id="form-Update">
-<h1>Add new items</h1>
+<h1>Update items</h1>
+<div class="form-group">
+    <label for="itemId">Item Id </label>
+    <input type="text" class="form-control" id="itemId" placeholder="Enter item Id" name="itemId">
+  </div>
   <div class = "form-group">
      <label for="itemname">Name of item</label>
      <input type="text" class="form-control" id="itemname" placeholder="Enter a name of the item to add" name="itemname">
@@ -30,12 +34,12 @@ const form = `
        <select name="categoryId" id="categories">
         </select>
   </div>
-  <button type="submit" class="btn btn-primary">Add Item</button>
+  <button type="submit" class="btn btn-primary">Update Item</button>
   </form>
 `;
 
 
-const updateItem= () => {
+const updateItem = () => {
   // appending category values from database to form
   const categoryResponse = $.ajax({
     type: "GET",
@@ -45,49 +49,31 @@ const updateItem= () => {
     let optionsHtml = "";
     groceyItemCategories.forEach((itemEl) => {
       console.log("itemEl", itemEl);
-      optionsHtml = optionsHtml +  `<option value=${itemEl._id}>${itemEl.name}</option>`;
+      optionsHtml = optionsHtml + `<option value=${itemEl._id}>${itemEl.name}</option>`;
       console.log("optionsHtml", optionsHtml);
     });
     console.log("optionsHtml", optionsHtml);
     $("#categories").append(optionsHtml);
   });
-  
-    //form submit button handler logic
-    // async is a keyword for the function declaration
-    $(document).on('submit', "form#form-Update",async(e) => {
-        e.preventDefault();
-        console.log($("#itemname").val());
-        console.log($("#price").val());
-        console.log($("#noofitems").val());
-        console.log($(`input[name="readyToEat"]:checked`).val());
-        console.log($('#categories').val());
-        console.log("Data entered");
 
-        // this is the object that gets sent as part of the post request
+  $(document).on('submit', "form#form-Update", async (e) => {
+    e.preventDefault();
+
     const requestBody = {
-        itemname: $("#itemname").val(),
-        price: $("#price").val(),
-        noOfItems: $("#noofitems").val(),
-        readyToEat: $(`input[name="readyToEat"]:checked`).val(),
-        categoryId: $("#categories").val(),
-      };
-      console.log("requestBody", requestBody);
-
-
-     // Making the call to post request
-     // await is used during the promise handling
-     const response = await $.ajax({
-      type: "POST", // OR GET
-      url: "/api/groceryItems/update-item",
+      itemname: $("#itemname").val(),
+      price: $("#price").val(),
+      noOfItems: $("#noofitems").val(),
+      readyToEat: $(`input[name="readyToEat"]:checked`).val(),
+      categoryId: $("#categories").val(),
+    };
+    console.log("requestBody", requestBody);
+    const response = await $.ajax({
+      type: "PATCH", // OR GET
+      url: `/api/groceryItems/update-item/${$("#itemId").val()}`,
       contentType: "application/json",
       data: JSON.stringify(requestBody),
     });
-    //.then((data)=>{ //here u can use response or data
-      console.log("data:", response);
-       // Logging response back to the console
-    console.log(
-      `This is the response I get back!: ${response}`
-    );
+    window.alert("Fruit Updated!");
   });
   return form;
 };

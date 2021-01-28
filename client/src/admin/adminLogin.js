@@ -24,7 +24,7 @@ const adminUser = () => {
       username: $("input[name='username']").val(),
       password: $("input[name='password']").val(),
     };
-  
+
     // Make a call to validate user name and password
     try {
       const response = await $.ajax({
@@ -44,7 +44,7 @@ const adminUser = () => {
       $("body").append("<div>Invalid email/pass provided!</div>");
     }
   });
-  
+
   return form;
 };
 
@@ -54,7 +54,7 @@ const adminUser = () => {
 //   $("body").empty();
 
 //   // Append new user form instead
- 
+
 // });
 
 export default adminUser;

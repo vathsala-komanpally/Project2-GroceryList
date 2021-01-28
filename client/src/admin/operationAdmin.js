@@ -1,5 +1,7 @@
 import newItem from "./addItems";
 import updateItem from "./updateItem";
+import deleteItem from "./deleteItem";
+
 const form = `
 <form id="adminOperations">
 <h1>List of things Admin can do here:</h1>
@@ -13,19 +15,25 @@ or delete to delete any items
 </form>
 `;
 
-const operationsByAdmin=()=>{
+const operationsByAdmin = () => {
     $(document).on("click", "#add", async (e) => {
         e.preventDefault();
         $("body").empty();
-      $("body").append(newItem());
+        $("body").append(newItem());
     });
 
 
-    $(document).on("click", "#update-fruit", async (e) => {
+    $(document).on("click", "#update", async (e) => {
         e.preventDefault();
         $("body").empty();
         $("body").append(updateItem());
-    });    
+    });
+
+    $(document).on("click", "#delete", async (e) => {
+        e.preventDefault();
+        $("body").empty();
+        $("body").append(deleteItem());
+    });
     return form;
 }
 
