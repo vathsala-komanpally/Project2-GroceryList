@@ -1,5 +1,5 @@
 import newUser from "./signupUser";
-//import fruitForm from "../fruitForm";
+import mainForm from "../mainPageForm";
 
 const form = `
   <form id="login-user">
@@ -22,14 +22,12 @@ const loginUser = () => {
   $(document).on("submit", "#login-user", async (event) => {
     event.preventDefault();
     
-
     // Extract username and password entered
     const formData = {
       email: $("input[name='email']").val(),
       password: $("input[name='password']").val(),
     };
-  
-    // Make a call to validate user name and password
+
     try {
       const response = await $.ajax({
         type: "POST",
@@ -38,24 +36,19 @@ const loginUser = () => {
         data: JSON.stringify(formData),
       });
       console.log(response);
-      // Clear current login form as login is successful by calling empty() function
       $("body").empty();
-      // Append the fruit form to the body allowing the user to create/update/delete fruits
-      //$("body").append(fruitForm());
+      //how to get data of user selected items of main page to here details here:
+      //$("body").append(mainForm());
     } catch (err) {
-      // If there's a problem logging in, then add a message to let user know that an invalid combination was provided
       $("body").append("<div>Invalid email/pass provided!</div>");
     }
   });
   return form;
 };
 
-// Add event listener for Register new user button being clicked
-$(document).on("click", "#register-new-user", () => {
-  // Clear current login form
-  $("body").empty();
 
-  // Append new user form instead
+$(document).on("click", "#register-new-user", () => {
+  $("body").empty();
   $("body").append(newUser());
 });
 

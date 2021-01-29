@@ -944,7 +944,234 @@ var newUser = function newUser() {
 
 var _default = newUser;
 exports.default = _default;
-},{"./loginUser":"src/user/loginUser.js"}],"src/user/loginUser.js":[function(require,module,exports) {
+},{"./loginUser":"src/user/loginUser.js"}],"src/mainPageForm.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var form = "\n<form id=\"form-Main\">\n<table id=\"itemsTable\">\n<thead>\n<tr>\n    <th>ItemNo.</th>\n    <th>Name</th>\n    <th>Price</th>\n    <th>Quantity</th>\n</tr>\n</thead>\n<tbody id=\"resultItems\">\n</tbody>\n</table>\n\n<div id=\"groceryList\">\n</div>\n\n<footer>\n<p>Please call 123445 for enquiries</p>\n</footer>\n\n</form>\n";
+
+var mainForm = function mainForm() {
+  // to store items selected by the user
+  var numberOfItems = []; // number of items selected by the user
+
+  var itemNumber = 0; //getting data from mongodb collections then dispalying that on page
+
+  $.ajax({
+    type: "GET",
+    url: "/api/groceryItems/category/all"
+  }).then(function (groceyItemCategories) {
+    groceyItemCategories.forEach(function (itemEl) {
+      $("#groceryList").append("<h2>".concat(itemEl.name, "</h2>"));
+      $("#groceryList").append("<ol id=".concat(itemEl.name, "></ol>"));
+      $.ajax({
+        type: "GET",
+        url: "/api/groceryItems/category/".concat(itemEl._id)
+      }).then(function (categoryItems) {
+        // products[`${itemEl.name}`] = categoryItems;
+        categoryItems.forEach(function (element) {
+          $("#".concat(itemEl.name)).append("<li><input class=\"itemNames\" type=\"button\" name=\"".concat(element.itemname, "\" value=\"").concat(element.itemname, " $").concat(element.price, "\"> </li>"));
+        });
+      });
+    });
+  }); //when user clicks/selects an item it gets name and price of that item
+
+  $(document).on("click", ".itemNames", /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(e) {
+      var nameOfItem, priceofItems, priceofItem;
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              e.preventDefault();
+              nameOfItem = e.target.name;
+              priceofItems = e.target.value;
+              priceofItem = priceofItems.split('$')[1];
+              selectedItems(nameOfItem, priceofItem);
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }()); //it checks user slected item for 1st time or not then increases quantity and price based on that
+
+  var selectedItems = function selectedItems(nameOfItem, priceofItem) {
+    var exist = numberOfItems.find(function (_ref2) {
+      var itemname = _ref2.itemname;
+      return itemname === nameOfItem;
+    });
+
+    if (exist) {
+      itemNumber++;
+      console.log("its here in exist:", exist);
+      console.log(numberOfItems);
+      var objIndex = numberOfItems.findIndex(function (exist) {
+        return exist.itemname == nameOfItem;
+      });
+      numberOfItems[objIndex].repeated = exist.repeated + 1;
+      numberOfItems[objIndex].price = exist.repeated * priceofItem;
+      alert("you got ".concat(numberOfItems[objIndex].repeated - 1, " ").concat(nameOfItem, " in the list, Do you want to 1 more"));
+    } else {
+      var idItemObject = {
+        id: itemNumber,
+        itemname: nameOfItem,
+        price: priceofItem,
+        originalprice: priceofItem,
+        repeated: 1
+      };
+      numberOfItems.push(idItemObject);
+    }
+
+    printResult();
+  }; //prins all selected item details like serial number, name,price and quantity values with total price on page in table form
+
+
+  function printResult() {
+    var sum = 0;
+    $("#resultItems").empty();
+
+    for (var i = 0; i < numberOfItems.length; i++) {
+      $("#resultItems").append("<tr>\n        <td>".concat(i + 1, "</td>\n        <td>").concat(numberOfItems[i].itemname, "</td>\n        <td>$").concat(numberOfItems[i].price, "</td>\n        <td>").concat(numberOfItems[i].repeated, "\n        <input type=\"button\" value=\"+\" class=\"plus\" name=\"").concat(numberOfItems[i].itemname, "$").concat(numberOfItems[i].price, "\" >\n           <input type=\"button\" value=\"-\" class=\"minus\"  name=\"").concat(numberOfItems[i].itemname, "$").concat(numberOfItems[i].price, "\" >\n        <button class=\"delete fa fa-trash-o\" value= \"").concat(numberOfItems[i].itemname, "$").concat(numberOfItems[i].price, "\">\n            </button></td></tr>"));
+      var priceOf = numberOfItems[i].price;
+      sum = +priceOf + sum;
+    }
+
+    $("#resultItems").append("<tr><th></th><th>Total price:</th><th>".concat(sum, "</th>"));
+  } //its called when user clciks on '+' button
+
+
+  $(document).on("click", ".plus", /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(e) {
+      var newitem, nameOfItem, priceofItem;
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              e.preventDefault();
+              newitem = e.target.name;
+              nameOfItem = newitem.split('$')[0];
+              priceofItem = newitem.split('$')[1];
+              selectedItems(nameOfItem, priceofItem);
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    return function (_x2) {
+      return _ref3.apply(this, arguments);
+    };
+  }()); //its called when user clciks on '-' button
+
+  $(document).on("click", ".minus", /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(e) {
+      var newitem, nameOfItem, priceofItem;
+      return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              e.preventDefault();
+              newitem = e.target.name;
+              nameOfItem = newitem.split('$')[0];
+              priceofItem = newitem.split('$')[1];
+              console.log(priceofItem);
+              console.log(numberOfItems);
+              removeItems(nameOfItem);
+
+            case 7:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }));
+
+    return function (_x3) {
+      return _ref4.apply(this, arguments);
+    };
+  }()); //its called when user clciks on 'delete icon/trash' icon
+
+  $(document).on("click", ".delete", /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(e) {
+      var newitem, nameOfItem;
+      return regeneratorRuntime.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              e.preventDefault();
+              newitem = e.target.value;
+              nameOfItem = newitem.split('$')[0];
+              deleteSelectedItem(nameOfItem);
+
+            case 4:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    }));
+
+    return function (_x4) {
+      return _ref5.apply(this, arguments);
+    };
+  }()); // when user clciks on '-' it decreases price and quantity and display results back to the user
+
+  var removeItems = function removeItems(nameOfItem) {
+    var exist = numberOfItems.find(function (_ref6) {
+      var itemname = _ref6.itemname;
+      return itemname === nameOfItem;
+    });
+
+    if (exist && exist.repeated > 1) {
+      var objIndex = numberOfItems.findIndex(function (exist) {
+        return exist.itemname == nameOfItem;
+      });
+      numberOfItems[objIndex].repeated = exist.repeated - 1;
+      numberOfItems[objIndex].price = exist.price - exist.originalprice;
+      alert("you have only ".concat(numberOfItems[objIndex].repeated, " ").concat(nameOfItem, " in the list"));
+      printResult();
+    } else if (exist.repeated = 1) {
+      deleteSelectedItem(nameOfItem);
+    }
+  }; // when user clciks on delete icon it delets that item from the table
+
+
+  var deleteSelectedItem = function deleteSelectedItem(nameOfItem) {
+    var exist = numberOfItems.find(function (_ref7) {
+      var itemname = _ref7.itemname;
+      return itemname === nameOfItem;
+    });
+    var objIndex = numberOfItems.findIndex(function (exist) {
+      return exist.itemname == nameOfItem;
+    });
+    numberOfItems.splice(objIndex, 1);
+    alert("".concat(nameOfItem, " is removed from the list"));
+    printResult();
+  };
+
+  return form;
+};
+
+var _default = mainForm;
+exports.default = _default;
+},{}],"src/user/loginUser.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -954,13 +1181,14 @@ exports.default = void 0;
 
 var _signupUser = _interopRequireDefault(require("./signupUser"));
 
+var _mainPageForm = _interopRequireDefault(require("../mainPageForm"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//import fruitForm from "../fruitForm";
 var form = "\n  <form id=\"login-user\">\n  <h1>Login</h1>\n  <h6>Please login to continue</h6>\n    <div class=\"form-group\">\n      <label for=\"Email\">Email</label>\n      <input type=\"text\" class=\"form-control\" placeholder=\"Please enter your email\" name=\"email\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"password\">Password</label>\n      <input type=\"password\" class=\"form-control\" placeholder=\"Please enter password\" name=\"password\">\n    </div>\n    <button type=\"submit\" class=\"btn btn-primary\">Login</button>\n  </form>\n  <button id=\"register-new-user\" class=\"btn btn-primary\">Create account to Login </button>\n";
 
 var loginUser = function loginUser() {
@@ -976,8 +1204,7 @@ var loginUser = function loginUser() {
               formData = {
                 email: $("input[name='email']").val(),
                 password: $("input[name='password']").val()
-              }; // Make a call to validate user name and password
-
+              };
               _context.prev = 2;
               _context.next = 5;
               return $.ajax({
@@ -989,10 +1216,9 @@ var loginUser = function loginUser() {
 
             case 5:
               response = _context.sent;
-              console.log(response); // Clear current login form as login is successful by calling empty() function
-
-              $("body").empty(); // Append the fruit form to the body allowing the user to create/update/delete fruits
-              //$("body").append(fruitForm());
+              console.log(response);
+              $("body").empty(); //how to get data of user selected items of main page to here details here:
+              //$("body").append(mainForm());
 
               _context.next = 13;
               break;
@@ -1000,7 +1226,6 @@ var loginUser = function loginUser() {
             case 10:
               _context.prev = 10;
               _context.t0 = _context["catch"](2);
-              // If there's a problem logging in, then add a message to let user know that an invalid combination was provided
               $("body").append("<div>Invalid email/pass provided!</div>");
 
             case 13:
@@ -1016,18 +1241,15 @@ var loginUser = function loginUser() {
     };
   }());
   return form;
-}; // Add event listener for Register new user button being clicked
-
+};
 
 $(document).on("click", "#register-new-user", function () {
-  // Clear current login form
-  $("body").empty(); // Append new user form instead
-
+  $("body").empty();
   $("body").append((0, _signupUser.default)());
 });
 var _default = loginUser;
 exports.default = _default;
-},{"./signupUser":"src/user/signupUser.js"}],"src/admin/addItems.js":[function(require,module,exports) {
+},{"./signupUser":"src/user/signupUser.js","../mainPageForm":"src/mainPageForm.js"}],"src/admin/addItems.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1371,8 +1593,7 @@ var adminUser = function adminUser() {
               formData = {
                 username: $("input[name='username']").val(),
                 password: $("input[name='password']").val()
-              }; // Make a call to validate user name and password
-
+              };
               _context.prev = 2;
               _context.next = 5;
               return $.ajax({
@@ -1384,11 +1605,8 @@ var adminUser = function adminUser() {
 
             case 5:
               response = _context.sent;
-              console.log(response); // Clear current login form as login is successful by calling empty() function
-
-              $("body").empty(); // Append the fruit form to the body allowing the user to create/update/delete fruits
-              //$("body").append(fruitForm());
-
+              console.log(response);
+              $("body").empty();
               $("body").append((0, _operationAdmin.default)());
               _context.next = 14;
               break;
@@ -1396,7 +1614,6 @@ var adminUser = function adminUser() {
             case 11:
               _context.prev = 11;
               _context.t0 = _context["catch"](2);
-              // If there's a problem logging in, then add a message to let user know that an invalid combination was provided
               $("body").append("<div>Invalid email/pass provided!</div>");
 
             case 14:
@@ -1412,208 +1629,11 @@ var adminUser = function adminUser() {
     };
   }());
   return form;
-}; // // Add event listener for Register new user button being clicked
-// $(document).on("click", "#login", () => {
-//   // Clear current login form
-//   $("body").empty();
-//   // Append new user form instead
-// });
-
+};
 
 var _default = adminUser;
 exports.default = _default;
-},{"./operationAdmin":"src/admin/operationAdmin.js"}],"src/mainPageForm.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-var form = "\n<form id=\"form-Main\">\n<table id=\"itemsTable\">\n<thead>\n<tr>\n    <th>ItemNo.</th>\n    <th>Name</th>\n    <th>Price</th>\n    <th>Quantity</th>\n</tr>\n</thead>\n<tbody id=\"resultItems\">\n</tbody>\n</table>\n\n<div id=\"groceryList\">\n</div>\n\n<footer>\n<p>Please call 123445 for enquiries</p>\n</footer>\n\n</form>\n";
-
-var mainForm = function mainForm() {
-  var products = {};
-  var numberOfItems = [];
-  var itemNumber = 0; //passing data from mongodb collections to html page
-
-  $.ajax({
-    type: "GET",
-    url: "/api/groceryItems/category/all"
-  }).then(function (groceyItemCategories) {
-    groceyItemCategories.forEach(function (itemEl) {
-      $("#groceryList").append("<h2>".concat(itemEl.name, "</h2>"));
-      $("#groceryList").append("<ol id=".concat(itemEl.name, "></ol>"));
-      $.ajax({
-        type: "GET",
-        url: "/api/groceryItems/category/".concat(itemEl._id)
-      }).then(function (categoryItems) {
-        products["".concat(itemEl.name)] = categoryItems;
-        categoryItems.forEach(function (element) {
-          $("#".concat(itemEl.name)).append("<li><input class=\"itemNames\" type=\"button\" name=\"".concat(element.itemname, "\" value=\"").concat(element.itemname, " $").concat(element.price, "\"> </li>"));
-        });
-      });
-    });
-  }); //when user clicks on each item it prints those items on the page in form of table
-
-  $(document).on("click", ".itemNames", /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(e) {
-      var nameOfItem;
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              e.preventDefault();
-              nameOfItem = e.target.name;
-              console.log("Inside item click", nameOfItem);
-              itemClickedValues(nameOfItem);
-
-            case 4:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-
-    return function (_x) {
-      return _ref.apply(this, arguments);
-    };
-  }()); // pushing items clicked values into array of object(numberofItems) and increase quantity and price
-
-  var itemClickedValues = function itemClickedValues(nameOfItem) {
-    //console.log("products:",products);
-    for (var i = 0; i < Object.keys(products).length; i++) {
-      var valueOfKey = products[Object.keys(products)[i]];
-      var result = valueOfKey.find(function (_ref2) {
-        var itemname = _ref2.itemname;
-        return itemname === nameOfItem;
-      });
-
-      if (result) {
-        itemNumber++;
-        var exist = numberOfItems.find(function (_ref3) {
-          var itemname = _ref3.itemname;
-          return itemname === nameOfItem;
-        });
-
-        if (exist) {
-          console.log("its here in exist:", exist);
-          console.log(numberOfItems);
-
-          var _objIndex = numberOfItems.findIndex(function (exist) {
-            return exist.itemname == nameOfItem;
-          });
-
-          numberOfItems[_objIndex].repeated = exist.repeated + 1;
-          numberOfItems[_objIndex].price = exist.repeated * result.price;
-          alert("you got ".concat(numberOfItems[_objIndex].repeated - 1, " ").concat(nameOfItem, " in the list, Do you want to 1 more"));
-        } else {
-          //const itemIdNumber = result.id;
-          var itemPrice = result.price;
-          var idItemObject = {
-            id: itemNumber,
-            itemname: nameOfItem,
-            price: itemPrice,
-            repeated: 1
-          };
-          numberOfItems.push(idItemObject);
-        }
-      }
-    }
-
-    printResult();
-  }; //printing values with total price on to the table 
-
-
-  function printResult() {
-    var sum = 0;
-    $("#resultItems").empty();
-
-    for (var i = 0; i < numberOfItems.length; i++) {
-      $("#resultItems").append("<tr>\n        <td>".concat(i + 1, "</td>\n        <td>").concat(numberOfItems[i].itemname, "</td>\n        <td>$").concat(numberOfItems[i].price, "</td>\n        <td>").concat(numberOfItems[i].repeated, "\n        <input type=\"button\" value=\"+\" class=\"plus\" onclick=\"plusFunction(this)\">\n           <input type=\"button\" value=\"-\" class=\"minus\" onclick=\"minusFunction(this)\">\n        <button onclick=\"deleteFunction(this)\">\n           <i class=\"fa fa-trash-o\"></i></button></td></tr>"));
-      var priceOf = numberOfItems[i].price;
-      sum = +priceOf + sum;
-    }
-
-    $("#resultItems").append("<tr><th></th><th>Total price:</th><th>".concat(sum, "</th>"));
-  }
-
-  var deleteSelectedItem = function deleteSelectedItem(nameOfItem) {
-    var exist = numberOfItems.find(function (_ref4) {
-      var itemname = _ref4.itemname;
-      return itemname === nameOfItem;
-    });
-    objIndex = numberOfItems.findIndex(function (exist) {
-      return exist.itemname == nameOfItem;
-    });
-    numberOfItems.splice(objIndex, 1);
-    alert("".concat(nameOfItem, " is removed from the list"));
-    printResult();
-  };
-
-  var itemRemovedValues = function itemRemovedValues(nameOfItem) {
-    for (var i = 0; i < Object.keys(products).length; i++) {
-      var valueOfKey = products[Object.keys(products)[i]];
-      var result = valueOfKey.find(function (_ref5) {
-        var itemname = _ref5.itemname;
-        return itemname === nameOfItem;
-      });
-
-      if (result) {
-        var exist = numberOfItems.find(function (_ref6) {
-          var itemname = _ref6.itemname;
-          return itemname === nameOfItem;
-        });
-
-        if (exist && exist.repeated > 1) {
-          objIndex = numberOfItems.findIndex(function (exist) {
-            return exist.itemname == nameOfItem;
-          });
-          numberOfItems[objIndex].repeated = exist.repeated - 1;
-          numberOfItems[objIndex].price = exist.price - result.price;
-          alert("you have only ".concat(numberOfItems[objIndex].repeated, " ").concat(nameOfItem, " in the list"));
-        } else if (exist.repeated = 1) {
-          deleteSelectedItem(nameOfItem);
-        }
-
-        printResult();
-      }
-    }
-  }; //deleting a row if user clicks on delete symbol
-
-
-  function deleteFunction(r) {
-    var row = r.parentNode.parentNode.rowIndex;
-    var cellItemName = document.getElementById("itemsTable").rows[row].cells[1].innerText;
-    deleteSelectedItem(cellItemName);
-  } //incrementing previous quantity value by 1 user clicks on + button and price as well
-
-
-  function plusFunction(r) {
-    console.log("here");
-    var row = r.parentNode.parentNode.rowIndex;
-    var cellItemName = document.getElementById("itemsTable").rows[row].cells[1].innerText;
-    itemClickedValues(cellItemName);
-  } //decreasing previous quantity value by 1 if user clciks '-' button and minus price from it
-
-
-  function minusFunction(r) {
-    var row = r.parentNode.parentNode.rowIndex;
-    var cellItemName = document.getElementById("itemsTable").rows[row].cells[1].innerText;
-    itemRemovedValues(cellItemName);
-  }
-
-  return form;
-};
-
-var _default = mainForm;
-exports.default = _default;
-},{}],"src/app.js":[function(require,module,exports) {
+},{"./operationAdmin":"src/admin/operationAdmin.js"}],"src/app.js":[function(require,module,exports) {
 "use strict";
 
 require("regenerator-runtime/runtime");
@@ -1637,48 +1657,7 @@ $("#finish").on("click", function () {
 $("#myHref").on('click', function () {
   $("body").empty();
   $("body").append((0, _adminLogin.default)());
-}); // const fruitsObject = [
-//     { id: 0, Name: "Apple", Price: 5, Quantity: 0, Imag: "./images/apple.jpeg" },
-//     { id: 1, Name: "Banana", Price: 3, Quantity: 0, Imag: "./images/banana.png" },
-//     { id: 2, Name: "Grapes", Price: 9, Quantity: 0, Imag: "./images/grape.png" },
-//     { id: 3, Name: "Pear", Price: 5, Quantity: 0, Imag: "./images/pear.png" },
-//     { id: 4, Name: "Mango", Price: 3, Quantity: 0, Imag: "./images/mango.jpeg" },
-// ];
-// const vegetablesObject = [
-//     { id: 0, Name: "Carrot", Price: 2, Quantity: 0, Imag: "./images/carrot.jpeg" },
-//     { id: 1, Name: "Capsicum", Price: 7, Quantity: 0, Imag: "./images/Capsicum.jpeg" },
-//     { id: 2, Name: "Cucumber", Price: 2, Quantity: 0, Imag: "./images/cucumber.jpeg" },
-//     { id: 3, Name: "Spinach", Price: 7, Quantity: 0, Imag: "./images/spinach.jpeg" },
-//     { id: 4, Name: "Potato", Price: 4, Quantity: 0, Imag: "./images/potato.jpeg" },
-// ];
-// const dairyObject = [
-//     { id: 0, Name: "Butter", Price: 5, Quantity: 0, Imag: "./images/butter.jpeg" },
-//     { id: 1, Name: "Cheese", Price: 10, Quantity: 0, Imag: "./images/cheese.png" },
-//     { id: 2, Name: "Milk", Price: 3, Quantity: 0, Imag: "./images/milk.png" },
-//     { id: 3, Name: "Eggs", Price: 7, Quantity: 0, Imag: "./images/eggs.jpeg" },
-//     { id: 4, Name: "Yogurt", Price: 6, Quantity: 0, Imag: "./images/yogurt.jpeg" },
-// ];
-// const grainsObject = [
-//     { id: 0, Name: "Bread", Price: 4, Quantity: 0, Imag: "./images/bread.jpeg" },
-//     { id: 1, Name: "Barley", Price: 12, Quantity: 0, Imag: "./images/barley.png" },
-//     { id: 2, Name: "Rice", Price: 12, Quantity: 0, Imag: "./images/rice.jpeg" },
-//     { id: 3, Name: "Oats", Price: 6, Quantity: 0, Imag: "./images/oats.jpeg" },
-//     { id: 4, Name: "Pasta", Price: 4, Quantity: 0, Imag: "./images/pasta.jpeg" },
-// ];
-// const meatObject = [
-//     { id: 0, Name: "Chicken", Price: 6, Quantity: 0, Imag: "./images/chicken.jpeg" },
-//     { id: 1, Name: "Fish", Price: 19, Quantity: 0, Imag: "./images/fish.png" },
-//     { id: 2, Name: "Goat", Price: 22, Quantity: 0, Imag: "./images/goat.jpeg" },
-//     { id: 3, Name: "Lamb", Price: 21, Quantity: 0, Imag: "./images/lamb.png" },
-//     { id: 4, Name: "Prawns", Price: 15, Quantity: 0, Imag: "./images/prawn.jpeg" },
-// ];
-// const products = {
-//     Fruits: fruitsObject,
-//     Vegetables: vegetablesObject,
-//     Dairy: dairyObject,
-//     Grains: grainsObject,
-//     Meat: meatObject,
-// };
+});
 },{"regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js","./user/loginUser":"src/user/loginUser.js","./admin/adminLogin":"src/admin/adminLogin.js","./mainPageForm":"src/mainPageForm.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -1707,7 +1686,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63354" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49524" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
