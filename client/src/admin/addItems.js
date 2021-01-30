@@ -88,6 +88,11 @@ const newItem = () => {
     console.log(
       `This is the response I get back!: ${response}`
     );
+    window.alert("Fruit Added!");
+    $("#itemname").val("");
+    $("#price").val("");
+    $("#noofitems").val("");
+    
   });
   return form;
 };

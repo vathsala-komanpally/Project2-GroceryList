@@ -1,8 +1,8 @@
 import operationsOfAdmin from "./operationAdmin";
 const form = `
   <form id="admin-Login">
-  <h1>Login</h1>
-  <h6>Dear admin please login here to update grocery items</h6>
+  <h1>Admin Login</h1>
+  <h6>please login here to update grocery items</h6>
     <div class="form-group">
       <label for="username">User Name</label>
       <input type="text" class="form-control" placeholder="Please enter user name" name="username">

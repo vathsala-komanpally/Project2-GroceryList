@@ -6,6 +6,7 @@ import mainForm from "./mainPageForm";
 
 const appForm = `
 <form id="form-App">
+<div id ="container">
 <header>
 <h1>Welcome! to Lucky's Grocery Market</h1>
 <button id="finish" type="submit">Click here to Buy</button>
@@ -16,6 +17,8 @@ const appForm = `
 <label>For admins only</label>
 <a href="#" id="myHref">Click here</a>
 <label>to update Grocery Items</label>
+</div>
+
 </div>
 </form>
 `;

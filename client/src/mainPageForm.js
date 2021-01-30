@@ -1,6 +1,8 @@
 
 const form = `
 <form id="form-Main">
+<div id="container">
+
 <table id="itemsTable">
 <thead>
 <tr>
@@ -20,7 +22,7 @@ const form = `
 <footer>
 <p>Please call 123445 for enquiries</p>
 </footer>
-
+</div>
 </form>
 `;
 
@@ -37,7 +39,7 @@ const mainForm = () => {
         url: "/api/groceryItems/category/all",
     }).then((groceyItemCategories) => {
         groceyItemCategories.forEach((itemEl) => {
-            $("#groceryList").append(`<h2>${itemEl.name}</h2>`);
+           $("#groceryList").append(`<h2>${itemEl.name}</h2>`);
             $("#groceryList").append(`<ol id=${itemEl.name}></ol>`);
             $.ajax({
                 type: "GET",

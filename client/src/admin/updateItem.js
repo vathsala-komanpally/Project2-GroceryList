@@ -67,13 +67,22 @@ const updateItem = () => {
       categoryId: $("#categories").val(),
     };
     console.log("requestBody", requestBody);
+    
+    
     const response = await $.ajax({
       type: "PATCH", // OR GET
       url: `/api/groceryItems/update-item/${$("#itemId").val()}`,
       contentType: "application/json",
       data: JSON.stringify(requestBody),
     });
-    window.alert("Fruit Updated!");
+  
+    window.alert(response);
+  
+    $("#itemId").val("");
+    $("#itemname").val("");
+    $("#price").val("");
+    $("#noofitems").val("");
+  
   });
   return form;
 };

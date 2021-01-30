@@ -47,7 +47,13 @@ router.post("/new-item", (request, response)=>{
 
 router.patch("/update-item/:id", (request, response)=>{
     groceryItemsModel.findByIdAndUpdate(request.params.id, request.body).then((data)=>{
-        response.send(data);
+       
+        if(data){
+            response.send("updated successfully");
+            
+        }else{
+            response.send("Please enter valid Id, seems like item id doesn't exist");
+        }
     }).catch(()=>{
         response.status(404).send("Item was not found!");
     });

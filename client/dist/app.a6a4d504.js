@@ -956,7 +956,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var form = "\n<form id=\"form-Main\">\n<table id=\"itemsTable\">\n<thead>\n<tr>\n    <th>ItemNo.</th>\n    <th>Name</th>\n    <th>Price</th>\n    <th>Quantity</th>\n</tr>\n</thead>\n<tbody id=\"resultItems\">\n</tbody>\n</table>\n\n<div id=\"groceryList\">\n</div>\n\n<footer>\n<p>Please call 123445 for enquiries</p>\n</footer>\n\n</form>\n";
+var form = "\n<form id=\"form-Main\">\n<div id=\"container\">\n\n<table id=\"itemsTable\">\n<thead>\n<tr>\n    <th>ItemNo.</th>\n    <th>Name</th>\n    <th>Price</th>\n    <th>Quantity</th>\n</tr>\n</thead>\n<tbody id=\"resultItems\">\n</tbody>\n</table>\n\n<div id=\"groceryList\">\n</div>\n\n<footer>\n<p>Please call 123445 for enquiries</p>\n</footer>\n</div>\n</form>\n";
 
 var mainForm = function mainForm() {
   // to store items selected by the user
@@ -1321,8 +1321,12 @@ var newItem = function newItem() {
               console.log("data:", response); // Logging response back to the console
 
               console.log("This is the response I get back!: ".concat(response));
+              window.alert("Fruit Added!");
+              $("#itemname").val("");
+              $("#price").val("");
+              $("#noofitems").val("");
 
-            case 14:
+            case 18:
             case "end":
               return _context.stop();
           }
@@ -1396,9 +1400,13 @@ var updateItem = function updateItem() {
 
             case 5:
               response = _context.sent;
-              window.alert("Fruit Updated!");
+              window.alert(response);
+              $("#itemId").val("");
+              $("#itemname").val("");
+              $("#price").val("");
+              $("#noofitems").val("");
 
-            case 7:
+            case 11:
             case "end":
               return _context.stop();
           }
@@ -1578,7 +1586,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var form = "\n  <form id=\"admin-Login\">\n  <h1>Login</h1>\n  <h6>Dear admin please login here to update grocery items</h6>\n    <div class=\"form-group\">\n      <label for=\"username\">User Name</label>\n      <input type=\"text\" class=\"form-control\" placeholder=\"Please enter user name\" name=\"username\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"password\">Password</label>\n      <input type=\"password\" class=\"form-control\" placeholder=\"Please enter password\" name=\"password\">\n    </div>\n    <button type=\"submit\" class=\"btn btn-primary\" id=\"login\">Login</button>\n  </form>\n";
+var form = "\n  <form id=\"admin-Login\">\n  <h1>Admin Login</h1>\n  <h6>please login here to update grocery items</h6>\n    <div class=\"form-group\">\n      <label for=\"username\">User Name</label>\n      <input type=\"text\" class=\"form-control\" placeholder=\"Please enter user name\" name=\"username\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"password\">Password</label>\n      <input type=\"password\" class=\"form-control\" placeholder=\"Please enter password\" name=\"password\">\n    </div>\n    <button type=\"submit\" class=\"btn btn-primary\" id=\"login\">Login</button>\n  </form>\n";
 
 var adminUser = function adminUser() {
   $(document).on("submit", "#admin-Login", /*#__PURE__*/function () {
@@ -1647,7 +1655,7 @@ var _mainPageForm = _interopRequireDefault(require("./mainPageForm"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 console.log("Javascript file is running");
-var appForm = "\n<form id=\"form-App\">\n<header>\n<h1>Welcome! to Lucky's Grocery Market</h1>\n<button id=\"finish\" type=\"submit\">Click here to Buy</button>\n<label>Please choose the items to shop from below list then:</label>\n<marquee behavior=\"scroll\" direction=\"left\">Please check our page for more updates on groceries</marquee>\n</header>\n<div id=\"admin\">\n<label>For admins only</label>\n<a href=\"#\" id=\"myHref\">Click here</a>\n<label>to update Grocery Items</label>\n</div>\n</form>\n";
+var appForm = "\n<form id=\"form-App\">\n<div id =\"container\">\n<header>\n<h1>Welcome! to Lucky's Grocery Market</h1>\n<button id=\"finish\" type=\"submit\">Click here to Buy</button>\n<label>Please choose the items to shop from below list then:</label>\n<marquee behavior=\"scroll\" direction=\"left\">Please check our page for more updates on groceries</marquee>\n</header>\n<div id=\"admin\">\n<label>For admins only</label>\n<a href=\"#\" id=\"myHref\">Click here</a>\n<label>to update Grocery Items</label>\n</div>\n\n</div>\n</form>\n";
 $("body").append(appForm);
 $("body").append(_mainPageForm.default);
 $("#finish").on("click", function () {
@@ -1686,7 +1694,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49524" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57878" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
