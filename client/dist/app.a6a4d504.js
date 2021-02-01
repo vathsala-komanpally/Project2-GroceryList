@@ -956,7 +956,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var form = "\n<form id=\"form-Main\">\n<div id=\"container\">\n\n<table id=\"itemsTable\">\n<thead>\n<tr>\n    <th>ItemNo.</th>\n    <th>Name</th>\n    <th>Price</th>\n    <th>Quantity</th>\n</tr>\n</thead>\n<tbody id=\"resultItems\">\n</tbody>\n</table>\n\n<div id=\"groceryList\">\n</div>\n\n<footer>\n<p>Please call 123445 for enquiries</p>\n</footer>\n</div>\n</form>\n";
+var form = "\n<form id=\"form-Main\">\n<div id=\"container\">\n\n<table id=\"itemsTable\">\n<thead>\n<tr>\n    <th>ItemNo.</th>\n    <th>Name</th>\n    <th>Price</th>\n    <th>Quantity</th>\n</tr>\n</thead>\n<tbody id=\"resultItems\">\n</tbody>\n</table>\n<div class=\"images\">\n<img src=\"https://www.bakingbusiness.com/ext/resources/2020/4/OnlineGroceryShopping_Lead.jpg?1586435720\">\n<img src=\"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVociO7PJK-EOOVz1f-se7zT6euNErCJTcXA&usqp=CAU\">\n\n<img src=\"https://blogs.vmware.com/velocloud/files/2018/03/Image_o-GROCERY-STORE-facebook.jpg\">\n<img src=\"https://q3p9g6n2.rocketcdn.me/wp-content/ml-loads/2016/08/grocery-groceries-commerce-online-ss-1920.jpg\">\n</div>\n<div id=\"groceryList\">\n</div>\n\n\n<div id=\"main\">\n</div>\n<footer>\n<p>Please call 123445 for enquiries</p>\n</footer>\n</div>\n</form>\n";
 
 var mainForm = function mainForm() {
   // to store items selected by the user
@@ -969,8 +969,10 @@ var mainForm = function mainForm() {
     url: "/api/groceryItems/category/all"
   }).then(function (groceyItemCategories) {
     groceyItemCategories.forEach(function (itemEl) {
-      $("#groceryList").append("<h2>".concat(itemEl.name, "</h2>"));
-      $("#groceryList").append("<ol id=".concat(itemEl.name, "></ol>"));
+      //$("#groceryList").append(`<h2>${itemEl.name}</h2>`);
+      $("#groceryList").append("<a href=\"#\">".concat(itemEl.name, "</a>")); //$("#groceryList").append(`<ol id=${itemEl.name}></ol>`);
+
+      $("#main").append("<ol id=".concat(itemEl.name, "></ol>"));
       $.ajax({
         type: "GET",
         url: "/api/groceryItems/category/".concat(itemEl._id)
@@ -1045,7 +1047,7 @@ var mainForm = function mainForm() {
     $("#resultItems").empty();
 
     for (var i = 0; i < numberOfItems.length; i++) {
-      $("#resultItems").append("<tr>\n        <td>".concat(i + 1, "</td>\n        <td>").concat(numberOfItems[i].itemname, "</td>\n        <td>$").concat(numberOfItems[i].price, "</td>\n        <td>").concat(numberOfItems[i].repeated, "\n        <input type=\"button\" value=\"+\" class=\"plus\" name=\"").concat(numberOfItems[i].itemname, "$").concat(numberOfItems[i].price, "\" >\n           <input type=\"button\" value=\"-\" class=\"minus\"  name=\"").concat(numberOfItems[i].itemname, "$").concat(numberOfItems[i].price, "\" >\n        <button class=\"delete fa fa-trash-o\" value= \"").concat(numberOfItems[i].itemname, "$").concat(numberOfItems[i].price, "\">\n            </button></td></tr>"));
+      $("#resultItems").append("<tr>\n        <td>".concat(i + 1, "</td>\n        <td>").concat(numberOfItems[i].itemname, "</td>\n        <td>$").concat(numberOfItems[i].price, "</td>\n        <td>").concat(numberOfItems[i].repeated, "\n        <input type=\"button\" value=\" + \" class=\"plus\" name=\"").concat(numberOfItems[i].itemname, "$").concat(numberOfItems[i].price, "\" >\n           <input type=\"button\" value=\" - \" class=\"minus\"  name=\"").concat(numberOfItems[i].itemname, "$").concat(numberOfItems[i].price, "\" >\n        <button class=\"delete fa fa-trash-o\" value= \"").concat(numberOfItems[i].itemname, "$").concat(numberOfItems[i].price, "\">\n            </button></td></tr>"));
       var priceOf = numberOfItems[i].price;
       sum = +priceOf + sum;
     }
@@ -1655,7 +1657,7 @@ var _mainPageForm = _interopRequireDefault(require("./mainPageForm"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 console.log("Javascript file is running");
-var appForm = "\n<form id=\"form-App\">\n<div id =\"container\">\n<header>\n<h1>Welcome! to Lucky's Grocery Market</h1>\n<button id=\"finish\" type=\"submit\">Click here to Buy</button>\n<label>Please choose the items to shop from below list then:</label>\n<marquee behavior=\"scroll\" direction=\"left\">Please check our page for more updates on groceries</marquee>\n</header>\n<div id=\"admin\">\n<label>For admins only</label>\n<a href=\"#\" id=\"myHref\">Click here</a>\n<label>to update Grocery Items</label>\n</div>\n\n</div>\n</form>\n";
+var appForm = "\n<form id=\"form-App\">\n<div id =\"container\">\n<header>\n<h1>Welcome! to Lucky's Grocery Market</h1>\n<button id=\"finish\" type=\"submit\">Click here to Buy</button>\n<label>Please choose the items to shop from below list then:</label>\n<marquee behavior=\"scroll\" direction=\"left\">Please check our page for more updates on groceries</marquee>\n</header>\n<div id=\"admin\">\n<label>For admins only</label>\n<a href=\"#\" id=\"myHref\">Click here</a>\n<label>to update Grocery Items</label>\n</div>\n<div class=topmenu>\n<a href=\"#home\">Home</a>\n<a href=\"#about\">About</a>\n<a href=\"#catalogue\">Catalogue</a>\n<a href=\"#recipes\">Recipes</a>\n<a href=\"#contactus\">Contact Us</a>\n<input type=\"text\" placeholder=\"Search..\">\n</div>\n</div>\n</form>\n";
 $("body").append(appForm);
 $("body").append(_mainPageForm.default);
 $("#finish").on("click", function () {
@@ -1694,7 +1696,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57878" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51044" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

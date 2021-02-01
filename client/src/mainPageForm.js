@@ -15,10 +15,19 @@ const form = `
 <tbody id="resultItems">
 </tbody>
 </table>
+<div class="images">
+<img src="https://www.bakingbusiness.com/ext/resources/2020/4/OnlineGroceryShopping_Lead.jpg?1586435720">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVociO7PJK-EOOVz1f-se7zT6euNErCJTcXA&usqp=CAU">
 
+<img src="https://blogs.vmware.com/velocloud/files/2018/03/Image_o-GROCERY-STORE-facebook.jpg">
+<img src="https://q3p9g6n2.rocketcdn.me/wp-content/ml-loads/2016/08/grocery-groceries-commerce-online-ss-1920.jpg">
+</div>
 <div id="groceryList">
 </div>
 
+
+<div id="main">
+</div>
 <footer>
 <p>Please call 123445 for enquiries</p>
 </footer>
@@ -39,8 +48,10 @@ const mainForm = () => {
         url: "/api/groceryItems/category/all",
     }).then((groceyItemCategories) => {
         groceyItemCategories.forEach((itemEl) => {
-           $("#groceryList").append(`<h2>${itemEl.name}</h2>`);
-            $("#groceryList").append(`<ol id=${itemEl.name}></ol>`);
+           //$("#groceryList").append(`<h2>${itemEl.name}</h2>`);
+           $("#groceryList").append(`<a href="#">${itemEl.name}</a>`);
+            //$("#groceryList").append(`<ol id=${itemEl.name}></ol>`);
+            $("#main").append(`<ol id=${itemEl.name}></ol>`);
             $.ajax({
                 type: "GET",
                 url: `/api/groceryItems/category/${itemEl._id}`,
@@ -91,8 +102,8 @@ const mainForm = () => {
         <td>${numberOfItems[i].itemname}</td>
         <td>$${numberOfItems[i].price}</td>
         <td>${numberOfItems[i].repeated}
-        <input type="button" value="+" class="plus" name="${numberOfItems[i].itemname}$${numberOfItems[i].price}" >
-           <input type="button" value="-" class="minus"  name="${numberOfItems[i].itemname}$${numberOfItems[i].price}" >
+        <input type="button" value=" + " class="plus" name="${numberOfItems[i].itemname}$${numberOfItems[i].price}" >
+           <input type="button" value=" - " class="minus"  name="${numberOfItems[i].itemname}$${numberOfItems[i].price}" >
         <button class="delete fa fa-trash-o" value= "${numberOfItems[i].itemname}$${numberOfItems[i].price}">
             </button></td></tr>`);
             const priceOf = numberOfItems[i].price;

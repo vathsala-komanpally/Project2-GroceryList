@@ -18,7 +18,14 @@ const appForm = `
 <a href="#" id="myHref">Click here</a>
 <label>to update Grocery Items</label>
 </div>
-
+<div class=topmenu>
+<a href="#home">Home</a>
+<a href="#about">About</a>
+<a href="#catalogue">Catalogue</a>
+<a href="#recipes">Recipes</a>
+<a href="#contactus">Contact Us</a>
+<input type="text" placeholder="Search..">
+</div>
 </div>
 </form>
 `;

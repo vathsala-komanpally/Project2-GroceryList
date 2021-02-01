@@ -1,16 +1,14 @@
 * {
   box-sizing: border-box;
-  margin:0;
 	padding:0;
 }
 
 #container{
   display: block;
 margin: 50px;
-padding: 0;
 border: 1px;
 color: #434747;
-font-size: 14px;
+
 font-family: 'Times New Roman', serif;
 }
 
@@ -24,6 +22,7 @@ header {
   background: linear-gradient(-90deg, #9dcccf, #c0cec4);
   padding: 30px 30px 30px;
   border-radius: 10px;
+  
 }
 
 /* Style the header text */
@@ -41,10 +40,74 @@ h1 {
   background-color: #812929;
 }
 
+#admin {
+  float: right;
+  background-color: rgb(115, 155, 138);
+  padding: 12px 16px; /* Some padding */
+  cursor: pointer; /* Mouse pointer on hover */
+  border-radius: 5px;
+  border: 2px solid rgb(122, 85, 116);
+}
 /* Style names of grocery categories*/
 h2 {
   border: 3px solid rgb(117, 111, 98);
   border-radius: 10px;
+}
+
+.images img{
+
+  width: 42%;
+	height: 50%;
+  padding: 5px 10px;
+  border-right: none;
+	border-radius: 20px 0px 0 20px;
+	padding: 5px 10px;
+	float: right;
+}
+
+/* The sidebar menu */
+#groceryList {
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 160px; /* Set the width of the sidebar */
+  top: 45%; /* Stay at the top */
+  background-color:  rgb(115, 155, 138);
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
+}
+
+
+.main {
+  margin-left: 160px; /* Same as the width of the sidenav */
+  font-size: 28px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+.topmenu{
+  overflow: hidden;
+  background-color: rgb(115, 155, 138);
+  top: auto;
+  width: auto;
+  border-radius: 5px;
+}
+.topmenu a, #groceryList a{
+  float: left;
+  display: block;
+  color: #3f3a3a;
+  text-align: center;
+  padding: 17px 16px;
+  text-decoration: none;
+}
+#groceryList a{
+  width: 90px; /* Set the width of the sidebar */
+}
+
+.topmenu a:hover, #groceryList a:hover {
+  background: #ddd;
+}
+
+.topmenu input[type=text] {
+  border: 1px solid #ccc;  
+  margin-top: 18px;
 }
 
 
@@ -116,15 +179,6 @@ footer {
 }
 
 
-#admin {
-  float: right;
-  background-color: rgb(115, 155, 138);
-  padding: 12px 16px; /* Some padding */
-  font-size: 16px; /* Set a font size */
-  cursor: pointer; /* Mouse pointer on hover */
-  border-radius: 5px;
-  border: 2px solid rgb(122, 85, 116);
-}
 
 #register-new-user {
   position: absolute;
