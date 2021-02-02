@@ -16,12 +16,23 @@ const form = `
 </tbody>
 </table>
 
-<div class="images">
-<img src="https://www.bakingbusiness.com/ext/resources/2020/4/OnlineGroceryShopping_Lead.jpg?1586435720">
-<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVociO7PJK-EOOVz1f-se7zT6euNErCJTcXA&usqp=CAU">
+<table id="selectedItemsTable">
+<thead>
+<tr>
+    <th>ItemNo.</th>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Quantity</th>
+</tr>
+</thead>
+<tbody id="resultItems">
+</tbody>
+</table>
 
-<img src="https://blogs.vmware.com/velocloud/files/2018/03/Image_o-GROCERY-STORE-facebook.jpg">
-<img src="https://q3p9g6n2.rocketcdn.me/wp-content/ml-loads/2016/08/grocery-groceries-commerce-online-ss-1920.jpg">
+<div class="images">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVociO7PJK-EOOVz1f-se7zT6euNErCJTcXA&usqp=CAU">
+<img src="https://www.bakingbusiness.com/ext/resources/2020/4/OnlineGroceryShopping_Lead.jpg?1586435720">
+
 </div>
 <div id="groceryList">
 </div>
@@ -38,9 +49,9 @@ const form = `
 const mainForm = () => {
     // to store items selected by the user
     let numberOfItems = [];
-
     // number of items selected by the user
     let itemNumber = 0;
+    let quantity = 0;
 
     //getting all categry names from mongodb collections then dispalying that on page in the form fixed side bar
     $.ajax({
@@ -56,31 +67,39 @@ const mainForm = () => {
         e.preventDefault();
         const categoryId = e.target.name;
         const categoryName = e.target.text;
+        $("#resultItems").empty();
+        $("#resultItems").show();
+        $("#selectedItemsTable").hide();
         selectedCategory(categoryId, categoryName);
     });
 
     const selectedCategory = (categoryId, categoryName) => {
         $(".main ol").empty();
         $(".images").remove();
-        $(".main").append(`<ol id=${categoryName}></ol>`);
+
+        // number of items selected by the user
+        let itemNumber = 0;
+
+        //$(".main").append(`<ol id=${categoryName}></ol>`);
         $.ajax({
             type: "GET",
             url: `/api/groceryItems/category/${categoryId}`,
         }).then((categoryItems) => {
             categoryItems.forEach((element) => {
-                $(`#${categoryName}`).append(`<li><input class="itemNames" type="button" name="${element.itemname}" value="${element.itemname} $${element.price}"> </li>`);
+                itemNumber = itemNumber + 1;
+                //$(`#${categoryName}`).append(`<li><input class="itemNames" type="button" name="${element.itemname}" value="${element.itemname} $${element.price}"> </li>`);
+                $("#resultItems").append(`<tr>
+                <td>${itemNumber}</td>
+                <td>${element.itemname}</td>
+                <td>$${element.price}</td>
+                <td>${quantity}
+                <input type="button" value=" + " class="plus" name="${element.itemname}$${element.price}" >
+                   <input type="button" value=" - " class="minus"  name="${element.itemname}$${element.price}" >
+                <button class="delete fa fa-trash-o" value= "${element.itemname}$${element.price}">
+                    </button></td></tr>`);
             });
         });
     }
-
-    //when user clicks/selects an item it gets name and price of that item
-    $(document).on("click", ".itemNames", async (e) => {
-        e.preventDefault();
-        const nameOfItem = e.target.name;
-        const priceofItems = e.target.value;
-        const priceofItem = priceofItems.split('$')[1];
-        selectedItems(nameOfItem, priceofItem);
-    });
 
     //it checks user slected item for 1st time or not then increases quantity and price based on that
     const selectedItems = (nameOfItem, priceofItem) => {
@@ -100,12 +119,14 @@ const mainForm = () => {
         printResult();
     }
 
+//add this table data to the cart    
     //prins all selected item details like serial number, name,price and quantity values with total price on page in table form
     function printResult() {
         let sum = 0;
-        $("#resultItems").empty();
+        $("#selectedItemsTable").empty();
+        $("#selectedItemsTable").show();
         for (let i = 0; i < numberOfItems.length; i++) {
-            $("#resultItems").append(`<tr>
+            $("#selectedItemsTable").append(`<tr>
         <td>${i + 1}</td>
         <td>${numberOfItems[i].itemname}</td>
         <td>$${numberOfItems[i].price}</td>
@@ -117,7 +138,7 @@ const mainForm = () => {
             const priceOf = numberOfItems[i].price;
             sum = +priceOf + sum;
         }
-        $("#resultItems").append(`<tr><th></th><th>Total price:</th><th>${sum}</th>`);
+        $("#selectedItemsTable").append(`<tr><th></th><th>Total price:</th><th>${sum}</th>`);
     }
 
     //its called when user clciks on '+' button

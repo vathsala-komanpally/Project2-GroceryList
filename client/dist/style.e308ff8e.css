@@ -3,18 +3,6 @@
   padding: 0;
 }
 
-#container {
-  display: block;
-  margin: 50px;
-  border: 1px;
-  color: #434747;
-  font-family: "Times New Roman", serif;
-}
-
-.smallBlock {
-  border: 5px solid #c0c0c0;
-}
-
 /* Style the header */
 header {
   background: linear-gradient(-90deg, #9dcccf, #c0cec4);
@@ -30,7 +18,6 @@ h1 {
 
 /* Style the button checkout */
 #finish {
-  float: right;
   width: 150px;
   height: 40px;
   color: white;
@@ -52,22 +39,21 @@ h2 {
 }
 
 .images img {
-  width: 40%;
-  height: 25%;
+  width: 45%;
+  height: 60%;
   padding: 5px 10px;
-  border-right: none;
-  border-radius: 20px 0px 0 20px;
   float: right;
 }
 
 /* The sidebar menu */
 #groceryList {
-  height: 50%; /* Full-height: remove this if you want "auto" height */
+  height: 100%; /* Full-height: remove this if you want "auto" height */
   width: 140px; /* Set the width of the sidebar */
-  top: 45%; /* Stay at the top */
+  top: auto; /* Stay at the top */
   background-color: rgb(115, 155, 138);
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 20px;
+  position: fixed;
 }
 
 
@@ -111,7 +97,6 @@ h2 {
   margin-left: 160px; /* Same as the width of the sidenav */
 }
 
-
 @media screen and (max-height: 450px) {
   #groceryList  {padding-top: 15px;}
   #groceryList a {font-size: 18px;}
@@ -120,7 +105,7 @@ h2 {
 li {
   display: inline-block;
   padding: 5px 3px;
-  padding-left:60px;
+  padding-left:16px;
 }
 /* Style buttons (name of items) in the ol */
 .itemNames {
@@ -129,7 +114,7 @@ li {
   cursor: pointer; /* Mouse pointer on hover */
   border-radius: 5px;
   border: 3px solid rgb(107, 87, 44);
-  width: 100px;
+  width: 150px;
   height: 100px;
 }
 
@@ -137,7 +122,8 @@ li {
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
-  width: 70%;
+  width: 80%;
+  float: right;
 }
 
 td,
@@ -155,7 +141,10 @@ tr:nth-child(even) {
 /* Style the footer */
 footer {
   background-color: rgb(115, 155, 138);
-  padding: 10px;
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:60px;   /* Height of the footer */
   text-align: center;
   color: white;
 }

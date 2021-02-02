@@ -9,8 +9,9 @@ const appForm = `
 <div id ="container">
 <header>
 <h1>Welcome! to Lucky's Grocery Market</h1>
-<button id="finish" type="submit">Click here to Buy</button>
 <label>Please choose the items to shop from below list then:</label>
+<button id="finish" type="submit">Click here to Buy</button>
+
 <marquee behavior="scroll" direction="left">Please check our page for more updates on groceries</marquee>
 </header>
 <div id="admin">
@@ -25,6 +26,7 @@ const appForm = `
 <a href="#recipes">Recipes</a>
 <a href="#contactus">Contact Us</a>
 <input type="text" placeholder="Search..">
+<a href="Cart1.aspx" class="icon-shopping-cart" style="font-size: 25px"><asp:Label ID="lblCartCount" runat="server" CssClass="badge badge-warning"  ForeColor="White"/></a>
 </div>
 </div>
 </form>
