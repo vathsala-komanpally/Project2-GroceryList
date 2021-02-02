@@ -2,14 +2,16 @@
 const form = `
 <form id="form-Update">
 <h1>Update items</h1>
-<div class="form-group">
-    <label for="itemId">Item Id </label>
-    <input type="text" class="form-control" id="itemId" placeholder="Enter item Id" name="itemId">
-  </div>
-  <div class = "form-group">
-     <label for="itemname">Name of item</label>
-     <input type="text" class="form-control" id="itemname" placeholder="Enter a name of the item to add" name="itemname">
-  </div>
+<div class = "form-group">
+<label for="categoryId">Choose a category:</label>
+     <select class="categoryname" name="categoryId" id="categories">
+      </select>
+</div>
+<div class = "form-group">
+<label for="itemsForCategory">Choose an item:</label>
+     <select class="categoryitemname" name="categoryItemName" id="categoryItems">
+      </select>
+</div>
    <div class = "form-group">
      <label for="price">Price</label>
      <input type="text" class="form-control" id="price" placeholder="Enter a price of item" name="price">
@@ -29,11 +31,6 @@ const form = `
       <label class="form-check-label" for="readyToEatNo">No</label>
     </div>
   </fieldset>
-  <div class = "form-group">
-  <label for="categoryId">Choose a category:</label>
-       <select name="categoryId" id="categories">
-        </select>
-  </div>
   <button type="submit" class="btn btn-primary">Update Item</button>
   </form>
 `;
@@ -45,44 +42,61 @@ const updateItem = () => {
     type: "GET",
     url: "/api/groceryItems/category/all",
   }).then((groceyItemCategories) => {
-    console.log("groceyItemCategories", groceyItemCategories);
     let optionsHtml = "";
     groceyItemCategories.forEach((itemEl) => {
-      console.log("itemEl", itemEl);
       optionsHtml = optionsHtml + `<option value=${itemEl._id}>${itemEl.name}</option>`;
-      console.log("optionsHtml", optionsHtml);
     });
-    console.log("optionsHtml", optionsHtml);
     $("#categories").append(optionsHtml);
   });
 
+  // user choosen category items in that list
+  $(document).on("change", ".categoryname", async (e) => {
+    e.preventDefault();
+    console.log("inside here");
+    const categoryId = e.target.value;
+    itemsOfCategory(categoryId);
+  });
+
+  const itemsOfCategory = (categoryId) => {
+    $("#categoryItems").empty();
+    $.ajax({
+      type: "GET",
+      url: `/api/groceryItems/category/${categoryId}`,
+    }).then((Items) => {
+      let optionsHtml = "";
+      Items.forEach((itemEl) => {
+        optionsHtml = optionsHtml + `<option value=${itemEl.itemname}_${itemEl._id}>${itemEl.itemname}</option>`;
+      });
+      $("#categoryItems").append(optionsHtml);
+    });
+  }
+
   $(document).on('submit', "form#form-Update", async (e) => {
     e.preventDefault();
-
+    let item = $("#categoryItems").val();
+    const nameofItem = item.split('_')[0];
+    const idofItem = item.split('_')[1];
     const requestBody = {
-      itemname: $("#itemname").val(),
+      itemname: nameofItem,
       price: $("#price").val(),
       noOfItems: $("#noofitems").val(),
       readyToEat: $(`input[name="readyToEat"]:checked`).val(),
       categoryId: $("#categories").val(),
     };
-    console.log("requestBody", requestBody);
-    
-    
+
+    console.log(requestBody);
     const response = await $.ajax({
       type: "PATCH", // OR GET
-      url: `/api/groceryItems/update-item/${$("#itemId").val()}`,
+      url: `/api/groceryItems/update-item/${idofItem}`,
       contentType: "application/json",
       data: JSON.stringify(requestBody),
     });
-  
+
     window.alert(response);
-  
-    $("#itemId").val("");
+
     $("#itemname").val("");
     $("#price").val("");
     $("#noofitems").val("");
-  
   });
   return form;
 };

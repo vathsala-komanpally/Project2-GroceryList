@@ -956,49 +956,35 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var form = "\n<form id=\"form-Main\">\n<div id=\"container\">\n\n<table id=\"itemsTable\">\n<thead>\n<tr>\n    <th>ItemNo.</th>\n    <th>Name</th>\n    <th>Price</th>\n    <th>Quantity</th>\n</tr>\n</thead>\n<tbody id=\"resultItems\">\n</tbody>\n</table>\n<div class=\"images\">\n<img src=\"https://www.bakingbusiness.com/ext/resources/2020/4/OnlineGroceryShopping_Lead.jpg?1586435720\">\n<img src=\"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVociO7PJK-EOOVz1f-se7zT6euNErCJTcXA&usqp=CAU\">\n\n<img src=\"https://blogs.vmware.com/velocloud/files/2018/03/Image_o-GROCERY-STORE-facebook.jpg\">\n<img src=\"https://q3p9g6n2.rocketcdn.me/wp-content/ml-loads/2016/08/grocery-groceries-commerce-online-ss-1920.jpg\">\n</div>\n<div id=\"groceryList\">\n</div>\n\n\n<div id=\"main\">\n</div>\n<footer>\n<p>Please call 123445 for enquiries</p>\n</footer>\n</div>\n</form>\n";
+var form = "\n<form id=\"form-Main\">\n<div id=\"container\">\n\n<table id=\"itemsTable\">\n<thead>\n<tr>\n    <th>ItemNo.</th>\n    <th>Name</th>\n    <th>Price</th>\n    <th>Quantity</th>\n</tr>\n</thead>\n<tbody id=\"resultItems\">\n</tbody>\n</table>\n\n<div class=\"images\">\n<img src=\"https://www.bakingbusiness.com/ext/resources/2020/4/OnlineGroceryShopping_Lead.jpg?1586435720\">\n<img src=\"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVociO7PJK-EOOVz1f-se7zT6euNErCJTcXA&usqp=CAU\">\n\n<img src=\"https://blogs.vmware.com/velocloud/files/2018/03/Image_o-GROCERY-STORE-facebook.jpg\">\n<img src=\"https://q3p9g6n2.rocketcdn.me/wp-content/ml-loads/2016/08/grocery-groceries-commerce-online-ss-1920.jpg\">\n</div>\n<div id=\"groceryList\">\n</div>\n\n<div class=\"main\">\n</div>\n<footer>\n<p>Please call 123445 for enquiries</p>\n</footer>\n</div>\n</form>\n";
 
 var mainForm = function mainForm() {
   // to store items selected by the user
   var numberOfItems = []; // number of items selected by the user
 
-  var itemNumber = 0; //getting data from mongodb collections then dispalying that on page
+  var itemNumber = 0; //getting all categry names from mongodb collections then dispalying that on page in the form fixed side bar
 
   $.ajax({
     type: "GET",
     url: "/api/groceryItems/category/all"
   }).then(function (groceyItemCategories) {
     groceyItemCategories.forEach(function (itemEl) {
-      //$("#groceryList").append(`<h2>${itemEl.name}</h2>`);
-      $("#groceryList").append("<a href=\"#\">".concat(itemEl.name, "</a>")); //$("#groceryList").append(`<ol id=${itemEl.name}></ol>`);
-
-      $("#main").append("<ol id=".concat(itemEl.name, "></ol>"));
-      $.ajax({
-        type: "GET",
-        url: "/api/groceryItems/category/".concat(itemEl._id)
-      }).then(function (categoryItems) {
-        // products[`${itemEl.name}`] = categoryItems;
-        categoryItems.forEach(function (element) {
-          $("#".concat(itemEl.name)).append("<li><input class=\"itemNames\" type=\"button\" name=\"".concat(element.itemname, "\" value=\"").concat(element.itemname, " $").concat(element.price, "\"> </li>"));
-        });
-      });
+      $("#groceryList").append("<a class=\"category\" href=\"#\" name=\"".concat(itemEl._id, "\">").concat(itemEl.name, "</a>"));
     });
-  }); //when user clicks/selects an item it gets name and price of that item
-
-  $(document).on("click", ".itemNames", /*#__PURE__*/function () {
+  });
+  $(document).on("click", ".category", /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(e) {
-      var nameOfItem, priceofItems, priceofItem;
+      var categoryId, categoryName;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               e.preventDefault();
-              nameOfItem = e.target.name;
-              priceofItems = e.target.value;
-              priceofItem = priceofItems.split('$')[1];
-              selectedItems(nameOfItem, priceofItem);
+              categoryId = e.target.name;
+              categoryName = e.target.text;
+              selectedCategory(categoryId, categoryName);
 
-            case 5:
+            case 4:
             case "end":
               return _context.stop();
           }
@@ -1009,11 +995,52 @@ var mainForm = function mainForm() {
     return function (_x) {
       return _ref.apply(this, arguments);
     };
+  }());
+
+  var selectedCategory = function selectedCategory(categoryId, categoryName) {
+    $(".main ol").empty();
+    $(".images").remove();
+    $(".main").append("<ol id=".concat(categoryName, "></ol>"));
+    $.ajax({
+      type: "GET",
+      url: "/api/groceryItems/category/".concat(categoryId)
+    }).then(function (categoryItems) {
+      categoryItems.forEach(function (element) {
+        $("#".concat(categoryName)).append("<li><input class=\"itemNames\" type=\"button\" name=\"".concat(element.itemname, "\" value=\"").concat(element.itemname, " $").concat(element.price, "\"> </li>"));
+      });
+    });
+  }; //when user clicks/selects an item it gets name and price of that item
+
+
+  $(document).on("click", ".itemNames", /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(e) {
+      var nameOfItem, priceofItems, priceofItem;
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              e.preventDefault();
+              nameOfItem = e.target.name;
+              priceofItems = e.target.value;
+              priceofItem = priceofItems.split('$')[1];
+              selectedItems(nameOfItem, priceofItem);
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    return function (_x2) {
+      return _ref2.apply(this, arguments);
+    };
   }()); //it checks user slected item for 1st time or not then increases quantity and price based on that
 
   var selectedItems = function selectedItems(nameOfItem, priceofItem) {
-    var exist = numberOfItems.find(function (_ref2) {
-      var itemname = _ref2.itemname;
+    var exist = numberOfItems.find(function (_ref3) {
+      var itemname = _ref3.itemname;
       return itemname === nameOfItem;
     });
 
@@ -1057,11 +1084,11 @@ var mainForm = function mainForm() {
 
 
   $(document).on("click", ".plus", /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(e) {
+    var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(e) {
       var newitem, nameOfItem, priceofItem;
-      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      return regeneratorRuntime.wrap(function _callee3$(_context3) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
               e.preventDefault();
               newitem = e.target.name;
@@ -1071,23 +1098,23 @@ var mainForm = function mainForm() {
 
             case 5:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
         }
-      }, _callee2);
+      }, _callee3);
     }));
 
-    return function (_x2) {
-      return _ref3.apply(this, arguments);
+    return function (_x3) {
+      return _ref4.apply(this, arguments);
     };
   }()); //its called when user clciks on '-' button
 
   $(document).on("click", ".minus", /*#__PURE__*/function () {
-    var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(e) {
+    var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(e) {
       var newitem, nameOfItem, priceofItem;
-      return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      return regeneratorRuntime.wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
               e.preventDefault();
               newitem = e.target.name;
@@ -1099,31 +1126,6 @@ var mainForm = function mainForm() {
 
             case 7:
             case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3);
-    }));
-
-    return function (_x3) {
-      return _ref4.apply(this, arguments);
-    };
-  }()); //its called when user clciks on 'delete icon/trash' icon
-
-  $(document).on("click", ".delete", /*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(e) {
-      var newitem, nameOfItem;
-      return regeneratorRuntime.wrap(function _callee4$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              e.preventDefault();
-              newitem = e.target.value;
-              nameOfItem = newitem.split('$')[0];
-              deleteSelectedItem(nameOfItem);
-
-            case 4:
-            case "end":
               return _context4.stop();
           }
         }
@@ -1133,11 +1135,36 @@ var mainForm = function mainForm() {
     return function (_x4) {
       return _ref5.apply(this, arguments);
     };
+  }()); //its called when user clciks on 'delete icon/trash' icon
+
+  $(document).on("click", ".delete", /*#__PURE__*/function () {
+    var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(e) {
+      var newitem, nameOfItem;
+      return regeneratorRuntime.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              e.preventDefault();
+              newitem = e.target.value;
+              nameOfItem = newitem.split('$')[0];
+              deleteSelectedItem(nameOfItem);
+
+            case 4:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }));
+
+    return function (_x5) {
+      return _ref6.apply(this, arguments);
+    };
   }()); // when user clciks on '-' it decreases price and quantity and display results back to the user
 
   var removeItems = function removeItems(nameOfItem) {
-    var exist = numberOfItems.find(function (_ref6) {
-      var itemname = _ref6.itemname;
+    var exist = numberOfItems.find(function (_ref7) {
+      var itemname = _ref7.itemname;
       return itemname === nameOfItem;
     });
 
@@ -1156,8 +1183,8 @@ var mainForm = function mainForm() {
 
 
   var deleteSelectedItem = function deleteSelectedItem(nameOfItem) {
-    var exist = numberOfItems.find(function (_ref7) {
-      var itemname = _ref7.itemname;
+    var exist = numberOfItems.find(function (_ref8) {
+      var itemname = _ref8.itemname;
       return itemname === nameOfItem;
     });
     var objIndex = numberOfItems.findIndex(function (exist) {
@@ -1357,7 +1384,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var form = "\n<form id=\"form-Update\">\n<h1>Update items</h1>\n<div class=\"form-group\">\n    <label for=\"itemId\">Item Id </label>\n    <input type=\"text\" class=\"form-control\" id=\"itemId\" placeholder=\"Enter item Id\" name=\"itemId\">\n  </div>\n  <div class = \"form-group\">\n     <label for=\"itemname\">Name of item</label>\n     <input type=\"text\" class=\"form-control\" id=\"itemname\" placeholder=\"Enter a name of the item to add\" name=\"itemname\">\n  </div>\n   <div class = \"form-group\">\n     <label for=\"price\">Price</label>\n     <input type=\"text\" class=\"form-control\" id=\"price\" placeholder=\"Enter a price of item\" name=\"price\">\n  </div>\n  <div class = \"form-group\">\n  <label for=\"noofitems\">Number Of Items</label>\n  <input type=\"text\" class=\"form-control\" id=\"noofitems\" placeholder=\"Enter no. of items\" name=\"noofitems\">\n</div>\n  <fieldset class=\"form-group\">\n    <legend class=\"col-form-label\">Ready to Eat?</legend>\n    <div class=\"form-check form-check-inline\">\n      <input class=\"form-check-input\" type=\"radio\" id=\"readyToEatYes\" name =\"readyToEat\" value=\"true\">\n      <label class=\"form-check-label\" for=\"readyToEatYes\">Yes</label>\n    </div>\n    <div class=\"form-check form-check-inline\">\n      <input class=\"form-check-input\" type=\"radio\" id=\"readyToEatNo\" name =\"readyToEat\" value=\"false\">\n      <label class=\"form-check-label\" for=\"readyToEatNo\">No</label>\n    </div>\n  </fieldset>\n  <div class = \"form-group\">\n  <label for=\"categoryId\">Choose a category:</label>\n       <select name=\"categoryId\" id=\"categories\">\n        </select>\n  </div>\n  <button type=\"submit\" class=\"btn btn-primary\">Update Item</button>\n  </form>\n";
+var form = "\n<form id=\"form-Update\">\n<h1>Update items</h1>\n<div class = \"form-group\">\n<label for=\"categoryId\">Choose a category:</label>\n     <select class=\"categoryname\" name=\"categoryId\" id=\"categories\">\n      </select>\n</div>\n<div class = \"form-group\">\n<label for=\"itemsForCategory\">Choose an item:</label>\n     <select class=\"categoryitemname\" name=\"categoryItemName\" id=\"categoryItems\">\n      </select>\n</div>\n   <div class = \"form-group\">\n     <label for=\"price\">Price</label>\n     <input type=\"text\" class=\"form-control\" id=\"price\" placeholder=\"Enter a price of item\" name=\"price\">\n  </div>\n  <div class = \"form-group\">\n  <label for=\"noofitems\">Number Of Items</label>\n  <input type=\"text\" class=\"form-control\" id=\"noofitems\" placeholder=\"Enter no. of items\" name=\"noofitems\">\n</div>\n  <fieldset class=\"form-group\">\n    <legend class=\"col-form-label\">Ready to Eat?</legend>\n    <div class=\"form-check form-check-inline\">\n      <input class=\"form-check-input\" type=\"radio\" id=\"readyToEatYes\" name =\"readyToEat\" value=\"true\">\n      <label class=\"form-check-label\" for=\"readyToEatYes\">Yes</label>\n    </div>\n    <div class=\"form-check form-check-inline\">\n      <input class=\"form-check-input\" type=\"radio\" id=\"readyToEatNo\" name =\"readyToEat\" value=\"false\">\n      <label class=\"form-check-label\" for=\"readyToEatNo\">No</label>\n    </div>\n  </fieldset>\n  <button type=\"submit\" class=\"btn btn-primary\">Update Item</button>\n  </form>\n";
 
 var updateItem = function updateItem() {
   // appending category values from database to form
@@ -1365,50 +1392,26 @@ var updateItem = function updateItem() {
     type: "GET",
     url: "/api/groceryItems/category/all"
   }).then(function (groceyItemCategories) {
-    console.log("groceyItemCategories", groceyItemCategories);
     var optionsHtml = "";
     groceyItemCategories.forEach(function (itemEl) {
-      console.log("itemEl", itemEl);
       optionsHtml = optionsHtml + "<option value=".concat(itemEl._id, ">").concat(itemEl.name, "</option>");
-      console.log("optionsHtml", optionsHtml);
     });
-    console.log("optionsHtml", optionsHtml);
     $("#categories").append(optionsHtml);
-  });
-  $(document).on('submit', "form#form-Update", /*#__PURE__*/function () {
+  }); // user choosen category items in that list
+
+  $(document).on("change", ".categoryname", /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(e) {
-      var requestBody, response;
+      var categoryId;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               e.preventDefault();
-              requestBody = {
-                itemname: $("#itemname").val(),
-                price: $("#price").val(),
-                noOfItems: $("#noofitems").val(),
-                readyToEat: $("input[name=\"readyToEat\"]:checked").val(),
-                categoryId: $("#categories").val()
-              };
-              console.log("requestBody", requestBody);
-              _context.next = 5;
-              return $.ajax({
-                type: "PATCH",
-                // OR GET
-                url: "/api/groceryItems/update-item/".concat($("#itemId").val()),
-                contentType: "application/json",
-                data: JSON.stringify(requestBody)
-              });
+              console.log("inside here");
+              categoryId = e.target.value;
+              itemsOfCategory(categoryId);
 
-            case 5:
-              response = _context.sent;
-              window.alert(response);
-              $("#itemId").val("");
-              $("#itemname").val("");
-              $("#price").val("");
-              $("#noofitems").val("");
-
-            case 11:
+            case 4:
             case "end":
               return _context.stop();
           }
@@ -1418,6 +1421,68 @@ var updateItem = function updateItem() {
 
     return function (_x) {
       return _ref.apply(this, arguments);
+    };
+  }());
+
+  var itemsOfCategory = function itemsOfCategory(categoryId) {
+    $("#categoryItems").empty();
+    $.ajax({
+      type: "GET",
+      url: "/api/groceryItems/category/".concat(categoryId)
+    }).then(function (Items) {
+      var optionsHtml = "";
+      Items.forEach(function (itemEl) {
+        optionsHtml = optionsHtml + "<option value=".concat(itemEl.itemname, "_").concat(itemEl._id, ">").concat(itemEl.itemname, "</option>");
+      });
+      $("#categoryItems").append(optionsHtml);
+    });
+  };
+
+  $(document).on('submit', "form#form-Update", /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(e) {
+      var item, nameofItem, idofItem, requestBody, response;
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              e.preventDefault();
+              item = $("#categoryItems").val();
+              nameofItem = item.split('_')[0];
+              idofItem = item.split('_')[1];
+              requestBody = {
+                itemname: nameofItem,
+                price: $("#price").val(),
+                noOfItems: $("#noofitems").val(),
+                readyToEat: $("input[name=\"readyToEat\"]:checked").val(),
+                categoryId: $("#categories").val()
+              };
+              console.log(requestBody);
+              _context2.next = 8;
+              return $.ajax({
+                type: "PATCH",
+                // OR GET
+                url: "/api/groceryItems/update-item/".concat(idofItem),
+                contentType: "application/json",
+                data: JSON.stringify(requestBody)
+              });
+
+            case 8:
+              response = _context2.sent;
+              window.alert(response);
+              $("#itemname").val("");
+              $("#price").val("");
+              $("#noofitems").val("");
+
+            case 13:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    return function (_x2) {
+      return _ref2.apply(this, arguments);
     };
   }());
   return form;
@@ -1438,30 +1503,41 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 // Make a DELETE request to the server to delete a fruit
-var form = "\n<form id=\"form-Delete\">\n<h1>Delete items</h1>\n<div class=\"form-group\">\n    <label for=\"itemId\">Item Id </label>\n    <input type=\"text\" class=\"form-control\" id=\"itemId\" placeholder=\"Enter item Id\" name=\"itemId\">\n  </div>\n  <button type=\"submit\" class=\"btn btn-primary\">Delete Item</button>\n  </form>\n";
+var form = "\n<form id=\"form-Delete\">\n<h1>Delete items</h1>\n<div class = \"form-group\">\n<label for=\"itemsForCategory\">Choose an item:</label>\n     <select class=\"categoryitemname\" name=\"categoryItemName\" id=\"categoryItems\">\n      </select>\n</div>\n  <button type=\"submit\" class=\"btn btn-primary\">Delete Item</button>\n  </form>\n";
 
 var deleteItem = function deleteItem() {
+  $.ajax({
+    type: "GET",
+    url: "/api/groceryItems/allGroceryItems"
+  }).then(function (Items) {
+    var optionsHtml = "";
+    Items.forEach(function (itemEl) {
+      optionsHtml = optionsHtml + "<option value=".concat(itemEl._id, ">").concat(itemEl.itemname, "</option>");
+    });
+    $("#categoryItems").append(optionsHtml);
+  });
   $(document).on('submit', "form#form-Delete", /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(e) {
-      var response;
+      var itemId, response;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               e.preventDefault();
-              _context.next = 3;
+              itemId = $("#categoryItems").val();
+              _context.next = 4;
               return $.ajax({
                 type: "DELETE",
-                url: "/api/groceryItems/delete-item/".concat($("#itemId").val()),
+                url: "/api/groceryItems/delete-item/".concat(itemId),
                 contentType: "application/json"
               });
 
-            case 3:
+            case 4:
               response = _context.sent;
               // Create a pop up alert in the UI to inform the user that fruit was deleted
               window.alert("Fruit Deleted!");
 
-            case 5:
+            case 6:
             case "end":
               return _context.stop();
           }
@@ -1696,7 +1772,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51044" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49434" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -4,7 +4,7 @@ const registerSchema = mongoose.Schema({
   username: String,
   mobilenumber: Number,
   email: String,
-  password:String,
+  password: String,
 });
 
 module.exports = mongoose.model("registerUser", registerSchema);

@@ -92,7 +92,7 @@ const newItem = () => {
     $("#itemname").val("");
     $("#price").val("");
     $("#noofitems").val("");
-    
+
   });
   return form;
 };

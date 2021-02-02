@@ -2,7 +2,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 //const UserModel = require("../models/User.model");
-const RegisterModel=require("../models/RegisterUser.Model");
+const RegisterModel = require("../models/RegisterUser.Model");
 
 // Create a new router to handle user routes
 const router = express.Router();
@@ -37,22 +37,17 @@ router.post("/register", (request, response) => {
   const passwordHash = bcrypt.hashSync(body.password, 10);
   console.log("passwordHash:", passwordHash);
 
-  const registerUser={ username: body.username, mobilenumber: body.mobilenumber,
-    email: body.email, password: passwordHash };
+  const registerUser = {
+    username: body.username, mobilenumber: body.mobilenumber,
+    email: body.email, password: passwordHash
+  };
 
-  RegisterModel.create(registerUser).then((registerData)=> {
+  RegisterModel.create(registerUser).then((registerData) => {
     response.send(registerData);
-  }).catch((err)=>{
-    console.log("error:",err);
+  }).catch((err) => {
+    console.log("error:", err);
     response.status(400).send(err);
   });
-  
-  // const user = { email: body.email, password: passwordHash };
-  // console.log("user:", user);
-
-  // UserModel.create(user).then((userData) => {
-  //   response.send(userData);
-  // });
 });
 
 module.exports = router;

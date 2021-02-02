@@ -33,7 +33,7 @@ const adminUser = () => {
       });
       console.log(response);
       $("body").empty();
-     
+
       $("body").append(operationsOfAdmin());
     } catch (err) {
       $("body").append("<div>Invalid email/pass provided!</div>");

@@ -1,28 +1,25 @@
 * {
   box-sizing: border-box;
-	padding:0;
+  padding: 0;
 }
 
-#container{
+#container {
   display: block;
-margin: 50px;
-border: 1px;
-color: #434747;
-
-font-family: 'Times New Roman', serif;
+  margin: 50px;
+  border: 1px;
+  color: #434747;
+  font-family: "Times New Roman", serif;
 }
 
-.smallBlock{
-  border: 5px solid #C0C0C0;
-
-  }
+.smallBlock {
+  border: 5px solid #c0c0c0;
+}
 
 /* Style the header */
 header {
   background: linear-gradient(-90deg, #9dcccf, #c0cec4);
   padding: 30px 30px 30px;
   border-radius: 10px;
-  
 }
 
 /* Style the header text */
@@ -54,42 +51,35 @@ h2 {
   border-radius: 10px;
 }
 
-.images img{
-
-  width: 42%;
-	height: 50%;
+.images img {
+  width: 40%;
+  height: 25%;
   padding: 5px 10px;
   border-right: none;
-	border-radius: 20px 0px 0 20px;
-	padding: 5px 10px;
-	float: right;
+  border-radius: 20px 0px 0 20px;
+  float: right;
 }
 
 /* The sidebar menu */
 #groceryList {
-  height: 100%; /* Full-height: remove this if you want "auto" height */
-  width: 160px; /* Set the width of the sidebar */
+  height: 50%; /* Full-height: remove this if you want "auto" height */
+  width: 140px; /* Set the width of the sidebar */
   top: 45%; /* Stay at the top */
-  background-color:  rgb(115, 155, 138);
+  background-color: rgb(115, 155, 138);
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 20px;
 }
 
 
-.main {
-  margin-left: 160px; /* Same as the width of the sidenav */
-  font-size: 28px; /* Increased text to enable scrolling */
-  padding: 0px 10px;
-}
-
-.topmenu{
+.topmenu {
   overflow: hidden;
   background-color: rgb(115, 155, 138);
   top: auto;
   width: auto;
   border-radius: 5px;
 }
-.topmenu a, #groceryList a{
+.topmenu a,
+#groceryList a {
   float: left;
   display: block;
   color: #3f3a3a;
@@ -97,23 +87,18 @@ h2 {
   padding: 17px 16px;
   text-decoration: none;
 }
-#groceryList a{
+#groceryList a {
   width: 90px; /* Set the width of the sidebar */
 }
 
-.topmenu a:hover, #groceryList a:hover {
+.topmenu a:hover,
+#groceryList a:hover {
   background: #ddd;
 }
 
-.topmenu input[type=text] {
-  border: 1px solid #ccc;  
+.topmenu input[type="text"] {
+  border: 1px solid #ccc;
   margin-top: 18px;
-}
-
-
-li {
-  display: inline-block;
-  padding: 10px;
 }
 
 /* Darker background on mouse-over */
@@ -122,6 +107,21 @@ li {
   border-radius: 10px;
 }
 
+.main {
+  margin-left: 160px; /* Same as the width of the sidenav */
+}
+
+
+@media screen and (max-height: 450px) {
+  #groceryList  {padding-top: 15px;}
+  #groceryList a {font-size: 18px;}
+}
+
+li {
+  display: inline-block;
+  padding: 5px 3px;
+  padding-left:60px;
+}
 /* Style buttons (name of items) in the ol */
 .itemNames {
   background-color: rgb(199, 214, 204); /* Blue background */
@@ -129,8 +129,8 @@ li {
   cursor: pointer; /* Mouse pointer on hover */
   border-radius: 5px;
   border: 3px solid rgb(107, 87, 44);
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
 }
 
 /* Style result items table */
@@ -178,8 +178,6 @@ footer {
   border: 2px solid rgb(134, 87, 101);
 }
 
-
-
 #register-new-user {
   position: absolute;
   top: 55%;
@@ -187,5 +185,3 @@ footer {
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
-
-

@@ -15,6 +15,7 @@ const form = `
 <tbody id="resultItems">
 </tbody>
 </table>
+
 <div class="images">
 <img src="https://www.bakingbusiness.com/ext/resources/2020/4/OnlineGroceryShopping_Lead.jpg?1586435720">
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVociO7PJK-EOOVz1f-se7zT6euNErCJTcXA&usqp=CAU">
@@ -25,8 +26,7 @@ const form = `
 <div id="groceryList">
 </div>
 
-
-<div id="main">
+<div class="main">
 </div>
 <footer>
 <p>Please call 123445 for enquiries</p>
@@ -42,27 +42,36 @@ const mainForm = () => {
     // number of items selected by the user
     let itemNumber = 0;
 
-    //getting data from mongodb collections then dispalying that on page
+    //getting all categry names from mongodb collections then dispalying that on page in the form fixed side bar
     $.ajax({
         type: "GET",
         url: "/api/groceryItems/category/all",
     }).then((groceyItemCategories) => {
         groceyItemCategories.forEach((itemEl) => {
-           //$("#groceryList").append(`<h2>${itemEl.name}</h2>`);
-           $("#groceryList").append(`<a href="#">${itemEl.name}</a>`);
-            //$("#groceryList").append(`<ol id=${itemEl.name}></ol>`);
-            $("#main").append(`<ol id=${itemEl.name}></ol>`);
-            $.ajax({
-                type: "GET",
-                url: `/api/groceryItems/category/${itemEl._id}`,
-            }).then((categoryItems) => {
-                // products[`${itemEl.name}`] = categoryItems;
-                categoryItems.forEach((element) => {
-                    $(`#${itemEl.name}`).append(`<li><input class="itemNames" type="button" name="${element.itemname}" value="${element.itemname} $${element.price}"> </li>`);
-                });
-            });
+            $("#groceryList").append(`<a class="category" href="#" name="${itemEl._id}">${itemEl.name}</a>`);
         });
     });
+
+    $(document).on("click", ".category", async (e) => {
+        e.preventDefault();
+        const categoryId = e.target.name;
+        const categoryName = e.target.text;
+        selectedCategory(categoryId, categoryName);
+    });
+
+    const selectedCategory = (categoryId, categoryName) => {
+        $(".main ol").empty();
+        $(".images").remove();
+        $(".main").append(`<ol id=${categoryName}></ol>`);
+        $.ajax({
+            type: "GET",
+            url: `/api/groceryItems/category/${categoryId}`,
+        }).then((categoryItems) => {
+            categoryItems.forEach((element) => {
+                $(`#${categoryName}`).append(`<li><input class="itemNames" type="button" name="${element.itemname}" value="${element.itemname} $${element.price}"> </li>`);
+            });
+        });
+    }
 
     //when user clicks/selects an item it gets name and price of that item
     $(document).on("click", ".itemNames", async (e) => {
@@ -90,7 +99,6 @@ const mainForm = () => {
         }
         printResult();
     }
-
 
     //prins all selected item details like serial number, name,price and quantity values with total price on page in table form
     function printResult() {

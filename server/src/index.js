@@ -6,7 +6,7 @@ const cors = require("cors");
 //const fruitRouter = require("./routes/fruitRoutes");
 const userRouter = require("./routes/userRoutes");
 const adminRouter = require("./routes/adminRoutes");
-const groceryRouter= require("./routes/groceryRoutes");
+const groceryRouter = require("./routes/groceryRoutes");
 
 mongoose.connect("mongodb://localhost:27017/GroceryStoreFullStack", {
   useNewUrlParser: true,
@@ -22,7 +22,6 @@ const port = 3000;
 // Add middleware to be able to read and understand json files
 app.use(express.json());
 app.use(cors()); // CORS // Cross Origin Resource Sharing
-
 
 // Tell express that it needs to use the routers we have initialised
 //app.use("/api/fruits", fruitRouter);
