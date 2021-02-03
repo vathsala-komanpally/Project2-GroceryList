@@ -1,20 +1,6 @@
 
 const form = `
 <form id="form-Main">
-<div id="container">
-
-<table id="itemsTable">
-<thead>
-<tr>
-    <th>ItemNo.</th>
-    <th>Name</th>
-    <th>Price</th>
-    <th>Quantity</th>
-</tr>
-</thead>
-<tbody id="itemsOfTable">
-</tbody>
-</table>
 
 <table id="selectedItemsTable">
 <thead>
@@ -26,6 +12,19 @@ const form = `
 </tr>
 </thead>
 <tbody id="resultItems">
+</tbody>
+</table>
+<div id="container">
+<table id="itemsTable">
+<thead>
+<tr>
+    <th>ItemNo.</th>
+    <th>Name</th>
+    <th>Price</th>
+    <th></th>
+</tr>
+</thead>
+<tbody id="itemsOfTable">
 </tbody>
 </table>
 
@@ -51,7 +50,9 @@ const mainForm = () => {
     let numberOfItems = [];
     // number of items selected by the user
     let itemNumber = 0;
-    let quantity = 0;
+    //let quantity = 0;
+
+    let cartNumber=0;
 
     $( document ).ready(function() {
         $("#itemsTable").hide();
@@ -67,6 +68,12 @@ const mainForm = () => {
             $("#groceryList").append(`<a class="category" href="#" name="${itemEl._id}">${itemEl.name}</a>`);
         });
     });
+
+    $(document).on("click", ".cart", async (e) => {
+        e.preventDefault();
+        $("#container").hide();
+        printResult();
+     });
 
     $(document).on("click", ".category", async (e) => {
         e.preventDefault();
@@ -95,14 +102,26 @@ const mainForm = () => {
                 <td>${itemNumber}</td>
                 <td>${element.itemname}</td>
                 <td>$${element.price}</td>
-                <td>${quantity}
-                <input type="button" value=" + " class="plus" name="${element.itemname}$${element.price}" >
-                   <input type="button" value=" - " class="minus"  name="${element.itemname}$${element.price}" >
-                <button class="delete fa fa-trash-o" value= "${element.itemname}$${element.price}">
-                    </button></td></tr>`);
+                <td><button class="AddToCart" value= "${element.itemname}$${element.price}">Add to Cart</button>
+                </td></tr>`);
             });
         });
     }
+
+   
+
+    $(document).on("click", ".AddToCart", async (e) => {
+        e.preventDefault();
+        const dummy=cartNumber;
+       cartNumber=cartNumber+1;
+       $('.cart h4').remove();
+       $(".cart").append(`<h4>${cartNumber}</h4>`);
+        const newitem = e.target.value;
+        const nameOfItem = newitem.split('$')[0];
+        const priceofItem = newitem.split('$')[1];
+        selectedItems(nameOfItem, priceofItem);
+    });
+
 
     //it checks user slected item for 1st time or not then increases quantity and price based on that
     const selectedItems = (nameOfItem, priceofItem) => {
@@ -119,7 +138,7 @@ const mainForm = () => {
             const idItemObject = { id: itemNumber, itemname: nameOfItem, price: priceofItem, originalprice: priceofItem, repeated: 1 };
             numberOfItems.push(idItemObject);
         }
-        printResult();
+       
     }
 
 //add this table data to the cart    
@@ -152,6 +171,8 @@ const mainForm = () => {
         const newitem = e.target.name;
         const nameOfItem = newitem.split('$')[0];
         const priceofItem = newitem.split('$')[1];
+        selectedItems(nameOfItem, priceofItem);
+        printResult();
         // // this can be added to increse price and quantity in the list
         // const $row=$(`.${nameOfItem}`); 
         // const itemNumber=  parseInt($row.find("td:eq(0)").text());
@@ -161,7 +182,6 @@ const mainForm = () => {
         // console.log("DoublePrice:",doublePrice, "DoubleQuantity:", quantity);
         // $row.find("td:eq(2)").text(`$${doublePrice}`);
         // $row.find("td:eq(3)").text(`${quantity}`);
-        selectedItems(nameOfItem, priceofItem);
     });
 
 
