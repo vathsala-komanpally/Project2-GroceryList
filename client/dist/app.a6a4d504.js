@@ -956,14 +956,18 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var form = "\n<form id=\"form-Main\">\n<div id=\"container\">\n\n<table id=\"itemsTable\">\n<thead>\n<tr>\n    <th>ItemNo.</th>\n    <th>Name</th>\n    <th>Price</th>\n    <th>Quantity</th>\n</tr>\n</thead>\n<tbody id=\"resultItems\">\n</tbody>\n</table>\n\n<table id=\"selectedItemsTable\">\n<thead>\n<tr>\n    <th>ItemNo.</th>\n    <th>Name</th>\n    <th>Price</th>\n    <th>Quantity</th>\n</tr>\n</thead>\n<tbody id=\"resultItems\">\n</tbody>\n</table>\n\n<div class=\"images\">\n<img src=\"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVociO7PJK-EOOVz1f-se7zT6euNErCJTcXA&usqp=CAU\">\n<img src=\"https://www.bakingbusiness.com/ext/resources/2020/4/OnlineGroceryShopping_Lead.jpg?1586435720\">\n\n</div>\n<div id=\"groceryList\">\n</div>\n\n<div class=\"main\">\n</div>\n<footer>\n<p>Please call 123445 for enquiries</p>\n</footer>\n</div>\n</form>\n";
+var form = "\n<form id=\"form-Main\">\n<div id=\"container\">\n\n<table id=\"itemsTable\">\n<thead>\n<tr>\n    <th>ItemNo.</th>\n    <th>Name</th>\n    <th>Price</th>\n    <th>Quantity</th>\n</tr>\n</thead>\n<tbody id=\"itemsOfTable\">\n</tbody>\n</table>\n\n<table id=\"selectedItemsTable\">\n<thead>\n<tr>\n    <th>ItemNo.</th>\n    <th>Name</th>\n    <th>Price</th>\n    <th>Quantity</th>\n</tr>\n</thead>\n<tbody id=\"resultItems\">\n</tbody>\n</table>\n\n<div class=\"images\">\n<img src=\"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVociO7PJK-EOOVz1f-se7zT6euNErCJTcXA&usqp=CAU\">\n<img src=\"https://www.bakingbusiness.com/ext/resources/2020/4/OnlineGroceryShopping_Lead.jpg?1586435720\">\n\n</div>\n<div id=\"groceryList\">\n</div>\n\n<div class=\"main\">\n</div>\n<footer>\n<p>Please call 123445 for enquiries</p>\n</footer>\n</div>\n</form>\n";
 
 var mainForm = function mainForm() {
   // to store items selected by the user
   var numberOfItems = []; // number of items selected by the user
 
   var itemNumber = 0;
-  var quantity = 0; //getting all categry names from mongodb collections then dispalying that on page in the form fixed side bar
+  var quantity = 0;
+  $(document).ready(function () {
+    $("#itemsTable").hide();
+    $("#selectedItemsTable").hide();
+  }); //getting all categry names from mongodb collections then dispalying that on page in the form fixed side bar
 
   $.ajax({
     type: "GET",
@@ -983,12 +987,11 @@ var mainForm = function mainForm() {
               e.preventDefault();
               categoryId = e.target.name;
               categoryName = e.target.text;
-              $("#resultItems").empty();
-              $("#resultItems").show();
-              $("#selectedItemsTable").hide();
-              selectedCategory(categoryId, categoryName);
+              $("#itemsTable").show();
+              $("#itemsOfTable").empty();
+              selectedCategory(categoryId);
 
-            case 7:
+            case 6:
             case "end":
               return _context.stop();
           }
@@ -1001,8 +1004,7 @@ var mainForm = function mainForm() {
     };
   }());
 
-  var selectedCategory = function selectedCategory(categoryId, categoryName) {
-    $(".main ol").empty();
+  var selectedCategory = function selectedCategory(categoryId) {
     $(".images").remove(); // number of items selected by the user
 
     var itemNumber = 0; //$(".main").append(`<ol id=${categoryName}></ol>`);
@@ -1014,7 +1016,7 @@ var mainForm = function mainForm() {
       categoryItems.forEach(function (element) {
         itemNumber = itemNumber + 1; //$(`#${categoryName}`).append(`<li><input class="itemNames" type="button" name="${element.itemname}" value="${element.itemname} $${element.price}"> </li>`);
 
-        $("#resultItems").append("<tr>\n                <td>".concat(itemNumber, "</td>\n                <td>").concat(element.itemname, "</td>\n                <td>$").concat(element.price, "</td>\n                <td>").concat(quantity, "\n                <input type=\"button\" value=\" + \" class=\"plus\" name=\"").concat(element.itemname, "$").concat(element.price, "\" >\n                   <input type=\"button\" value=\" - \" class=\"minus\"  name=\"").concat(element.itemname, "$").concat(element.price, "\" >\n                <button class=\"delete fa fa-trash-o\" value= \"").concat(element.itemname, "$").concat(element.price, "\">\n                    </button></td></tr>"));
+        $("#itemsOfTable").append("<tr class=\"".concat(element.itemname, "\">\n                <td>").concat(itemNumber, "</td>\n                <td>").concat(element.itemname, "</td>\n                <td>$").concat(element.price, "</td>\n                <td>").concat(quantity, "\n                <input type=\"button\" value=\" + \" class=\"plus\" name=\"").concat(element.itemname, "$").concat(element.price, "\" >\n                   <input type=\"button\" value=\" - \" class=\"minus\"  name=\"").concat(element.itemname, "$").concat(element.price, "\" >\n                <button class=\"delete fa fa-trash-o\" value= \"").concat(element.itemname, "$").concat(element.price, "\">\n                    </button></td></tr>"));
       });
     });
   }; //it checks user slected item for 1st time or not then increases quantity and price based on that
@@ -1034,7 +1036,7 @@ var mainForm = function mainForm() {
         return exist.itemname == nameOfItem;
       });
       numberOfItems[objIndex].repeated = exist.repeated + 1;
-      numberOfItems[objIndex].price = exist.repeated * priceofItem;
+      numberOfItems[objIndex].price = exist.repeated * exist.originalprice;
       alert("you got ".concat(numberOfItems[objIndex].repeated - 1, " ").concat(nameOfItem, " in the list, Do you want to 1 more"));
     } else {
       var idItemObject = {
@@ -1054,8 +1056,8 @@ var mainForm = function mainForm() {
 
   function printResult() {
     var sum = 0;
-    $("#selectedItemsTable").empty();
     $("#selectedItemsTable").show();
+    $("#resultItems").empty();
 
     for (var i = 0; i < numberOfItems.length; i++) {
       $("#selectedItemsTable").append("<tr>\n        <td>".concat(i + 1, "</td>\n        <td>").concat(numberOfItems[i].itemname, "</td>\n        <td>$").concat(numberOfItems[i].price, "</td>\n        <td>").concat(numberOfItems[i].repeated, "\n        <input type=\"button\" value=\" + \" class=\"plus\" name=\"").concat(numberOfItems[i].itemname, "$").concat(numberOfItems[i].price, "\" >\n           <input type=\"button\" value=\" - \" class=\"minus\"  name=\"").concat(numberOfItems[i].itemname, "$").concat(numberOfItems[i].price, "\" >\n        <button class=\"delete fa fa-trash-o\" value= \"").concat(numberOfItems[i].itemname, "$").concat(numberOfItems[i].price, "\">\n            </button></td></tr>"));
@@ -1077,7 +1079,16 @@ var mainForm = function mainForm() {
               e.preventDefault();
               newitem = e.target.name;
               nameOfItem = newitem.split('$')[0];
-              priceofItem = newitem.split('$')[1];
+              priceofItem = newitem.split('$')[1]; // // this can be added to increse price and quantity in the list
+              // const $row=$(`.${nameOfItem}`); 
+              // const itemNumber=  parseInt($row.find("td:eq(0)").text());
+              // const tdQuantity = parseInt($row.find("td:eq(3)").text());
+              // const quantity=tdQuantity+1;
+              // const doublePrice = priceofItem*2;
+              // console.log("DoublePrice:",doublePrice, "DoubleQuantity:", quantity);
+              // $row.find("td:eq(2)").text(`$${doublePrice}`);
+              // $row.find("td:eq(3)").text(`${quantity}`);
+
               selectedItems(nameOfItem, priceofItem);
 
             case 5:
@@ -1756,7 +1767,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49303" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52773" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -12,7 +12,7 @@ const form = `
     <th>Quantity</th>
 </tr>
 </thead>
-<tbody id="resultItems">
+<tbody id="itemsOfTable">
 </tbody>
 </table>
 
@@ -53,6 +53,11 @@ const mainForm = () => {
     let itemNumber = 0;
     let quantity = 0;
 
+    $( document ).ready(function() {
+        $("#itemsTable").hide();
+        $("#selectedItemsTable").hide();
+        });
+
     //getting all categry names from mongodb collections then dispalying that on page in the form fixed side bar
     $.ajax({
         type: "GET",
@@ -67,14 +72,12 @@ const mainForm = () => {
         e.preventDefault();
         const categoryId = e.target.name;
         const categoryName = e.target.text;
-        $("#resultItems").empty();
-        $("#resultItems").show();
-        $("#selectedItemsTable").hide();
-        selectedCategory(categoryId, categoryName);
+        $("#itemsTable").show();
+        $("#itemsOfTable").empty();
+        selectedCategory(categoryId);
     });
 
-    const selectedCategory = (categoryId, categoryName) => {
-        $(".main ol").empty();
+    const selectedCategory = (categoryId) => {
         $(".images").remove();
 
         // number of items selected by the user
@@ -88,7 +91,7 @@ const mainForm = () => {
             categoryItems.forEach((element) => {
                 itemNumber = itemNumber + 1;
                 //$(`#${categoryName}`).append(`<li><input class="itemNames" type="button" name="${element.itemname}" value="${element.itemname} $${element.price}"> </li>`);
-                $("#resultItems").append(`<tr>
+                $("#itemsOfTable").append(`<tr class="${element.itemname}">
                 <td>${itemNumber}</td>
                 <td>${element.itemname}</td>
                 <td>$${element.price}</td>
@@ -110,7 +113,7 @@ const mainForm = () => {
             console.log(numberOfItems);
             const objIndex = numberOfItems.findIndex((exist => exist.itemname == nameOfItem));
             numberOfItems[objIndex].repeated = exist.repeated + 1;
-            numberOfItems[objIndex].price = exist.repeated * priceofItem;
+            numberOfItems[objIndex].price = exist.repeated * exist.originalprice;
             alert(`you got ${numberOfItems[objIndex].repeated - 1} ${nameOfItem} in the list, Do you want to 1 more`);
         } else {
             const idItemObject = { id: itemNumber, itemname: nameOfItem, price: priceofItem, originalprice: priceofItem, repeated: 1 };
@@ -123,8 +126,9 @@ const mainForm = () => {
     //prins all selected item details like serial number, name,price and quantity values with total price on page in table form
     function printResult() {
         let sum = 0;
-        $("#selectedItemsTable").empty();
         $("#selectedItemsTable").show();
+        $("#resultItems").empty();
+       
         for (let i = 0; i < numberOfItems.length; i++) {
             $("#selectedItemsTable").append(`<tr>
         <td>${i + 1}</td>
@@ -139,6 +143,7 @@ const mainForm = () => {
             sum = +priceOf + sum;
         }
         $("#selectedItemsTable").append(`<tr><th></th><th>Total price:</th><th>${sum}</th>`);
+       
     }
 
     //its called when user clciks on '+' button
@@ -147,8 +152,18 @@ const mainForm = () => {
         const newitem = e.target.name;
         const nameOfItem = newitem.split('$')[0];
         const priceofItem = newitem.split('$')[1];
+        // // this can be added to increse price and quantity in the list
+        // const $row=$(`.${nameOfItem}`); 
+        // const itemNumber=  parseInt($row.find("td:eq(0)").text());
+        // const tdQuantity = parseInt($row.find("td:eq(3)").text());
+        // const quantity=tdQuantity+1;
+        // const doublePrice = priceofItem*2;
+        // console.log("DoublePrice:",doublePrice, "DoubleQuantity:", quantity);
+        // $row.find("td:eq(2)").text(`$${doublePrice}`);
+        // $row.find("td:eq(3)").text(`${quantity}`);
         selectedItems(nameOfItem, priceofItem);
     });
+
 
     //its called when user clciks on '-' button
     $(document).on("click", ".minus", async (e) => {
