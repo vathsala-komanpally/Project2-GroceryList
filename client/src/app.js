@@ -33,6 +33,18 @@ const appForm = `
 <input type="text" placeholder="Search..">
 <a href="Cart1.aspx" class="icon-shopping-cart" style="font-size: 25px"><asp:Label ID="lblCartCount" runat="server" CssClass="badge badge-warning"  ForeColor="White"/></a>
 </div>
+<div class="pageInfo">
+<div class="home">
+</div>
+<div class="about">
+</div>
+<div class="catalogue">
+</div>
+<div class="recipes">
+</div>
+<div class="contactus">
+</div>
+</div>
 
 </form>
 `;
@@ -60,25 +72,36 @@ $("#myHref").on('click', function () {
 
 $("#contactus").on('click', function () {
     $("#container").hide();
-    $("body").append(contactUsForm());
+    $(".home").hide(); $(".about").hide(); $(".recipes").hide(); $(".catalogue").hide();
+    $(".contactus").show(); 
+    $(".contactus").append(contactUsForm());
 });
 
 $("#home").on('click', function () {
     $("#container").hide();
-    $("body").append(homeForm());
+   $(".about").hide(); $(".recipes").hide(); $(".catalogue").hide();$(".contactus").hide();
+   $(".home").show();  
+   $(".home").append(homeForm());
 });
 
 $("#recipes").on('click', function () {
     $("#container").hide();
-    $("body").append(recipesForm());
+    $(".home").hide(); $(".about").hide(); $(".catalogue").hide();$(".contactus").hide();
+    $(".recipes").show(); 
+    $(".recipes").append(recipesForm());
 });
 
 $("#catalogue").on('click', function () {
     $("#container").hide();
-    $("body").append(catalogueForm());
+    $(".home").hide(); $(".about").hide(); $(".recipes").hide();$(".contactus").hide();
+    $(".catalogue").show(); 
+    $(".catalogue").append(catalogueForm());
 });
 
 $("#about").on('click', function () {
+
     $("#container").hide();
-    $("body").append(aboutForm());
+    $(".home").hide(); $(".recipes").hide(); $(".catalogue").hide();$(".contactus").hide();
+    $(".about").show(); 
+    $(".about").append(aboutForm());
 });

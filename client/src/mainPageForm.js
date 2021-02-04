@@ -48,10 +48,8 @@ const form = `
 const mainForm = () => {
     // to store items selected by the user
     let numberOfItems = [];
-    // number of items selected by the user
-    let itemNumber = 0;
     //let quantity = 0;
-
+    let idNo=0;
     let cartNumber=0;
 
     $( document ).ready(function() {
@@ -125,9 +123,9 @@ const mainForm = () => {
 
     //it checks user slected item for 1st time or not then increases quantity and price based on that
     const selectedItems = (nameOfItem, priceofItem) => {
+       
         const exist = numberOfItems.find(({ itemname }) => itemname === nameOfItem);
         if (exist) {
-            itemNumber++;
             console.log("its here in exist:", exist);
             console.log(numberOfItems);
             const objIndex = numberOfItems.findIndex((exist => exist.itemname == nameOfItem));
@@ -135,7 +133,9 @@ const mainForm = () => {
             numberOfItems[objIndex].price = exist.repeated * exist.originalprice;
             alert(`you got ${numberOfItems[objIndex].repeated - 1} ${nameOfItem} in the list, Do you want to 1 more`);
         } else {
-            const idItemObject = { id: itemNumber, itemname: nameOfItem, price: priceofItem, originalprice: priceofItem, repeated: 1 };
+            const dummy=idNo;
+            idNo= dummy+1;
+            const idItemObject = { itemNo: idNo, itemname: nameOfItem, price: priceofItem, originalprice: priceofItem, repeated: 1 };
             numberOfItems.push(idItemObject);
         }
        
@@ -145,24 +145,25 @@ const mainForm = () => {
     //prins all selected item details like serial number, name,price and quantity values with total price on page in table form
     function printResult() {
         let sum = 0;
+       
         $("#selectedItemsTable").show();
         $("#resultItems").empty();
        
-        for (let i = 0; i < numberOfItems.length; i++) {
+        numberOfItems.map((element)=> {
             $("#selectedItemsTable").append(`<tr>
-        <td>${i + 1}</td>
-        <td>${numberOfItems[i].itemname}</td>
-        <td>$${numberOfItems[i].price}</td>
-        <td>${numberOfItems[i].repeated}
-        <input type="button" value=" + " class="plus" name="${numberOfItems[i].itemname}$${numberOfItems[i].price}" >
-           <input type="button" value=" - " class="minus"  name="${numberOfItems[i].itemname}$${numberOfItems[i].price}" >
-        <button class="delete fa fa-trash-o" value= "${numberOfItems[i].itemname}$${numberOfItems[i].price}">
+        <td>${element.itemNo}</td>
+        <td>${element.itemname}</td>
+        <td>$${element.price}</td>
+        <td>${element.repeated}
+        <input type="button" value=" + " class="plus" name="${element.itemname}$${element.price}" >
+           <input type="button" value=" - " class="minus"  name="${element.itemname}$${element.price}" >
+        <button class="delete fa fa-trash-o" value= "${element.itemname}$${element.price}">
             </button></td></tr>`);
-            const priceOf = numberOfItems[i].price;
+            const priceOf = element.price;
             sum = +priceOf + sum;
-        }
-        $("#selectedItemsTable").append(`<tr><th></th><th>Total price:</th><th>${sum}</th>`);
-       
+        });
+        $("#selectedItemsTable").append(`<tr><th></th><th>Total price:</th><th>${sum}</th>`);  
+      
     }
 
     //its called when user clciks on '+' button

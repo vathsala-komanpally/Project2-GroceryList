@@ -960,10 +960,9 @@ var form = "\n<form id=\"form-Main\">\n\n<table id=\"selectedItemsTable\">\n<the
 
 var mainForm = function mainForm() {
   // to store items selected by the user
-  var numberOfItems = []; // number of items selected by the user
+  var numberOfItems = []; //let quantity = 0;
 
-  var itemNumber = 0; //let quantity = 0;
-
+  var idNo = 0;
   var cartNumber = 0;
   $(document).ready(function () {
     $("#itemsTable").hide();
@@ -1081,7 +1080,6 @@ var mainForm = function mainForm() {
     });
 
     if (exist) {
-      itemNumber++;
       console.log("its here in exist:", exist);
       console.log(numberOfItems);
       var objIndex = numberOfItems.findIndex(function (exist) {
@@ -1091,8 +1089,10 @@ var mainForm = function mainForm() {
       numberOfItems[objIndex].price = exist.repeated * exist.originalprice;
       alert("you got ".concat(numberOfItems[objIndex].repeated - 1, " ").concat(nameOfItem, " in the list, Do you want to 1 more"));
     } else {
+      var dummy = idNo;
+      idNo = dummy + 1;
       var idItemObject = {
-        id: itemNumber,
+        itemNo: idNo,
         itemname: nameOfItem,
         price: priceofItem,
         originalprice: priceofItem,
@@ -1108,13 +1108,11 @@ var mainForm = function mainForm() {
     var sum = 0;
     $("#selectedItemsTable").show();
     $("#resultItems").empty();
-
-    for (var i = 0; i < numberOfItems.length; i++) {
-      $("#selectedItemsTable").append("<tr>\n        <td>".concat(i + 1, "</td>\n        <td>").concat(numberOfItems[i].itemname, "</td>\n        <td>$").concat(numberOfItems[i].price, "</td>\n        <td>").concat(numberOfItems[i].repeated, "\n        <input type=\"button\" value=\" + \" class=\"plus\" name=\"").concat(numberOfItems[i].itemname, "$").concat(numberOfItems[i].price, "\" >\n           <input type=\"button\" value=\" - \" class=\"minus\"  name=\"").concat(numberOfItems[i].itemname, "$").concat(numberOfItems[i].price, "\" >\n        <button class=\"delete fa fa-trash-o\" value= \"").concat(numberOfItems[i].itemname, "$").concat(numberOfItems[i].price, "\">\n            </button></td></tr>"));
-      var priceOf = numberOfItems[i].price;
+    numberOfItems.map(function (element) {
+      $("#selectedItemsTable").append("<tr>\n        <td>".concat(element.itemNo, "</td>\n        <td>").concat(element.itemname, "</td>\n        <td>$").concat(element.price, "</td>\n        <td>").concat(element.repeated, "\n        <input type=\"button\" value=\" + \" class=\"plus\" name=\"").concat(element.itemname, "$").concat(element.price, "\" >\n           <input type=\"button\" value=\" - \" class=\"minus\"  name=\"").concat(element.itemname, "$").concat(element.price, "\" >\n        <button class=\"delete fa fa-trash-o\" value= \"").concat(element.itemname, "$").concat(element.price, "\">\n            </button></td></tr>"));
+      var priceOf = element.price;
       sum = +priceOf + sum;
-    }
-
+    });
     $("#selectedItemsTable").append("<tr><th></th><th>Total price:</th><th>".concat(sum, "</th>"));
   } //its called when user clciks on '+' button
 
@@ -1863,7 +1861,7 @@ var _about = _interopRequireDefault(require("./page/about"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 console.log("Javascript file is running");
-var appForm = "\n<form id=\"form-App\">\n<header>\n<h1>Welcome! to Lucky's Grocery Market</h1>\n<label>Please choose the items to shop from below list then:</label>\n<button id=\"finish\" type=\"submit\">Click here to Buy</button>\n<button class=\"cart\" style=\"font-size:24px\">Cart <i class=\"fa fa-shopping-cart\"></i></button>\n<marquee behavior=\"scroll\" direction=\"left\">Please check our page for more updates on groceries</marquee>\n\n</header>\n\n<div id=\"admin\">\n<label>For admins only</label>\n<a href=\"#\" id=\"myHref\">Click here</a>\n<label>to update Grocery Items</label>\n</div>\n<div class=topmenu>\n<a id=\"home\" href=\"#home\">Home</a>\n<a id=\"about\" href=\"#about\">About</a>\n<a id=\"catalogue\" href=\"#catalogue\">Catalogue</a>\n<a id=\"recipes\" href=\"#recipes\">Recipes</a>\n<a id=\"contactus\" href=\"#contactus\">Contact Us</a>\n<input type=\"text\" placeholder=\"Search..\">\n<a href=\"Cart1.aspx\" class=\"icon-shopping-cart\" style=\"font-size: 25px\"><asp:Label ID=\"lblCartCount\" runat=\"server\" CssClass=\"badge badge-warning\"  ForeColor=\"White\"/></a>\n</div>\n\n</form>\n";
+var appForm = "\n<form id=\"form-App\">\n<header>\n<h1>Welcome! to Lucky's Grocery Market</h1>\n<label>Please choose the items to shop from below list then:</label>\n<button id=\"finish\" type=\"submit\">Click here to Buy</button>\n<button class=\"cart\" style=\"font-size:24px\">Cart <i class=\"fa fa-shopping-cart\"></i></button>\n<marquee behavior=\"scroll\" direction=\"left\">Please check our page for more updates on groceries</marquee>\n\n</header>\n\n<div id=\"admin\">\n<label>For admins only</label>\n<a href=\"#\" id=\"myHref\">Click here</a>\n<label>to update Grocery Items</label>\n</div>\n<div class=topmenu>\n<a id=\"home\" href=\"#home\">Home</a>\n<a id=\"about\" href=\"#about\">About</a>\n<a id=\"catalogue\" href=\"#catalogue\">Catalogue</a>\n<a id=\"recipes\" href=\"#recipes\">Recipes</a>\n<a id=\"contactus\" href=\"#contactus\">Contact Us</a>\n<input type=\"text\" placeholder=\"Search..\">\n<a href=\"Cart1.aspx\" class=\"icon-shopping-cart\" style=\"font-size: 25px\"><asp:Label ID=\"lblCartCount\" runat=\"server\" CssClass=\"badge badge-warning\"  ForeColor=\"White\"/></a>\n</div>\n<div class=\"pageInfo\">\n<div class=\"home\">\n</div>\n<div class=\"about\">\n</div>\n<div class=\"catalogue\">\n</div>\n<div class=\"recipes\">\n</div>\n<div class=\"contactus\">\n</div>\n</div>\n\n</form>\n";
 $("body").append(appForm);
 $("body").append(_mainPageForm.default);
 $("#finish").on("click", function () {
@@ -1883,23 +1881,48 @@ $("#myHref").on('click', function () {
 });
 $("#contactus").on('click', function () {
   $("#container").hide();
-  $("body").append((0, _contactus.default)());
+  $(".home").hide();
+  $(".about").hide();
+  $(".recipes").hide();
+  $(".catalogue").hide();
+  $(".contactus").show();
+  $(".contactus").append((0, _contactus.default)());
 });
 $("#home").on('click', function () {
   $("#container").hide();
-  $("body").append((0, _home.default)());
+  $(".about").hide();
+  $(".recipes").hide();
+  $(".catalogue").hide();
+  $(".contactus").hide();
+  $(".home").show();
+  $(".home").append((0, _home.default)());
 });
 $("#recipes").on('click', function () {
   $("#container").hide();
-  $("body").append((0, _recipes.default)());
+  $(".home").hide();
+  $(".about").hide();
+  $(".catalogue").hide();
+  $(".contactus").hide();
+  $(".recipes").show();
+  $(".recipes").append((0, _recipes.default)());
 });
 $("#catalogue").on('click', function () {
   $("#container").hide();
-  $("body").append((0, _catalogue.default)());
+  $(".home").hide();
+  $(".about").hide();
+  $(".recipes").hide();
+  $(".contactus").hide();
+  $(".catalogue").show();
+  $(".catalogue").append((0, _catalogue.default)());
 });
 $("#about").on('click', function () {
   $("#container").hide();
-  $("body").append((0, _about.default)());
+  $(".home").hide();
+  $(".recipes").hide();
+  $(".catalogue").hide();
+  $(".contactus").hide();
+  $(".about").show();
+  $(".about").append((0, _about.default)());
 });
 },{"regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js","./user/loginUser":"src/user/loginUser.js","./admin/adminLogin":"src/admin/adminLogin.js","./mainPageForm":"src/mainPageForm.js","./page/contactus":"src/page/contactus.js","./page/home":"src/page/home.js","./page/recipes":"src/page/recipes.js","./page/catalogue":"src/page/catalogue.js","./page/about":"src/page/about.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -1929,7 +1952,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50165" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55690" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
