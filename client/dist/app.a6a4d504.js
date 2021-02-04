@@ -1764,7 +1764,82 @@ var adminUser = function adminUser() {
 
 var _default = adminUser;
 exports.default = _default;
-},{"./operationAdmin":"src/admin/operationAdmin.js"}],"src/app.js":[function(require,module,exports) {
+},{"./operationAdmin":"src/admin/operationAdmin.js"}],"src/page/contactus.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var form = "\n<form id=\"form-ContactUs\">\n    <div class=\"conatctus\"  style=\"padding:40px;\">\n        <h1>Contact Us:</h1>\n        <p>Adress: <br>\n        Drive, Ocean Reef, WA 6027<br>\n            Call (03) 9311 1200<br>\n            grocerystore@lucky.net.au<br><br>\n            Opening hours: <br>\n            Monday to Friday 7am to 6pm<br> \n            Saturday 10am to 4:30pm<br>\n            Sunday 11am to 4pm<br>\n        </p>\n        <p><a class=\"btn btn-primary btn-lg\" href=\"#\" role=\"button\">Learn more</a></p>\n     </div>\n</form>\n";
+
+var contactUsForm = function contactUsForm() {
+  return form;
+};
+
+var _default = contactUsForm;
+exports.default = _default;
+},{}],"src/page/home.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var form = "\n<form id=\"form-Home\">\n    <div class=\"conatctus\"  style=\"padding:40px;\">\n        <h1>Home:</h1>\n        <p>We\u2019re dedicated to finding ways to help our customer\u2019s money go further. That\u2019s why we offer \n        affordable prices every day on a wide range of products, as well as weekly Specials, Prices Dropped \n        and Low Price Always, to help you get your money\u2019s worth when you shop with us.\n        <br>\n        Every week, you'll find hundreds of new specials.\n        </p>\n        <p><a class=\"btn btn-primary btn-lg\" href=\"#\" role=\"button\">Learn more</a></p>\n     </div>\n</form>\n";
+
+var homeForm = function homeForm() {
+  return form;
+};
+
+var _default = homeForm;
+exports.default = _default;
+},{}],"src/page/recipes.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var form = "\n<form id=\"form-Recipes\">\n    <div class=\"conatctus\"  style=\"padding:40px;\">\n        <h1>Today's Recipe:</h1>\n        <p>Ingredients: <br>\n        1/2 cup cream cheese <br>\n        11/2 tbs pure icing sugar <br>\n        1 lemon, zested <br>\n        1 cup plain flour <br>\n        1 cup caster sugar<br>\n        1/4 cup cocoa, plus extra to dust<br>\n        1 tsp baking powder<br>\n        150g unsalted butter, melted<br>\n        1/2 cup milk<br>\n        2 free range eggs<br>\n        1 tsp vanilla extract<br>\n        125g raspberries, plus extra to serve<br>\n        2 tsp red food colouring<br>\n        200g 70% cocoa dark chocolate, chopped<br><br>\n        Method: <br>\n        1. Combine cream cheese, icing sugar and zest in a bowl and chill until required.<br>\n\n        2. Place flour, sugar, cocoa, baking powder, butter, milk, eggs, vanilla, raspberries, food colouring, pinch of salt and half the chocolate in a blender and process for 1 minute or until smooth.<br>\n\n        3. Divide mixture evenly between 4 x 400ml-capacity mugs until three-quarters full. Top each with remaining chocolate and 11/2 tbs water. Place onto a plate and microwave for 2 minutes or until puddings have risen \u2013 they will still be soft in the centre. To serve, top with cream cheese mixture and extra raspberries, and dust with extra cocoa.<br>\n        tip: preparation time + chilling time.\n\n        </p>\n        <p><a class=\"btn btn-primary btn-lg\" href=\"#\" role=\"button\">Learn more</a></p>\n        </div>\n</form>\n";
+
+var recipesForm = function recipesForm() {
+  return form;
+};
+
+var _default = recipesForm;
+exports.default = _default;
+},{}],"src/page/catalogue.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var form = "\n<form id=\"form-Catalogue\">\n    <div class=\"conatctus\"  style=\"padding:40px;\">\n        <h1>Catalogue of this week:</h1>\n        <p>New catalogue is comming soon\n        <br>\n        Every week, we will update a new catalogue.\n        </p>\n        <p><a class=\"btn btn-primary btn-lg\" href=\"#\" role=\"button\">Learn more</a></p>\n     </div>\n</form>\n";
+
+var catalogueForm = function catalogueForm() {
+  return form;
+};
+
+var _default = catalogueForm;
+exports.default = _default;
+},{}],"src/page/about.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var form = "\n<form id=\"form-About\">\n    <div class=\"conatctus\"  style=\"padding:40px;\">\n        <h1>About:</h1>\n        <p>We\u2019re dedicated to finding ways to help our customer\u2019s money go further. That\u2019s why we offer \n        affordable prices every day on a wide range of products, as well as weekly Specials, Prices Dropped \n        and Low Price Always, to help you get your money\u2019s worth when you shop with us.\n        <br>\n        Every week, you'll find hundreds of new specials.\n        </p>\n        <p><a class=\"btn btn-primary btn-lg\" href=\"#\" role=\"button\">Learn more</a></p>\n     </div>\n</form>\n";
+
+var aboutForm = function aboutForm() {
+  return form;
+};
+
+var _default = aboutForm;
+exports.default = _default;
+},{}],"src/app.js":[function(require,module,exports) {
 "use strict";
 
 require("regenerator-runtime/runtime");
@@ -1775,10 +1850,20 @@ var _adminLogin = _interopRequireDefault(require("./admin/adminLogin"));
 
 var _mainPageForm = _interopRequireDefault(require("./mainPageForm"));
 
+var _contactus = _interopRequireDefault(require("./page/contactus"));
+
+var _home = _interopRequireDefault(require("./page/home"));
+
+var _recipes = _interopRequireDefault(require("./page/recipes"));
+
+var _catalogue = _interopRequireDefault(require("./page/catalogue"));
+
+var _about = _interopRequireDefault(require("./page/about"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 console.log("Javascript file is running");
-var appForm = "\n<form id=\"form-App\">\n<header>\n<h1>Welcome! to Lucky's Grocery Market</h1>\n<label>Please choose the items to shop from below list then:</label>\n<button id=\"finish\" type=\"submit\">Click here to Buy</button>\n<button class=\"cart\" style=\"font-size:24px\">Cart <i class=\"fa fa-shopping-cart\"></i></button>\n<marquee behavior=\"scroll\" direction=\"left\">Please check our page for more updates on groceries</marquee>\n\n</header>\n\n<div id=\"admin\">\n<label>For admins only</label>\n<a href=\"#\" id=\"myHref\">Click here</a>\n<label>to update Grocery Items</label>\n</div>\n<div class=topmenu>\n<a href=\"#home\">Home</a>\n<a href=\"#about\">About</a>\n<a href=\"#catalogue\">Catalogue</a>\n<a href=\"#recipes\">Recipes</a>\n<a href=\"#contactus\">Contact Us</a>\n<input type=\"text\" placeholder=\"Search..\">\n<a href=\"Cart1.aspx\" class=\"icon-shopping-cart\" style=\"font-size: 25px\"><asp:Label ID=\"lblCartCount\" runat=\"server\" CssClass=\"badge badge-warning\"  ForeColor=\"White\"/></a>\n</div>\n\n</form>\n";
+var appForm = "\n<form id=\"form-App\">\n<header>\n<h1>Welcome! to Lucky's Grocery Market</h1>\n<label>Please choose the items to shop from below list then:</label>\n<button id=\"finish\" type=\"submit\">Click here to Buy</button>\n<button class=\"cart\" style=\"font-size:24px\">Cart <i class=\"fa fa-shopping-cart\"></i></button>\n<marquee behavior=\"scroll\" direction=\"left\">Please check our page for more updates on groceries</marquee>\n\n</header>\n\n<div id=\"admin\">\n<label>For admins only</label>\n<a href=\"#\" id=\"myHref\">Click here</a>\n<label>to update Grocery Items</label>\n</div>\n<div class=topmenu>\n<a id=\"home\" href=\"#home\">Home</a>\n<a id=\"about\" href=\"#about\">About</a>\n<a id=\"catalogue\" href=\"#catalogue\">Catalogue</a>\n<a id=\"recipes\" href=\"#recipes\">Recipes</a>\n<a id=\"contactus\" href=\"#contactus\">Contact Us</a>\n<input type=\"text\" placeholder=\"Search..\">\n<a href=\"Cart1.aspx\" class=\"icon-shopping-cart\" style=\"font-size: 25px\"><asp:Label ID=\"lblCartCount\" runat=\"server\" CssClass=\"badge badge-warning\"  ForeColor=\"White\"/></a>\n</div>\n\n</form>\n";
 $("body").append(appForm);
 $("body").append(_mainPageForm.default);
 $("#finish").on("click", function () {
@@ -1787,6 +1872,7 @@ $("#finish").on("click", function () {
 }); // $(".cart").on("click", function(){
 //    //how to remove mainform html content here
 //   // $("#form-Main").empty();
+//    $("#container").hide();
 //     console.log("inside here");
 //     //how to take data in printresults function to here
 // });
@@ -1795,7 +1881,27 @@ $("#myHref").on('click', function () {
   $("body").empty();
   $("body").append((0, _adminLogin.default)());
 });
-},{"regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js","./user/loginUser":"src/user/loginUser.js","./admin/adminLogin":"src/admin/adminLogin.js","./mainPageForm":"src/mainPageForm.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+$("#contactus").on('click', function () {
+  $("#container").hide();
+  $("body").append((0, _contactus.default)());
+});
+$("#home").on('click', function () {
+  $("#container").hide();
+  $("body").append((0, _home.default)());
+});
+$("#recipes").on('click', function () {
+  $("#container").hide();
+  $("body").append((0, _recipes.default)());
+});
+$("#catalogue").on('click', function () {
+  $("#container").hide();
+  $("body").append((0, _catalogue.default)());
+});
+$("#about").on('click', function () {
+  $("#container").hide();
+  $("body").append((0, _about.default)());
+});
+},{"regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js","./user/loginUser":"src/user/loginUser.js","./admin/adminLogin":"src/admin/adminLogin.js","./mainPageForm":"src/mainPageForm.js","./page/contactus":"src/page/contactus.js","./page/home":"src/page/home.js","./page/recipes":"src/page/recipes.js","./page/catalogue":"src/page/catalogue.js","./page/about":"src/page/about.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -1823,7 +1929,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49487" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50165" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

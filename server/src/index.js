@@ -8,6 +8,7 @@ const userRouter = require("./routes/userRoutes");
 const adminRouter = require("./routes/adminRoutes");
 const groceryRouter = require("./routes/groceryRoutes");
 
+
 mongoose.connect("mongodb://localhost:27017/GroceryStoreFullStack", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -28,6 +29,7 @@ app.use(cors()); // CORS // Cross Origin Resource Sharing
 app.use("/api/users", userRouter);
 app.use("/api/admins", adminRouter);
 app.use("/api/groceryItems", groceryRouter);
+
 
 app.listen(port, () =>
   console.log(`Fruit app is listening at http://localhost:${port}`)
