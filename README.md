@@ -3,14 +3,13 @@ extension to project1-Grocery list.
 This page allows admin to add, update and delete items of grocery store.
 when admin click on link provided
 
-Then admin has to login to do these operation here please use these:
+Then admin has to login to do these operation please use:
 user name: vathsala
 password: vathsaladmin
 
-//but it dont allow to add category names for now..has to include this feature in future
+When customers/users clicks on proceed to buy items on page, it asks user to login 
+There is a create an account option for new users to signup
 
-It has login page for customers/ users
-User as to login to proceed buying items from the page 
-It has register new user page pops up by clciking create account to Login
-
-When user choose items by clicking on them it items selected are displayed in a table format with +, - and delete buttons..these are used to add more, remove existed quantity of items, and delete items from list
+When user choose items by clciking addtocart, all selected items adds to tha cart, 
+The cart will display items in a table format with +, - and delete buttons..
+....these are used to add more, remove existed quantity of items, and delete items from list

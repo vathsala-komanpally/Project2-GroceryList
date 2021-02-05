@@ -1333,72 +1333,32 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var form = "\n<form id=\"form-Add\">\n<h1>Add new items</h1>\n  <div class = \"form-group\">\n     <label for=\"itemname\">Name of item</label>\n     <input type=\"text\" class=\"form-control\" id=\"itemname\" placeholder=\"Enter a name of the item to add\" name=\"itemname\">\n  </div>\n   <div class = \"form-group\">\n     <label for=\"price\">Price</label>\n     <input type=\"text\" class=\"form-control\" id=\"price\" placeholder=\"Enter a price of item\" name=\"price\">\n  </div>\n  <div class = \"form-group\">\n  <label for=\"noofitems\">Number Of Items</label>\n  <input type=\"text\" class=\"form-control\" id=\"noofitems\" placeholder=\"Enter no. of items\" name=\"noofitems\">\n</div>\n  <fieldset class=\"form-group\">\n    <legend class=\"col-form-label\">Ready to Eat?</legend>\n    <div class=\"form-check form-check-inline\">\n      <input class=\"form-check-input\" type=\"radio\" id=\"readyToEatYes\" name =\"readyToEat\" value=\"true\">\n      <label class=\"form-check-label\" for=\"readyToEatYes\">Yes</label>\n    </div>\n    <div class=\"form-check form-check-inline\">\n      <input class=\"form-check-input\" type=\"radio\" id=\"readyToEatNo\" name =\"readyToEat\" value=\"false\">\n      <label class=\"form-check-label\" for=\"readyToEatNo\">No</label>\n    </div>\n  </fieldset>\n  <div class = \"form-group\">\n  <label for=\"categoryId\">Choose a category:</label>\n       <select name=\"categoryId\" id=\"categories\">\n        </select>\n  </div>\n  <button type=\"submit\" class=\"btn btn-primary\">Add Item</button>\n  </form>\n";
+var form = "\n<form id=\"form-Add\">\n<h1>Add new items</h1>\n<div class = \"form-group\">\n<label for=\"categoryType\">Enter category name:</label>\n<input type=\"text\" class=\"form-control\" id=\"categoryname\" placeholder=\"Enter a name of category\" name=\"categoryname\">\n<input type=\"button\" id=\"idcategoryType\" value=\"Add category\">\n</div>\n<div class = \"form-group\">\n<label for=\"categoryId\">Choose a category:</label>\n     <select name=\"categoryId\" id=\"categories\">\n     <option value=\"\"</option>\n      </select>\n</div>\n  <div class = \"form-group\">\n     <label for=\"itemname\">Name of item</label>\n     <input type=\"text\" class=\"form-control\" id=\"itemname\" placeholder=\"Enter a name of the item to add\" name=\"itemname\">\n  </div>\n   <div class = \"form-group\">\n     <label for=\"price\">Price</label>\n     <input type=\"text\" class=\"form-control\" id=\"price\" placeholder=\"Enter a price of item\" name=\"price\">\n  </div>\n  <div class = \"form-group\">\n  <label for=\"noofitems\">Number Of Items</label>\n  <input type=\"text\" class=\"form-control\" id=\"noofitems\" placeholder=\"Enter no. of items\" name=\"noofitems\">\n</div>\n  <fieldset class=\"form-group\">\n    <legend class=\"col-form-label\">Ready to Eat?</legend>\n    <div class=\"form-check form-check-inline\">\n      <input class=\"form-check-input\" type=\"radio\" id=\"readyToEatYes\" name =\"readyToEat\" value=\"true\">\n      <label class=\"form-check-label\" for=\"readyToEatYes\">Yes</label>\n    </div>\n    <div class=\"form-check form-check-inline\">\n      <input class=\"form-check-input\" type=\"radio\" id=\"readyToEatNo\" name =\"readyToEat\" value=\"false\">\n      <label class=\"form-check-label\" for=\"readyToEatNo\">No</label>\n    </div>\n  </fieldset>\n \n  <button type=\"submit\" class=\"btn btn-primary\">Add Item</button>\n  </form>\n";
 
 var newItem = function newItem() {
-  // appending category values from database to form
-  var categoryResponse = $.ajax({
-    type: "GET",
-    url: "/api/groceryItems/category/all"
-  }).then(function (groceyItemCategories) {
-    console.log("groceyItemCategories", groceyItemCategories);
-    var optionsHtml = "";
-    groceyItemCategories.forEach(function (itemEl) {
-      console.log("itemEl", itemEl);
-      optionsHtml = optionsHtml + "<option value=".concat(itemEl._id, ">").concat(itemEl.name, "</option>");
-      console.log("optionsHtml", optionsHtml);
-    });
-    console.log("optionsHtml", optionsHtml);
-    $("#categories").append(optionsHtml);
-  }); //form submit button handler logic
-  // async is a keyword for the function declaration
-
-  $(document).on('submit', "form#form-Add", /*#__PURE__*/function () {
+  $(document).on('click', "#idcategoryType", /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(e) {
-      var requestBody, response;
+      var requestB, categoryRespon;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               e.preventDefault();
-              console.log($("#itemname").val());
-              console.log($("#price").val());
-              console.log($("#noofitems").val());
-              console.log($("input[name=\"readyToEat\"]:checked").val());
-              console.log($('#categories').val());
-              console.log("Data entered"); // this is the object that gets sent as part of the post request
-
-              requestBody = {
-                itemname: $("#itemname").val(),
-                price: $("#price").val(),
-                noOfItems: $("#noofitems").val(),
-                readyToEat: $("input[name=\"readyToEat\"]:checked").val(),
-                categoryId: $("#categories").val()
+              requestB = {
+                name: $("#categoryname").val()
               };
-              console.log("requestBody", requestBody); // Making the call to post request
-              // await is used during the promise handling
-
-              _context.next = 11;
-              return $.ajax({
+              console.log(requestB);
+              categoryRespon = $.ajax({
                 type: "POST",
-                // OR GET
-                url: "/api/groceryItems/new-item",
+                url: "/api/groceryItems/category",
                 contentType: "application/json",
-                data: JSON.stringify(requestBody)
+                data: JSON.stringify(requestB)
               });
+              console.log("inside here");
+              $("#categories").empty();
+              categoryDispaly();
 
-            case 11:
-              response = _context.sent;
-              //.then((data)=>{ //here u can use response or data
-              console.log("data:", response); // Logging response back to the console
-
-              console.log("This is the response I get back!: ".concat(response));
-              window.alert("Fruit Added!");
-              $("#itemname").val("");
-              $("#price").val("");
-              $("#noofitems").val("");
-
-            case 18:
+            case 7:
             case "end":
               return _context.stop();
           }
@@ -1408,6 +1368,69 @@ var newItem = function newItem() {
 
     return function (_x) {
       return _ref.apply(this, arguments);
+    };
+  }());
+
+  var categoryDispaly = function categoryDispaly() {
+    // appending category values from database to form
+    var categoryResponse = $.ajax({
+      type: "GET",
+      url: "/api/groceryItems/category/all"
+    }).then(function (groceyItemCategories) {
+      var optionsHtml = "";
+      groceyItemCategories.forEach(function (itemEl) {
+        optionsHtml = optionsHtml + "<option value=".concat(itemEl._id, ">").concat(itemEl.name, "</option>");
+      });
+      $("#categories").append(optionsHtml);
+    });
+  };
+
+  categoryDispaly(); //form submit button handler logic
+  // async is a keyword for the function declaration
+
+  $(document).on('submit', "form#form-Add", /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(e) {
+      var requestBody, response;
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              e.preventDefault(); // this is the object that gets sent as part of the post request
+
+              requestBody = {
+                itemname: $("#itemname").val(),
+                price: $("#price").val(),
+                noOfItems: $("#noofitems").val(),
+                readyToEat: $("input[name=\"readyToEat\"]:checked").val(),
+                categoryId: $("#categories").val()
+              };
+              console.log("requestBody", requestBody);
+              _context2.next = 5;
+              return $.ajax({
+                type: "POST",
+                // OR GET
+                url: "/api/groceryItems/new-item",
+                contentType: "application/json",
+                data: JSON.stringify(requestBody)
+              });
+
+            case 5:
+              response = _context2.sent;
+              window.alert("Item Added!");
+              $("#itemname").val("");
+              $("#price").val("");
+              $("#noofitems").val("");
+
+            case 10:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    return function (_x2) {
+      return _ref2.apply(this, arguments);
     };
   }());
   return form;
@@ -1952,7 +1975,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55690" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56376" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -8,6 +8,7 @@ import homeForm from "./page/home";
 import recipesForm from "./page/recipes";
 import catalogueForm from "./page/catalogue";
 import aboutForm from "./page/about";
+
 const appForm = `
 <form id="form-App">
 <header>
