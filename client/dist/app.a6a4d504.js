@@ -976,7 +976,8 @@ var mainForm = function mainForm() {
     groceyItemCategories.forEach(function (itemEl) {
       $("#groceryList").append("<a class=\"category\" href=\"#\" name=\"".concat(itemEl._id, "\">").concat(itemEl.name, "</a>"));
     });
-  });
+  }); //when user clicks on Cart button
+
   $(document).on("click", ".cart", /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(e) {
       return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -1100,8 +1101,7 @@ var mainForm = function mainForm() {
       };
       numberOfItems.push(idItemObject);
     }
-  }; //add this table data to the cart    
-  //prins all selected item details like serial number, name,price and quantity values with total price on page in table form
+  }; //prins all selected item details like serial number, name,price and quantity values with total price on page in table form
 
 
   function printResult() {
@@ -1114,6 +1114,7 @@ var mainForm = function mainForm() {
       sum = +priceOf + sum;
     });
     $("#selectedItemsTable").append("<tr><th></th><th>Total price:</th><th>".concat(sum, "</th>"));
+    $("#form-Main").append("<h4>Please Login to continue</h4>");
   } //its called when user clciks on '+' button
 
 
@@ -1129,15 +1130,7 @@ var mainForm = function mainForm() {
               nameOfItem = newitem.split('$')[0];
               priceofItem = newitem.split('$')[1];
               selectedItems(nameOfItem, priceofItem);
-              printResult(); // // this can be added to increse price and quantity in the list
-              // const $row=$(`.${nameOfItem}`); 
-              // const itemNumber=  parseInt($row.find("td:eq(0)").text());
-              // const tdQuantity = parseInt($row.find("td:eq(3)").text());
-              // const quantity=tdQuantity+1;
-              // const doublePrice = priceofItem*2;
-              // console.log("DoublePrice:",doublePrice, "DoubleQuantity:", quantity);
-              // $row.find("td:eq(2)").text(`$${doublePrice}`);
-              // $row.find("td:eq(3)").text(`${quantity}`);
+              printResult();
 
             case 6:
             case "end":
@@ -1884,7 +1877,7 @@ var _about = _interopRequireDefault(require("./page/about"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 console.log("Javascript file is running");
-var appForm = "\n<form id=\"form-App\">\n<header>\n<h1>Welcome! to Lucky's Grocery Market</h1>\n<label>Please choose the items to shop from below list then:</label>\n<button id=\"finish\" type=\"submit\">Click here to Buy</button>\n<button class=\"cart\" style=\"font-size:24px\">Cart <i class=\"fa fa-shopping-cart\"></i></button>\n<marquee behavior=\"scroll\" direction=\"left\">Please check our page for more updates on groceries</marquee>\n\n</header>\n\n<div id=\"admin\">\n<label>For admins only</label>\n<a href=\"#\" id=\"myHref\">Click here</a>\n<label>to update Grocery Items</label>\n</div>\n<div class=topmenu>\n<a id=\"home\" href=\"#home\">Home</a>\n<a id=\"about\" href=\"#about\">About</a>\n<a id=\"catalogue\" href=\"#catalogue\">Catalogue</a>\n<a id=\"recipes\" href=\"#recipes\">Recipes</a>\n<a id=\"contactus\" href=\"#contactus\">Contact Us</a>\n<input type=\"text\" placeholder=\"Search..\">\n<a href=\"Cart1.aspx\" class=\"icon-shopping-cart\" style=\"font-size: 25px\"><asp:Label ID=\"lblCartCount\" runat=\"server\" CssClass=\"badge badge-warning\"  ForeColor=\"White\"/></a>\n</div>\n<div class=\"pageInfo\">\n<div class=\"home\">\n</div>\n<div class=\"about\">\n</div>\n<div class=\"catalogue\">\n</div>\n<div class=\"recipes\">\n</div>\n<div class=\"contactus\">\n</div>\n</div>\n\n</form>\n";
+var appForm = "\n<form id=\"form-App\">\n<header>\n<h1>Welcome! to Lucky's Grocery Market</h1>\n<label>Please choose the items to shop from below list then click:</label>\n<button id=\"finish\" type=\"submit\">Login</button>\n<button class=\"cart\" style=\"font-size:24px\">Cart <i class=\"fa fa-shopping-cart\"></i></button>\n<marquee behavior=\"scroll\" direction=\"left\">Please check our page for more updates on groceries</marquee>\n\n</header>\n\n<div id=\"admin\">\n<label>For admins only</label>\n<a href=\"#\" id=\"myHref\">Click here</a>\n<label>to update Grocery Items</label>\n</div>\n<div class=topmenu>\n<a id=\"home\" href=\"#home\">Home</a>\n<a id=\"about\" href=\"#about\">About</a>\n<a id=\"catalogue\" href=\"#catalogue\">Catalogue</a>\n<a id=\"recipes\" href=\"#recipes\">Recipes</a>\n<a id=\"contactus\" href=\"#contactus\">Contact Us</a>\n<input type=\"text\" placeholder=\"Search..\">\n<a href=\"Cart1.aspx\" class=\"icon-shopping-cart\" style=\"font-size: 25px\"><asp:Label ID=\"lblCartCount\" runat=\"server\" CssClass=\"badge badge-warning\"  ForeColor=\"White\"/></a>\n</div>\n<div class=\"pageInfo\">\n<div class=\"home\">\n</div>\n<div class=\"about\">\n</div>\n<div class=\"catalogue\">\n</div>\n<div class=\"recipes\">\n</div>\n<div class=\"contactus\">\n</div>\n</div>\n\n</form>\n";
 $("body").append(appForm);
 $("body").append(_mainPageForm.default);
 $("#finish").on("click", function () {
@@ -1975,7 +1968,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62569" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50971" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

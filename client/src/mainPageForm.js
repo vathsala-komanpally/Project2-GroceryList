@@ -67,6 +67,7 @@ const mainForm = () => {
         });
     });
 
+    //when user clicks on Cart button
     $(document).on("click", ".cart", async (e) => {
         e.preventDefault();
         $("#container").hide();
@@ -106,8 +107,7 @@ const mainForm = () => {
         });
     }
 
-   
-
+ 
     $(document).on("click", ".AddToCart", async (e) => {
         e.preventDefault();
         const dummy=cartNumber;
@@ -140,8 +140,7 @@ const mainForm = () => {
         }
        
     }
-
-//add this table data to the cart    
+ 
     //prins all selected item details like serial number, name,price and quantity values with total price on page in table form
     function printResult() {
         let sum = 0;
@@ -163,7 +162,7 @@ const mainForm = () => {
             sum = +priceOf + sum;
         });
         $("#selectedItemsTable").append(`<tr><th></th><th>Total price:</th><th>${sum}</th>`);  
-      
+        $("#form-Main").append(`<h4>Please Login to continue</h4>`); 
     }
 
     //its called when user clciks on '+' button
@@ -174,15 +173,6 @@ const mainForm = () => {
         const priceofItem = newitem.split('$')[1];
         selectedItems(nameOfItem, priceofItem);
         printResult();
-        // // this can be added to increse price and quantity in the list
-        // const $row=$(`.${nameOfItem}`); 
-        // const itemNumber=  parseInt($row.find("td:eq(0)").text());
-        // const tdQuantity = parseInt($row.find("td:eq(3)").text());
-        // const quantity=tdQuantity+1;
-        // const doublePrice = priceofItem*2;
-        // console.log("DoublePrice:",doublePrice, "DoubleQuantity:", quantity);
-        // $row.find("td:eq(2)").text(`$${doublePrice}`);
-        // $row.find("td:eq(3)").text(`${quantity}`);
     });
 
 

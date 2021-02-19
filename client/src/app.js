@@ -13,8 +13,8 @@ const appForm = `
 <form id="form-App">
 <header>
 <h1>Welcome! to Lucky's Grocery Market</h1>
-<label>Please choose the items to shop from below list then:</label>
-<button id="finish" type="submit">Click here to Buy</button>
+<label>Please choose the items to shop from below list then click:</label>
+<button id="finish" type="submit">Login</button>
 <button class="cart" style="font-size:24px">Cart <i class="fa fa-shopping-cart"></i></button>
 <marquee behavior="scroll" direction="left">Please check our page for more updates on groceries</marquee>
 
