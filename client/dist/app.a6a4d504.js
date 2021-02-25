@@ -1728,7 +1728,7 @@ var form = "\n  <form id=\"admin-Login\">\n  <h1>Admin Login</h1>\n  <h6>please 
 var adminUser = function adminUser() {
   $(document).on("submit", "#admin-Login", /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(event) {
-      var formData, response;
+      var formData;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -1738,35 +1738,32 @@ var adminUser = function adminUser() {
               formData = {
                 username: $("input[name='username']").val(),
                 password: $("input[name='password']").val()
-              };
-              _context.prev = 2;
-              _context.next = 5;
-              return $.ajax({
-                type: "POST",
-                url: "/api/admins/login",
-                contentType: "application/json",
-                data: JSON.stringify(formData)
-              });
+              }; //   try {
+              //     const response = await $.ajax({
+              //       type: "POST",
+              //       url: "/api/admins/login",
+              //       contentType: "application/json",
+              //       data: JSON.stringify(formData),
+              //     });
+              //     console.log(response);
+              //     $("body").empty();
+              //     $("body").append(operationsOfAdmin());
+              //   } catch (err) {
+              //     $("body").append("<div>Invalid email/pass provided!</div>");
+              //   }
 
-            case 5:
-              response = _context.sent;
-              console.log(response);
-              $("body").empty();
-              $("body").append((0, _operationAdmin.default)());
-              _context.next = 14;
-              break;
+              if (formData.username == "vathsala" && formData.password == "vathsaladmin") {
+                $("body").append((0, _operationAdmin.default)());
+              } else {
+                $("body").append("please enter currect username and password");
+              }
 
-            case 11:
-              _context.prev = 11;
-              _context.t0 = _context["catch"](2);
-              $("body").append("<div>Invalid email/pass provided!</div>");
-
-            case 14:
+            case 3:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[2, 11]]);
+      }, _callee);
     }));
 
     return function (_x) {
@@ -1968,7 +1965,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50971" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49547" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

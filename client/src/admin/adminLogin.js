@@ -24,23 +24,29 @@ const adminUser = () => {
       username: $("input[name='username']").val(),
       password: $("input[name='password']").val(),
     };
-    try {
-      const response = await $.ajax({
-        type: "POST",
-        url: "/api/admins/login",
-        contentType: "application/json",
-        data: JSON.stringify(formData),
-      });
-      console.log(response);
-      $("body").empty();
+  //   try {
+  //     const response = await $.ajax({
+  //       type: "POST",
+  //       url: "/api/admins/login",
+  //       contentType: "application/json",
+  //       data: JSON.stringify(formData),
+  //     });
+  //     console.log(response);
+  //     $("body").empty();
 
-      $("body").append(operationsOfAdmin());
-    } catch (err) {
-      $("body").append("<div>Invalid email/pass provided!</div>");
-    }
+  //     $("body").append(operationsOfAdmin());
+  //   } catch (err) {
+  //     $("body").append("<div>Invalid email/pass provided!</div>");
+  //   }
+   
+   if(formData.username=="vathsala" && formData.password=="vathsaladmin"){
+   $("body").append(operationsOfAdmin());
+   }else{
+    $("body").append("please enter currect username and password");
+   }
   });
-
   return form;
+
 };
 
 export default adminUser;
