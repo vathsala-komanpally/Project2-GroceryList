@@ -1,4 +1,4 @@
-
+import loginUser from "./user/loginUser";
 const form = `
 <form id="form-Main">
 
@@ -48,7 +48,6 @@ const form = `
 const mainForm = () => {
     // to store items selected by the user
     let numberOfItems = [];
-    //let quantity = 0;
     let idNo=0;
     let cartNumber=0;
 
@@ -57,7 +56,7 @@ const mainForm = () => {
         $("#selectedItemsTable").hide();
         });
 
-    //getting all categry names from mongodb collections then dispalying that on page in the form fixed side bar
+    //To get all categry names from mongodb then dispalying that on page in the form fixed side bar
     $.ajax({
         type: "GET",
         url: "/api/groceryItems/category/all",
@@ -71,9 +70,16 @@ const mainForm = () => {
     $(document).on("click", ".cart", async (e) => {
         e.preventDefault();
         $("#container").hide();
+        $("#form-Main").append('<button id="checkOut" type="submit">CheckOut</button>');
         printResult();
      });
 
+    //  $(document).on("click", "#checkOut", async (e) =>  {
+    //     e.preventDefault();
+    //     $("#selectedItemsTable").hide();
+    //      $("#form-Main").append(loginUser());
+    // });
+    
     $(document).on("click", ".category", async (e) => {
         e.preventDefault();
         const categoryId = e.target.name;
@@ -89,14 +95,12 @@ const mainForm = () => {
         // number of items selected by the user
         let itemNumber = 0;
 
-        //$(".main").append(`<ol id=${categoryName}></ol>`);
         $.ajax({
             type: "GET",
             url: `/api/groceryItems/category/${categoryId}`,
         }).then((categoryItems) => {
             categoryItems.forEach((element) => {
                 itemNumber = itemNumber + 1;
-                //$(`#${categoryName}`).append(`<li><input class="itemNames" type="button" name="${element.itemname}" value="${element.itemname} $${element.price}"> </li>`);
                 $("#itemsOfTable").append(`<tr class="${element.itemname}">
                 <td>${itemNumber}</td>
                 <td>${element.itemname}</td>
@@ -126,8 +130,6 @@ const mainForm = () => {
        
         const exist = numberOfItems.find(({ itemname }) => itemname === nameOfItem);
         if (exist) {
-            console.log("its here in exist:", exist);
-            console.log(numberOfItems);
             const objIndex = numberOfItems.findIndex((exist => exist.itemname == nameOfItem));
             numberOfItems[objIndex].repeated = exist.repeated + 1;
             numberOfItems[objIndex].price = exist.repeated * exist.originalprice;
@@ -162,7 +164,6 @@ const mainForm = () => {
             sum = +priceOf + sum;
         });
         $("#selectedItemsTable").append(`<tr><th></th><th>Total price:</th><th>${sum}</th>`);  
-        $("#form-Main").append(`<h4>Please Login to continue</h4>`); 
     }
 
     //its called when user clciks on '+' button
@@ -182,8 +183,6 @@ const mainForm = () => {
         const newitem = e.target.name;
         const nameOfItem = newitem.split('$')[0];
         const priceofItem = newitem.split('$')[1];
-        console.log(priceofItem);
-        console.log(numberOfItems);
         removeItems(nameOfItem);
     });
 
@@ -217,9 +216,6 @@ const mainForm = () => {
         alert(`${nameOfItem} is removed from the list`);
         printResult();
     }
-
-
-
     return form;
 };
 

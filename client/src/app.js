@@ -14,7 +14,7 @@ const appForm = `
 <header>
 <h1>Welcome! to Lucky's Grocery Market</h1>
 <label>Please choose the items to shop from below list then click:</label>
-<button id="finish" type="submit">Login</button>
+<button id="login" type="submit">Login</button>
 <button class="cart" style="font-size:24px">Cart <i class="fa fa-shopping-cart"></i></button>
 <marquee behavior="scroll" direction="left">Please check our page for more updates on groceries</marquee>
 
@@ -53,18 +53,10 @@ const appForm = `
 $("body").append(appForm);
 $("body").append(mainForm);
 
-$("#finish").on("click", function () {
+$("#login").on("click", function () {
     $("body").empty();
     $("body").append(loginUser());
 });
-
-// $(".cart").on("click", function(){
-//    //how to remove mainform html content here
-//   // $("#form-Main").empty();
-//    $("#container").hide();
-//     console.log("inside here");
-//     //how to take data in printresults function to here
-// });
 
 $("#myHref").on('click', function () {
     $("body").empty();
@@ -100,7 +92,6 @@ $("#catalogue").on('click', function () {
 });
 
 $("#about").on('click', function () {
-
     $("#container").hide();
     $(".home").hide(); $(".recipes").hide(); $(".catalogue").hide();$(".contactus").hide();
     $(".about").show(); 

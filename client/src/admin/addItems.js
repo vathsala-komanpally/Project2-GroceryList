@@ -1,4 +1,3 @@
-
 const form = `
 <form id="form-Add">
 <h1>Add new items</h1>
@@ -49,14 +48,12 @@ const newItem = () => {
     const requestB ={
       name: $("#categoryname").val(),
     };
-    console.log(requestB);
     const categoryRespon = $.ajax({
       type: "POST",
       url: "/api/groceryItems/category",
       contentType: "application/json",
       data: JSON.stringify(requestB),
     });
-    console.log("inside here");
     $("#categories").empty();
     categoryDispaly();
   });
@@ -77,10 +74,8 @@ const categoryDispaly=()=>{
 categoryDispaly();
   
   //form submit button handler logic
-  // async is a keyword for the function declaration
   $(document).on('submit', "form#form-Add", async (e) => {
     e.preventDefault();
-  
     // this is the object that gets sent as part of the post request
     const requestBody = {
       itemname: $("#itemname").val(),
@@ -89,8 +84,6 @@ categoryDispaly();
       readyToEat: $(`input[name="readyToEat"]:checked`).val(),
       categoryId: $("#categories").val(),
     };
-  
-    console.log("requestBody", requestBody);
 
     const response = await $.ajax({
       type: "POST", // OR GET
@@ -102,8 +95,6 @@ categoryDispaly();
     $("#itemname").val("");
     $("#price").val("");
     $("#noofitems").val("");
-
-
   });
   return form;
 };

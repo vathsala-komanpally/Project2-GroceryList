@@ -52,7 +52,6 @@ const updateItem = () => {
   // user choosen category items in that list
   $(document).on("change", ".categoryname", async (e) => {
     e.preventDefault();
-    console.log("inside here");
     const categoryId = e.target.value;
     itemsOfCategory(categoryId);
   });
@@ -83,8 +82,7 @@ const updateItem = () => {
       readyToEat: $(`input[name="readyToEat"]:checked`).val(),
       categoryId: $("#categories").val(),
     };
-
-    console.log(requestBody);
+    
     const response = await $.ajax({
       type: "PATCH", // OR GET
       url: `/api/groceryItems/update-item/${idofItem}`,

@@ -17,11 +17,11 @@ h1 {
 }
 
 /* Style the button checkout */
-#finish {
+#login, #checkOut {
   width: 150px;
   height: 40px;
   color: white;
-  background-color: #812929;
+  background-color: #913b3b;
 }
 .AddToCart {
   width: 120px;
@@ -174,13 +174,13 @@ footer {
   border: 2px solid rgb(134, 87, 101);
 }
 
-#register-new-user {
+/* #register-new-user {
   position: absolute;
   top: 55%;
   left: 40%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-}
+} */
 
 
 /*# sourceMappingURL=/style.e308ff8e.css.map */

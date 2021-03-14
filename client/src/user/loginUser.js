@@ -1,5 +1,4 @@
 import newUser from "./signupUser";
-import mainForm from "../mainPageForm";
 
 const form = `
   <form id="login-user">
@@ -14,8 +13,9 @@ const form = `
       <input type="password" class="form-control" placeholder="Please enter password" name="password">
     </div>
     <button type="submit" class="btn btn-primary">Login</button>
-  </form>
+  
   <button id="register-new-user" class="btn btn-primary">Create account to Login </button>
+  </form>
 `;
 
 const loginUser = () => {
@@ -35,10 +35,7 @@ const loginUser = () => {
         contentType: "application/json",
         data: JSON.stringify(formData),
       });
-      console.log(response);
       $("body").empty();
-      //how to get data of user selected items of main page to here details here:
-      //$("body").append(mainForm());
     } catch (err) {
       $("body").append("<div>Invalid email/pass provided!</div>");
     }

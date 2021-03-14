@@ -45,7 +45,6 @@ const newUser = () => {
         data: JSON.stringify(formData),
       });
      
-      console.log(response.email);
       // Clear form by calling empty function
       $("body").empty();
 
