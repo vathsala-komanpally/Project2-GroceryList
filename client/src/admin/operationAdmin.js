@@ -4,7 +4,6 @@ import deleteItem from "./deleteItem";
 
 const form = `
 <form id="adminOperations">
-<h1>List of things Admin can do here:</h1>
 <label>please chooose add to add new items <br>
 or update to make any changes to existing items<br>
 or delete to delete any items

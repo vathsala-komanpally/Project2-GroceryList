@@ -1329,7 +1329,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var form = "\n<form id=\"adminOperations\">\n<h1>List of things Admin can do here:</h1>\n<label>please chooose add to add new items <br>\nor update to make any changes to existing items<br>\nor delete to delete any items\n</label><br>\n<button type=\"button\" id=\"add\" class=\"btn btn-primary\">Add</button>\n<button type=\"button\" id=\"update\" class=\"btn btn-primary\">Update</button>\n<button type=\"button\" id=\"delete\" class=\"btn btn-primary\">Delete</button>\n</form>\n";
+var form = "\n<form id=\"adminOperations\">\n<label>please chooose add to add new items <br>\nor update to make any changes to existing items<br>\nor delete to delete any items\n</label><br>\n<button type=\"button\" id=\"add\" class=\"btn btn-primary\">Add</button>\n<button type=\"button\" id=\"update\" class=\"btn btn-primary\">Update</button>\n<button type=\"button\" id=\"delete\" class=\"btn btn-primary\">Delete</button>\n</form>\n";
 
 var operationsByAdmin = function operationsByAdmin() {
   $(document).on("click", "#add", /*#__PURE__*/function () {
@@ -1518,18 +1518,35 @@ var mainForm = function mainForm() {
     return function (_x) {
       return _ref.apply(this, arguments);
     };
-  }()); //  $(document).on("click", "#checkOut", async (e) =>  {
-  //     e.preventDefault();
-  //     $("#selectedItemsTable").hide();
-  //      $("#form-Main").append(loginUser());
-  // });
-
-  $(document).on("click", ".category", /*#__PURE__*/function () {
+  }());
+  $(document).on("click", "#checkOut", /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(e) {
-      var categoryId, categoryName;
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
+            case 0:
+              e.preventDefault();
+              $("#selectedItemsTable").hide();
+              $("#form-Main").append((0, _loginUser.default)());
+
+            case 3:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    return function (_x2) {
+      return _ref2.apply(this, arguments);
+    };
+  }());
+  $(document).on("click", ".category", /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(e) {
+      var categoryId, categoryName;
+      return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
             case 0:
               e.preventDefault();
               categoryId = e.target.name;
@@ -1540,14 +1557,14 @@ var mainForm = function mainForm() {
 
             case 6:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
         }
-      }, _callee2);
+      }, _callee3);
     }));
 
-    return function (_x2) {
-      return _ref2.apply(this, arguments);
+    return function (_x3) {
+      return _ref3.apply(this, arguments);
     };
   }());
 
@@ -1567,11 +1584,11 @@ var mainForm = function mainForm() {
   };
 
   $(document).on("click", ".AddToCart", /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(e) {
+    var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(e) {
       var dummy, newitem, nameOfItem, priceofItem;
-      return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      return regeneratorRuntime.wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
               e.preventDefault();
               dummy = cartNumber;
@@ -1585,20 +1602,20 @@ var mainForm = function mainForm() {
 
             case 9:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
-      }, _callee3);
+      }, _callee4);
     }));
 
-    return function (_x3) {
-      return _ref3.apply(this, arguments);
+    return function (_x4) {
+      return _ref4.apply(this, arguments);
     };
   }()); //it checks user slected item for 1st time or not then increases quantity and price based on that
 
   var selectedItems = function selectedItems(nameOfItem, priceofItem) {
-    var exist = numberOfItems.find(function (_ref4) {
-      var itemname = _ref4.itemname;
+    var exist = numberOfItems.find(function (_ref5) {
+      var itemname = _ref5.itemname;
       return itemname === nameOfItem;
     });
 
@@ -1638,33 +1655,6 @@ var mainForm = function mainForm() {
 
 
   $(document).on("click", ".plus", /*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(e) {
-      var newitem, nameOfItem, priceofItem;
-      return regeneratorRuntime.wrap(function _callee4$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              e.preventDefault();
-              newitem = e.target.name;
-              nameOfItem = newitem.split('$')[0];
-              priceofItem = newitem.split('$')[1];
-              selectedItems(nameOfItem, priceofItem);
-              printResult();
-
-            case 6:
-            case "end":
-              return _context4.stop();
-          }
-        }
-      }, _callee4);
-    }));
-
-    return function (_x4) {
-      return _ref5.apply(this, arguments);
-    };
-  }()); //its called when user clciks on '-' button
-
-  $(document).on("click", ".minus", /*#__PURE__*/function () {
     var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(e) {
       var newitem, nameOfItem, priceofItem;
       return regeneratorRuntime.wrap(function _callee5$(_context5) {
@@ -1675,9 +1665,10 @@ var mainForm = function mainForm() {
               newitem = e.target.name;
               nameOfItem = newitem.split('$')[0];
               priceofItem = newitem.split('$')[1];
-              removeItems(nameOfItem);
+              selectedItems(nameOfItem, priceofItem);
+              printResult();
 
-            case 5:
+            case 6:
             case "end":
               return _context5.stop();
           }
@@ -1688,21 +1679,22 @@ var mainForm = function mainForm() {
     return function (_x5) {
       return _ref6.apply(this, arguments);
     };
-  }()); //its called when user clciks on 'delete icon/trash' icon
+  }()); //its called when user clciks on '-' button
 
-  $(document).on("click", ".delete", /*#__PURE__*/function () {
+  $(document).on("click", ".minus", /*#__PURE__*/function () {
     var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(e) {
-      var newitem, nameOfItem;
+      var newitem, nameOfItem, priceofItem;
       return regeneratorRuntime.wrap(function _callee6$(_context6) {
         while (1) {
           switch (_context6.prev = _context6.next) {
             case 0:
               e.preventDefault();
-              newitem = e.target.value;
+              newitem = e.target.name;
               nameOfItem = newitem.split('$')[0];
-              deleteSelectedItem(nameOfItem);
+              priceofItem = newitem.split('$')[1];
+              removeItems(nameOfItem);
 
-            case 4:
+            case 5:
             case "end":
               return _context6.stop();
           }
@@ -1713,11 +1705,36 @@ var mainForm = function mainForm() {
     return function (_x6) {
       return _ref7.apply(this, arguments);
     };
+  }()); //its called when user clciks on 'delete icon/trash' icon
+
+  $(document).on("click", ".delete", /*#__PURE__*/function () {
+    var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(e) {
+      var newitem, nameOfItem;
+      return regeneratorRuntime.wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              e.preventDefault();
+              newitem = e.target.value;
+              nameOfItem = newitem.split('$')[0];
+              deleteSelectedItem(nameOfItem);
+
+            case 4:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7);
+    }));
+
+    return function (_x7) {
+      return _ref8.apply(this, arguments);
+    };
   }()); // when user clciks on '-' it decreases price and quantity and display results back to the user
 
   var removeItems = function removeItems(nameOfItem) {
-    var exist = numberOfItems.find(function (_ref8) {
-      var itemname = _ref8.itemname;
+    var exist = numberOfItems.find(function (_ref9) {
+      var itemname = _ref9.itemname;
       return itemname === nameOfItem;
     });
 
@@ -1736,8 +1753,8 @@ var mainForm = function mainForm() {
 
 
   var deleteSelectedItem = function deleteSelectedItem(nameOfItem) {
-    var exist = numberOfItems.find(function (_ref9) {
-      var itemname = _ref9.itemname;
+    var exist = numberOfItems.find(function (_ref10) {
+      var itemname = _ref10.itemname;
       return itemname === nameOfItem;
     });
     var objIndex = numberOfItems.findIndex(function (exist) {
@@ -1936,7 +1953,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52332" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53689" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

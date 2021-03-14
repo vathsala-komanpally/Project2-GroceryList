@@ -74,11 +74,11 @@ const mainForm = () => {
         printResult();
      });
 
-    //  $(document).on("click", "#checkOut", async (e) =>  {
-    //     e.preventDefault();
-    //     $("#selectedItemsTable").hide();
-    //      $("#form-Main").append(loginUser());
-    // });
+     $(document).on("click", "#checkOut", async (e) =>  {
+        e.preventDefault();
+        $("#selectedItemsTable").hide();
+         $("#form-Main").append(loginUser());
+    });
     
     $(document).on("click", ".category", async (e) => {
         e.preventDefault();
