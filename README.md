@@ -23,19 +23,20 @@ The Grocery market page will be display on screen:
 
 . When admin click on link provided it opens a login page,
     please use below credentials for admin login:
-           user name: vathsala
-           password: vathsaladmin
+
+           "user name": vathsala,
+           "password": vathsaladmin
 
 . After succesfull login,this allows admin to add, update and delete grocery items.
 ![](client/images/admin.png)
 
 
-.When "Add" button is clicked it display a form with required item details to be entered
+.When "Add" button is clicked 
 ![](client/images/addItem.png)
 
-similarly there is a form for Update and Delete.
+similarly there is a form for Update and Delete as well.
 
-(added category's are displayed on home page in the side bar)
+(added category names are displayed on home page in the fixed side bar)
 
 . When user clicks on the category name on side bar it shows list of all items added in that category in a table format next to it.
 
@@ -44,7 +45,7 @@ similarly there is a form for Update and Delete.
 . There is an option "Add to cart" next to each item, if user clicks on it, that item will be added to the cart on top.
 
 .When user clicks on "Cart" it shows all items added to the cart
-. The cart displays items in a table format with +, - and delete buttons next to each item in the list to help user to add more items, to remove listed item, and to delete items respectively.
+. The cart displays items in a table format with +, - and delete buttons next to each item in the list which makes easier for user to add more items, remove listed item, and delete items respectively.
 ![](client/images/CartDisplay.png)
 . there is a "CheckOut" to continue with the order.
 . there is a create an account option for new users to signup 
