@@ -17,7 +17,7 @@ then open your Chrome browser go to http://localhost:1234/ to see output
 The Grocery market page will be display on screen: 
 .To add items to the grocery page click on Click here link "For admins only Click here to update Grocery Items" which is diaplayed on right corner next to nav top bar 
 
-![](images/2.homepage.png)
+![](client/images/2.homepage.png)
 
 
 
