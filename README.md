@@ -1,17 +1,11 @@
 # Project2-GroceryList
-
+### Technologies: HTML, CSS, JavaScript, JQuery, Bootstrap and MongoDB.
 ## Project setup
 Installation - clone this repo and open in VS code then 
 
 open terminal
-.....>cd client
-.....>npm install
-......>npm start 
-
-Goto terminal
-......>cd server
-.....>npm install
-......>npm start 
+.....> cd client ......>npm install ......>npm start 
+......>cd server .....>npm install  ......>npm start 
 
 ## Project output
 Open chrome browser go to http://localhost:1234/ to see output
